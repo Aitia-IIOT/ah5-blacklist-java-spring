@@ -2,10 +2,15 @@ DROP DATABASE IF EXISTS `ah_blacklist`;
 CREATE DATABASE `ah_blacklist`;
 USE `ah_blacklist`;
 
--- Create tables
-source create_tables.sql
-
--- Set up privileges
+-- Create users
 CREATE USER IF NOT EXISTS 'blacklist'@'localhost' IDENTIFIED BY 'bl@ckl1st';
 CREATE USER IF NOT EXISTS 'blacklist'@'%' IDENTIFIED BY 'bl@ckl1st';
-source grant_privileges.sql
+
+-- Grant privileges
+REVOKE ALL, GRANT OPTION FROM 'blacklist'@'localhost';
+GRANT ALL PRIVILEGES ON `ah_blacklist`.`entry` TO 'blacklist'@'localhost';
+
+REVOKE ALL, GRANT OPTION FROM 'blacklist'@'%';
+GRANT ALL PRIVILEGES ON `ah_blacklist`.`entry` TO 'blacklist'@'%';
+
+FLUSH PRIVILEGES;
