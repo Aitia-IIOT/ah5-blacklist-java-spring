@@ -13,8 +13,8 @@ public class Entry extends ArrowheadEntity {
 	//=================================================================================================
 	// members
 	
-	public static final List<String> SORTABLE_FIELDS_BY = List.of("id", "system_name", "createdAt");
-	public static final String DEFAULT_SORT_FIELD = "system_name";
+	public static final List<String> SORTABLE_FIELDS_BY = List.of("id", "systemName", "createdAt");
+	public static final String DEFAULT_SORT_FIELD = "systemName";
 	
 	// system name
 	@Column(nullable = false, length = VARCHAR_SMALL)
@@ -117,7 +117,7 @@ public class Entry extends ArrowheadEntity {
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	public String geReason() {
+	public String getReason() {
 		return reason;
 	}
 	
