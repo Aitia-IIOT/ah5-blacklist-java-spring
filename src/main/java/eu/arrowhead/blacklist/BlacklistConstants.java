@@ -18,10 +18,10 @@ public class BlacklistConstants {
 	// HTTP API
 	public static final String HTTP_API_BASE_PATH = "/blacklist";
 	public static final String HTTP_API_MANAGEMENT_PATH = HTTP_API_BASE_PATH + "/mgmt";
-	public static final String HTTP_API_CHECK_PATH = "/check";
+	public static final String HTTP_API_CHECK_PATH = "/check/{systemName}";
 	public static final String HTTP_API_LOOKUP_PATH = "/lookup";
 	public static final String HTTP_API_QUERY_PATH = "/query"; 
 	public static final String HTTP_API_CREATE_PATH = "/create"; 
-	public static final String HTTP_API_REMOVE_PATH = "/remove"; 
+	public static final String HTTP_API_REMOVE_PATH = "/remove/{systemNameList}"; 
 	
 }

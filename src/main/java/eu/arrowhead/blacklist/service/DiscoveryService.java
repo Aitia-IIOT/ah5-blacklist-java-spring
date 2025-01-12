@@ -8,13 +8,10 @@ import org.springframework.stereotype.Service;
 import eu.arrowhead.blacklist.jpa.repository.EntryRepository;
 
 @Service
-public class EntryService {
+public class DiscoveryService {
 	
 	//=================================================================================================
 	// members
-	
-	@Autowired
-	private EntryRepository entryRepo;
 	
 	private final Logger logger = LogManager.getLogger(this.getClass());
 	

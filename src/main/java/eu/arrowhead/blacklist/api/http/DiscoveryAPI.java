@@ -1,11 +1,100 @@
 package eu.arrowhead.blacklist.api.http;
 
+import java.util.Map.Entry;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import eu.arrowhead.blacklist.BlacklistConstants;
+import eu.arrowhead.blacklist.api.http.utils.SystemNamePreprocessor;
+import eu.arrowhead.blacklist.service.DiscoveryService;
+import eu.arrowhead.blacklist.service.dto.BlacklistEntryListResponseDTO;
+import eu.arrowhead.common.Constants;
+import eu.arrowhead.dto.ErrorMessageDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.servlet.http.HttpServletRequest;
+
+@RestController
+@RequestMapping(BlacklistConstants.HTTP_API_BASE_PATH)
+@SecurityRequirement(name = Constants.SECURITY_REQ_AUTHORIZATION)
 public class DiscoveryAPI {
+	
+	//=================================================================================================
+	// members
+
+	@Autowired
+	private DiscoveryService discoveryService;
+	
+	@Autowired
+	private SystemNamePreprocessor preprocessor;
+
+	private final Logger logger = LogManager.getLogger(this.getClass());
+
+	//=================================================================================================
+	// methods
 	
 	// check
 	// GET /check/{systemname} -> boolean
+	//-------------------------------------------------------------------------------------------------
+	@Operation(summary = "Returns if the specified system name is on the blacklist (boolean value)")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = Constants.HTTP_STATUS_OK, description = Constants.SWAGGER_HTTP_200_MESSAGE, content = {
+					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = boolean.class)) }),
+			@ApiResponse(responseCode = Constants.HTTP_STATUS_BAD_REQUEST, description = Constants.SWAGGER_HTTP_400_MESSAGE, content = {
+					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorMessageDTO.class)) }),
+			@ApiResponse(responseCode = Constants.HTTP_STATUS_UNAUTHORIZED, description = Constants.SWAGGER_HTTP_401_MESSAGE, content = {
+					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorMessageDTO.class)) }),
+			@ApiResponse(responseCode = Constants.HTTP_STATUS_FORBIDDEN, description = Constants.SWAGGER_HTTP_403_MESSAGE, content = {
+					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorMessageDTO.class)) }),
+			@ApiResponse(responseCode = Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR, description = Constants.SWAGGER_HTTP_500_MESSAGE, content = {
+					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorMessageDTO.class)) })
+	})
+	@GetMapping(path = BlacklistConstants.HTTP_API_CHECK_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean check(@PathVariable(required = true) final String systemName) {
+		logger.debug("Check started for {}", systemName);
+
+		final String origin = HttpMethod.GET.name() + " " + BlacklistConstants.HTTP_API_BASE_PATH + BlacklistConstants.HTTP_API_CHECK_PATH;
+
+		//return discoveryService.check(systemName, origin);
+		return false;
+	}
 	
 	// lookup
 	// GET /lookup -> BlacklistEntryListResponseDTO
+	//-------------------------------------------------------------------------------------------------
+	@Operation(summary = "Returns the active blacklist entries of the requester")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = Constants.HTTP_STATUS_OK, description = Constants.SWAGGER_HTTP_200_MESSAGE, content = {
+					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = BlacklistEntryListResponseDTO.class)) }),
+			@ApiResponse(responseCode = Constants.HTTP_STATUS_BAD_REQUEST, description = Constants.SWAGGER_HTTP_400_MESSAGE, content = {
+					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorMessageDTO.class)) }),
+			@ApiResponse(responseCode = Constants.HTTP_STATUS_UNAUTHORIZED, description = Constants.SWAGGER_HTTP_401_MESSAGE, content = {
+					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorMessageDTO.class)) }),
+			@ApiResponse(responseCode = Constants.HTTP_STATUS_FORBIDDEN, description = Constants.SWAGGER_HTTP_403_MESSAGE, content = {
+					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorMessageDTO.class)) }),
+			@ApiResponse(responseCode = Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR, description = Constants.SWAGGER_HTTP_500_MESSAGE, content = {
+					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorMessageDTO.class)) })
+	})
+	@GetMapping(path = BlacklistConstants.HTTP_API_LOOKUP_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
+	public BlacklistEntryListResponseDTO lookup(final HttpServletRequest httpServletRequest) {
+		logger.debug("Lookup started");
+
+		final String origin = HttpMethod.GET.name() + " " + BlacklistConstants.HTTP_API_BASE_PATH + BlacklistConstants.HTTP_API_LOOKUP_PATH;
+		final String identifiedName = preprocessor.process(httpServletRequest, origin);
+		//return discoveryService.lookup(identifiedName, origin);
+		return null;
+	}
 
 }
