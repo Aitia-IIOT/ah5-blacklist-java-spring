@@ -18,7 +18,6 @@ import eu.arrowhead.blacklist.service.dto.BlacklistCreateRequestDTO;
 import eu.arrowhead.blacklist.service.dto.enums.Mode;
 import eu.arrowhead.common.Utilities;
 import eu.arrowhead.common.exception.InternalServerError;
-import eu.arrowhead.dto.PageDTO;
 
 @Service
 public class EntryDbService {
@@ -97,6 +96,27 @@ public class EntryDbService {
 				}
 			}
 			return entries;	
+		} catch (final Exception ex) {
+			logger.error(ex.getMessage());
+			logger.debug(ex);
+			throw new InternalServerError("Database operation error");
+		}
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	public void unsetActiveByNameList(final List<String> names, final String revokerName, final String origin) {
+		logger.debug("unsetActiveByNameList started...");
+		Assert.isTrue(!Utilities.isEmpty(names), "System name list is missing or empty");
+		
+		try {
+			synchronized (LOCK) {
+				final List<Entry> toInactivate = entryRepo.findAllBySystemNameIn(names).stream().filter(Entry::getActive).collect(Collectors.toList());
+				for (Entry entry : toInactivate) {
+					entry.setActive(false);
+					entry.setRevokedBy(revokerName);
+				}
+				entryRepo.saveAllAndFlush(toInactivate);
+			}
 		} catch (final Exception ex) {
 			logger.error(ex.getMessage());
 			logger.debug(ex);

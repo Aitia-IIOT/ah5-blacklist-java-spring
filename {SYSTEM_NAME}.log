@@ -1,0 +1,827 @@
+2025-01-13 17:21:06.666  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.BlacklistApplicationTests          : Starting BlacklistApplicationTests using Java 21.0.3 with PID 19280 (started by sga in C:\Users\sga\Documents\GitHub\ah5-blacklist-java-spring)
+2025-01-13 17:21:06.690 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.BlacklistApplicationTests          : Running with Spring Boot v3.3.0, Spring v6.1.8
+2025-01-13 17:21:06.693  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.BlacklistApplicationTests          : No active profile set, falling back to 1 default profile: "default"
+2025-01-13 17:21:13.769 ERROR DESKTOP-CN7SI54 --- [           main] j.LocalContainerEntityManagerFactoryBean : Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: missing table [logs]
+2025-01-13 17:21:13.773  WARN DESKTOP-CN7SI54 --- [           main] o.s.w.c.s.GenericWebApplicationContext   : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: missing table [logs]
+2025-01-13 17:21:13.862 ERROR DESKTOP-CN7SI54 --- [           main] o.s.b.SpringApplication                  : Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: missing table [logs]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1788)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:952)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$3(SpringBootContextLoader.java:137)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1463)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:553)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:137)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:108)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:191)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:130)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:163)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$10(ClassBasedTestDescriptor.java:378)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:383)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$11(ClassBasedTestDescriptor.java:378)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:179)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:310)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:735)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:734)
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:762)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:377)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$6(ClassBasedTestDescriptor.java:290)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:289)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$4(ClassBasedTestDescriptor.java:279)
+	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$5(ClassBasedTestDescriptor.java:278)
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:31)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:106)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:105)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:69)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$2(NodeTestTask.java:123)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:123)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: missing table [logs]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:421)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1835)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1784)
+	... 93 more
+Caused by: org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: missing table [logs]
+	at org.hibernate.tool.schema.internal.AbstractSchemaValidator.validateTable(AbstractSchemaValidator.java:135)
+	at org.hibernate.tool.schema.internal.GroupedSchemaValidatorImpl.validateTables(GroupedSchemaValidatorImpl.java:46)
+	at org.hibernate.tool.schema.internal.AbstractSchemaValidator.performValidation(AbstractSchemaValidator.java:98)
+	at org.hibernate.tool.schema.internal.AbstractSchemaValidator.doValidation(AbstractSchemaValidator.java:76)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:289)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1429)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:322)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:457)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1506)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	... 97 more
+2025-01-13 17:21:13.880  WARN DESKTOP-CN7SI54 --- [           main] o.s.t.c.TestContextManager               : Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener] to prepare test instance [eu.arrowhead.blacklist.BlacklistApplicationTests@39c93af6]
+java.lang.IllegalStateException: Failed to load ApplicationContext for [WebMergedContextConfiguration@69374e28 testClass = eu.arrowhead.blacklist.BlacklistApplicationTests, locations = [], classes = [eu.arrowhead.blacklist.BlacklistApplication], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2f40a43, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@547e29a4, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@436390f4, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@255990cc, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@51b01960, org.springframework.boot.test.context.SpringBootTestAnnotation@a8aaf14c], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:180)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:191)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:130)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:163)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$10(ClassBasedTestDescriptor.java:378)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:383)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$11(ClassBasedTestDescriptor.java:378)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:179)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:310)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:735)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:734)
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:762)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:377)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$6(ClassBasedTestDescriptor.java:290)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:289)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$4(ClassBasedTestDescriptor.java:279)
+	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$5(ClassBasedTestDescriptor.java:278)
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:31)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:106)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:105)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:69)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$2(NodeTestTask.java:123)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:123)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: missing table [logs]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1788)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:952)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$3(SpringBootContextLoader.java:137)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1463)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:553)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:137)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:108)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+	... 73 more
+Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: missing table [logs]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:421)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1835)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1784)
+	... 93 more
+Caused by: org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: missing table [logs]
+	at org.hibernate.tool.schema.internal.AbstractSchemaValidator.validateTable(AbstractSchemaValidator.java:135)
+	at org.hibernate.tool.schema.internal.GroupedSchemaValidatorImpl.validateTables(GroupedSchemaValidatorImpl.java:46)
+	at org.hibernate.tool.schema.internal.AbstractSchemaValidator.performValidation(AbstractSchemaValidator.java:98)
+	at org.hibernate.tool.schema.internal.AbstractSchemaValidator.doValidation(AbstractSchemaValidator.java:76)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:289)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1429)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:322)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:457)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1506)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	... 97 more
+2025-01-13 17:24:39.950  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.BlacklistApplicationTests          : Starting BlacklistApplicationTests using Java 21.0.3 with PID 3544 (started by sga in C:\Users\sga\Documents\GitHub\ah5-blacklist-java-spring)
+2025-01-13 17:24:39.975 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.BlacklistApplicationTests          : Running with Spring Boot v3.3.0, Spring v6.1.8
+2025-01-13 17:24:39.981  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.BlacklistApplicationTests          : No active profile set, falling back to 1 default profile: "default"
+2025-01-13 17:24:45.554 ERROR DESKTOP-CN7SI54 --- [           main] j.LocalContainerEntityManagerFactoryBean : Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: missing table [logs]
+2025-01-13 17:24:45.557  WARN DESKTOP-CN7SI54 --- [           main] o.s.w.c.s.GenericWebApplicationContext   : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: missing table [logs]
+2025-01-13 17:24:45.618 ERROR DESKTOP-CN7SI54 --- [           main] o.s.b.SpringApplication                  : Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: missing table [logs]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1788)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:952)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$3(SpringBootContextLoader.java:137)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1463)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:553)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:137)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:108)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:191)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:130)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:163)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$10(ClassBasedTestDescriptor.java:378)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:383)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$11(ClassBasedTestDescriptor.java:378)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:179)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:310)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:735)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:734)
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:762)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:377)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$6(ClassBasedTestDescriptor.java:290)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:289)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$4(ClassBasedTestDescriptor.java:279)
+	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$5(ClassBasedTestDescriptor.java:278)
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:31)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:106)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:105)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:69)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$2(NodeTestTask.java:123)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:123)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: missing table [logs]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:421)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1835)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1784)
+	... 93 more
+Caused by: org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: missing table [logs]
+	at org.hibernate.tool.schema.internal.AbstractSchemaValidator.validateTable(AbstractSchemaValidator.java:135)
+	at org.hibernate.tool.schema.internal.GroupedSchemaValidatorImpl.validateTables(GroupedSchemaValidatorImpl.java:46)
+	at org.hibernate.tool.schema.internal.AbstractSchemaValidator.performValidation(AbstractSchemaValidator.java:98)
+	at org.hibernate.tool.schema.internal.AbstractSchemaValidator.doValidation(AbstractSchemaValidator.java:76)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:289)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1429)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:322)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:457)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1506)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	... 97 more
+2025-01-13 17:24:45.647  WARN DESKTOP-CN7SI54 --- [           main] o.s.t.c.TestContextManager               : Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener] to prepare test instance [eu.arrowhead.blacklist.BlacklistApplicationTests@788fa91f]
+java.lang.IllegalStateException: Failed to load ApplicationContext for [WebMergedContextConfiguration@435e224d testClass = eu.arrowhead.blacklist.BlacklistApplicationTests, locations = [], classes = [eu.arrowhead.blacklist.BlacklistApplication], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2f40a43, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@547e29a4, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@436390f4, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@255990cc, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@51b01960, org.springframework.boot.test.context.SpringBootTestAnnotation@a8aaf14c], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:180)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:191)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:130)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:163)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$10(ClassBasedTestDescriptor.java:378)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:383)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$11(ClassBasedTestDescriptor.java:378)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:179)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.StreamSpliterators$WrappingSpliterator.forEachRemaining(StreamSpliterators.java:310)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:735)
+	at java.base/java.util.stream.Streams$ConcatSpliterator.forEachRemaining(Streams.java:734)
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:762)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:377)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$6(ClassBasedTestDescriptor.java:290)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:289)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$4(ClassBasedTestDescriptor.java:279)
+	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$5(ClassBasedTestDescriptor.java:278)
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:31)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:106)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:105)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:69)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$2(NodeTestTask.java:123)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:123)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: missing table [logs]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1788)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:952)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$3(SpringBootContextLoader.java:137)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1463)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:553)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:137)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:108)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+	... 73 more
+Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: missing table [logs]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:421)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1835)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1784)
+	... 93 more
+Caused by: org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: missing table [logs]
+	at org.hibernate.tool.schema.internal.AbstractSchemaValidator.validateTable(AbstractSchemaValidator.java:135)
+	at org.hibernate.tool.schema.internal.GroupedSchemaValidatorImpl.validateTables(GroupedSchemaValidatorImpl.java:46)
+	at org.hibernate.tool.schema.internal.AbstractSchemaValidator.performValidation(AbstractSchemaValidator.java:98)
+	at org.hibernate.tool.schema.internal.AbstractSchemaValidator.doValidation(AbstractSchemaValidator.java:76)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:289)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1429)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:322)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:457)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1506)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	... 97 more
+2025-01-13 17:26:46.159  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.BlacklistApplicationTests          : Starting BlacklistApplicationTests using Java 21.0.3 with PID 4280 (started by sga in C:\Users\sga\Documents\GitHub\ah5-blacklist-java-spring)
+2025-01-13 17:26:46.185 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.BlacklistApplicationTests          : Running with Spring Boot v3.3.0, Spring v6.1.8
+2025-01-13 17:26:46.189  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.BlacklistApplicationTests          : No active profile set, falling back to 1 default profile: "default"
+2025-01-13 17:26:53.118 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : Initializing HttpService...
+2025-01-13 17:26:53.441 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : HttpService is initialized.
+2025-01-13 17:26:53.476 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : HttpCollectorDriver.init started...
+2025-01-13 17:26:53.578  INFO DESKTOP-CN7SI54 --- [           main] e.a.c.h.f.a.SelfDeclaredFilter           : SelfDeclaredFilter is active
+2025-01-13 17:26:53.881  WARN DESKTOP-CN7SI54 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-01-13 17:26:53.984  WARN DESKTOP-CN7SI54 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 56a5d1cf-3509-40c4-a1ec-6adbf4b7a1ff
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-01-13 17:26:57.311 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : Initialization in onApplicationEvent()...
+2025-01-13 17:26:57.313  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : System name: blacklist
+2025-01-13 17:26:57.313  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : SSL mode: DISABLED
+2025-01-13 17:26:57.313  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : Authentication policy: DECLARED
+2025-01-13 17:26:57.314 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : registerToServiceRegistry started...
+2025-01-13 17:26:57.314 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : skipRegistration started...
+2025-01-13 17:26:57.314 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : checkServiceRegistryConnection started...
+2025-01-13 17:26:57.315 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.ServiceCollector                 : getServiceModel started...
+2025-01-13 17:26:57.315 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:26:57.316 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:26:57.316 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : acquireService started...
+2025-01-13 17:26:57.317 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : acquireServiceFromSR started...
+2025-01-13 17:26:57.336 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : createRequestPayload started...
+2025-01-13 17:26:57.339 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpUtilities                    : calculateAuthorizationHeader started...
+2025-01-13 17:26:57.342 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : sendRequest started...
+2025-01-13 17:26:57.343 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : Sending POST request to: http://localhost:8443/serviceregistry/service-discovery/lookup?verbose=true
+2025-01-13 17:26:58.877 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : convertLookupResponse started...
+2025-01-13 17:26:58.877 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.i.p.v.HttpOperationsValidator      : HttpOperationsValidator.validateAndNormalize started...
+2025-01-13 17:26:58.878 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameValidator                : Validate name started: lookup
+2025-01-13 17:26:58.878 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:26:58.902 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameValidator                : Validate name started: revoke
+2025-01-13 17:26:58.903 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:26:58.906 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameValidator                : Validate name started: register
+2025-01-13 17:26:58.907 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:26:58.913  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : Service Registry is accessable...
+2025-01-13 17:26:58.914 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.ArrowheadHttpService             : consumeService started...
+2025-01-13 17:26:58.915 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.ServiceCollector                 : getServiceModel started...
+2025-01-13 17:26:58.928 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:26:58.929 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:26:58.930 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:26:58.932 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpUtilities                    : calculateAuthorizationHeader started...
+2025-01-13 17:26:58.939 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : sendRequest started...
+2025-01-13 17:26:58.941 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : Sending DELETE request to: http://127.0.0.1:8443/serviceregistry/system-discovery/revoke
+2025-01-13 17:26:59.024 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.a.AddressNormalizer            : normalize started...
+2025-01-13 17:26:59.026 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.ArrowheadHttpService             : consumeService started...
+2025-01-13 17:26:59.026 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.ServiceCollector                 : getServiceModel started...
+2025-01-13 17:26:59.027 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:26:59.028 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:26:59.029 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:26:59.030 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpUtilities                    : calculateAuthorizationHeader started...
+2025-01-13 17:26:59.031 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : sendRequest started...
+2025-01-13 17:26:59.032 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : Sending POST request to: http://127.0.0.1:8443/serviceregistry/system-discovery/register
+2025-01-13 17:26:59.130 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : registerService started...
+2025-01-13 17:26:59.134 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.ArrowheadHttpService             : consumeService started...
+2025-01-13 17:26:59.136 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.ServiceCollector                 : getServiceModel started...
+2025-01-13 17:26:59.137 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:26:59.138 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:26:59.139 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : acquireService started...
+2025-01-13 17:26:59.139 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : acquireServiceFromSR started...
+2025-01-13 17:26:59.141 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : createRequestPayload started...
+2025-01-13 17:26:59.142 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpUtilities                    : calculateAuthorizationHeader started...
+2025-01-13 17:26:59.143 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : sendRequest started...
+2025-01-13 17:26:59.143 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : Sending POST request to: http://localhost:8443/serviceregistry/service-discovery/lookup?verbose=true
+2025-01-13 17:26:59.222 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : convertLookupResponse started...
+2025-01-13 17:26:59.223 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.i.p.v.HttpOperationsValidator      : HttpOperationsValidator.validateAndNormalize started...
+2025-01-13 17:26:59.224 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameValidator                : Validate name started: lookup
+2025-01-13 17:26:59.225 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:26:59.226 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameValidator                : Validate name started: revoke
+2025-01-13 17:26:59.226 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:26:59.227 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameValidator                : Validate name started: register
+2025-01-13 17:26:59.227 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:26:59.228 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:26:59.228 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpUtilities                    : calculateAuthorizationHeader started...
+2025-01-13 17:26:59.228 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : sendRequest started...
+2025-01-13 17:26:59.229 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : Sending POST request to: http://127.0.0.1:8443/serviceregistry/service-discovery/register
+2025-01-13 17:26:59.504 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : registerService started...
+2025-01-13 17:26:59.505 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.ArrowheadHttpService             : consumeService started...
+2025-01-13 17:26:59.506 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.ServiceCollector                 : getServiceModel started...
+2025-01-13 17:26:59.507 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:26:59.507 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:26:59.508 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:26:59.509 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpUtilities                    : calculateAuthorizationHeader started...
+2025-01-13 17:26:59.513 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : sendRequest started...
+2025-01-13 17:26:59.514 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : Sending POST request to: http://127.0.0.1:8443/serviceregistry/service-discovery/register
+2025-01-13 17:26:59.692  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : System blacklist published 2 service(s).
+2025-01-13 17:26:59.692 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : Initialization in onApplicationEvent() is done.
+2025-01-13 17:26:59.724  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.BlacklistApplicationTests          : Started BlacklistApplicationTests in 13.989 seconds (process running for 16.256)
+2025-01-13 17:27:02.880 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.b.i.BlacklistApplicationInitListener : destroy called...
+2025-01-13 17:27:02.882 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.b.i.BlacklistApplicationInitListener : revokeServices started...
+2025-01-13 17:27:02.883 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.b.i.BlacklistApplicationInitListener : skipRegistration started...
+2025-01-13 17:27:02.883 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.b.i.BlacklistApplicationInitListener : checkServiceRegistryConnection started...
+2025-01-13 17:27:02.883 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.c.ServiceCollector                 : getServiceModel started...
+2025-01-13 17:27:02.884 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:02.884 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:02.885  INFO DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.b.i.BlacklistApplicationInitListener : Service Registry is accessable...
+2025-01-13 17:27:02.885 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.h.ArrowheadHttpService             : consumeService started...
+2025-01-13 17:27:02.886 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.c.ServiceCollector                 : getServiceModel started...
+2025-01-13 17:27:02.886 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:02.887 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:02.887 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:02.887 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.h.HttpUtilities                    : calculateAuthorizationHeader started...
+2025-01-13 17:27:02.901 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.h.HttpService                      : sendRequest started...
+2025-01-13 17:27:02.902 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.h.HttpService                      : Sending DELETE request to: http://127.0.0.1:8443/blacklist::blacklist-management::1.0.0/serviceregistry/service-discovery/revoke
+2025-01-13 17:27:02.958 ERROR DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.b.i.BlacklistApplicationInitListener : WebClientResponseException: 404 Not Found from DELETE http://127.0.0.1:8443/blacklist::blacklist-management::1.0.0/serviceregistry/service-discovery/revoke, http://127.0.0.1:8443/blacklist::blacklist-management::1.0.0/serviceregistry/service-discovery/revoke
+2025-01-13 17:27:02.958 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.b.i.BlacklistApplicationInitListener : eu.arrowhead.common.exception.ExternalServerError: WebClientResponseException: 404 Not Found from DELETE http://127.0.0.1:8443/blacklist::blacklist-management::1.0.0/serviceregistry/service-discovery/revoke, http://127.0.0.1:8443/blacklist::blacklist-management::1.0.0/serviceregistry/service-discovery/revoke
+2025-01-13 17:27:34.948  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.BlacklistApplicationTests          : Starting BlacklistApplicationTests using Java 21.0.3 with PID 2208 (started by sga in C:\Users\sga\Documents\GitHub\ah5-blacklist-java-spring)
+2025-01-13 17:27:34.970 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.BlacklistApplicationTests          : Running with Spring Boot v3.3.0, Spring v6.1.8
+2025-01-13 17:27:34.974  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.BlacklistApplicationTests          : No active profile set, falling back to 1 default profile: "default"
+2025-01-13 17:27:42.384 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : Initializing HttpService...
+2025-01-13 17:27:42.562 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : HttpService is initialized.
+2025-01-13 17:27:42.589 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : HttpCollectorDriver.init started...
+2025-01-13 17:27:42.692  INFO DESKTOP-CN7SI54 --- [           main] e.a.c.h.f.a.SelfDeclaredFilter           : SelfDeclaredFilter is active
+2025-01-13 17:27:42.923  WARN DESKTOP-CN7SI54 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-01-13 17:27:42.998  WARN DESKTOP-CN7SI54 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 6a60ebef-961b-47b9-a6f6-ec11f924eb4b
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-01-13 17:27:46.532 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : Initialization in onApplicationEvent()...
+2025-01-13 17:27:46.533  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : System name: blacklist
+2025-01-13 17:27:46.533  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : SSL mode: DISABLED
+2025-01-13 17:27:46.534  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : Authentication policy: DECLARED
+2025-01-13 17:27:46.534 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : registerToServiceRegistry started...
+2025-01-13 17:27:46.535 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : skipRegistration started...
+2025-01-13 17:27:46.535 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : checkServiceRegistryConnection started...
+2025-01-13 17:27:46.537 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.ServiceCollector                 : getServiceModel started...
+2025-01-13 17:27:46.538 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:46.538 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:46.540 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : acquireService started...
+2025-01-13 17:27:46.540 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : acquireServiceFromSR started...
+2025-01-13 17:27:46.554 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : createRequestPayload started...
+2025-01-13 17:27:46.556 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpUtilities                    : calculateAuthorizationHeader started...
+2025-01-13 17:27:46.559 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : sendRequest started...
+2025-01-13 17:27:46.559 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : Sending POST request to: http://localhost:8443/serviceregistry/service-discovery/lookup?verbose=true
+2025-01-13 17:27:47.421 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : convertLookupResponse started...
+2025-01-13 17:27:47.422 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.i.p.v.HttpOperationsValidator      : HttpOperationsValidator.validateAndNormalize started...
+2025-01-13 17:27:47.423 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameValidator                : Validate name started: lookup
+2025-01-13 17:27:47.424 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:47.433 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameValidator                : Validate name started: revoke
+2025-01-13 17:27:47.433 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:47.434 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameValidator                : Validate name started: register
+2025-01-13 17:27:47.434 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:47.437  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : Service Registry is accessable...
+2025-01-13 17:27:47.438 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.ArrowheadHttpService             : consumeService started...
+2025-01-13 17:27:47.439 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.ServiceCollector                 : getServiceModel started...
+2025-01-13 17:27:47.440 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:47.441 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:47.441 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:47.441 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpUtilities                    : calculateAuthorizationHeader started...
+2025-01-13 17:27:47.441 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : sendRequest started...
+2025-01-13 17:27:47.441 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : Sending DELETE request to: http://127.0.0.1:8443/serviceregistry/system-discovery/revoke
+2025-01-13 17:27:47.487 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.a.AddressNormalizer            : normalize started...
+2025-01-13 17:27:47.488 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.ArrowheadHttpService             : consumeService started...
+2025-01-13 17:27:47.489 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.ServiceCollector                 : getServiceModel started...
+2025-01-13 17:27:47.489 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:47.490 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:47.491 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:47.491 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpUtilities                    : calculateAuthorizationHeader started...
+2025-01-13 17:27:47.493 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : sendRequest started...
+2025-01-13 17:27:47.494 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : Sending POST request to: http://127.0.0.1:8443/serviceregistry/system-discovery/register
+2025-01-13 17:27:47.537 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : registerService started...
+2025-01-13 17:27:47.541 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.ArrowheadHttpService             : consumeService started...
+2025-01-13 17:27:47.542 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.ServiceCollector                 : getServiceModel started...
+2025-01-13 17:27:47.542 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:47.542 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:47.543 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : acquireService started...
+2025-01-13 17:27:47.543 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : acquireServiceFromSR started...
+2025-01-13 17:27:47.543 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : createRequestPayload started...
+2025-01-13 17:27:47.544 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpUtilities                    : calculateAuthorizationHeader started...
+2025-01-13 17:27:47.544 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : sendRequest started...
+2025-01-13 17:27:47.544 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : Sending POST request to: http://localhost:8443/serviceregistry/service-discovery/lookup?verbose=true
+2025-01-13 17:27:47.613 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : convertLookupResponse started...
+2025-01-13 17:27:47.614 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.i.p.v.HttpOperationsValidator      : HttpOperationsValidator.validateAndNormalize started...
+2025-01-13 17:27:47.614 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameValidator                : Validate name started: lookup
+2025-01-13 17:27:47.615 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:47.615 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameValidator                : Validate name started: revoke
+2025-01-13 17:27:47.616 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:47.616 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameValidator                : Validate name started: register
+2025-01-13 17:27:47.616 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:47.617 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:47.617 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpUtilities                    : calculateAuthorizationHeader started...
+2025-01-13 17:27:47.618 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : sendRequest started...
+2025-01-13 17:27:47.619 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : Sending POST request to: http://127.0.0.1:8443/serviceregistry/service-discovery/register
+2025-01-13 17:27:47.749 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : registerService started...
+2025-01-13 17:27:47.750 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.ArrowheadHttpService             : consumeService started...
+2025-01-13 17:27:47.750 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.ServiceCollector                 : getServiceModel started...
+2025-01-13 17:27:47.750 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:47.751 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:47.751 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:47.753 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpUtilities                    : calculateAuthorizationHeader started...
+2025-01-13 17:27:47.754 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : sendRequest started...
+2025-01-13 17:27:47.756 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : Sending POST request to: http://127.0.0.1:8443/serviceregistry/service-discovery/register
+2025-01-13 17:27:47.833  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : System blacklist published 2 service(s).
+2025-01-13 17:27:47.834 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : Initialization in onApplicationEvent() is done.
+2025-01-13 17:27:47.857  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.BlacklistApplicationTests          : Started BlacklistApplicationTests in 13.351 seconds (process running for 15.34)
+2025-01-13 17:27:50.804 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.b.i.BlacklistApplicationInitListener : destroy called...
+2025-01-13 17:27:50.806 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.b.i.BlacklistApplicationInitListener : revokeServices started...
+2025-01-13 17:27:50.806 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.b.i.BlacklistApplicationInitListener : skipRegistration started...
+2025-01-13 17:27:50.806 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.b.i.BlacklistApplicationInitListener : checkServiceRegistryConnection started...
+2025-01-13 17:27:50.808 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.c.ServiceCollector                 : getServiceModel started...
+2025-01-13 17:27:50.808 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:50.809 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:50.809  INFO DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.b.i.BlacklistApplicationInitListener : Service Registry is accessable...
+2025-01-13 17:27:50.810 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.h.ArrowheadHttpService             : consumeService started...
+2025-01-13 17:27:50.810 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.c.ServiceCollector                 : getServiceModel started...
+2025-01-13 17:27:50.810 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:50.811 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:50.811 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:27:50.811 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.h.HttpUtilities                    : calculateAuthorizationHeader started...
+2025-01-13 17:27:50.816 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.h.HttpService                      : sendRequest started...
+2025-01-13 17:27:50.817 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.h.HttpService                      : Sending DELETE request to: http://127.0.0.1:8443/blacklist::blacklist-management::1.0.0/serviceregistry/service-discovery/revoke
+2025-01-13 17:27:50.883 ERROR DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.b.i.BlacklistApplicationInitListener : WebClientResponseException: 404 Not Found from DELETE http://127.0.0.1:8443/blacklist::blacklist-management::1.0.0/serviceregistry/service-discovery/revoke, http://127.0.0.1:8443/blacklist::blacklist-management::1.0.0/serviceregistry/service-discovery/revoke
+2025-01-13 17:27:50.884 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.b.i.BlacklistApplicationInitListener : eu.arrowhead.common.exception.ExternalServerError: WebClientResponseException: 404 Not Found from DELETE http://127.0.0.1:8443/blacklist::blacklist-management::1.0.0/serviceregistry/service-discovery/revoke, http://127.0.0.1:8443/blacklist::blacklist-management::1.0.0/serviceregistry/service-discovery/revoke
+2025-01-13 17:29:42.427  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.BlacklistApplicationTests          : Starting BlacklistApplicationTests using Java 21.0.3 with PID 14860 (started by sga in C:\Users\sga\Documents\GitHub\ah5-blacklist-java-spring)
+2025-01-13 17:29:42.448 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.BlacklistApplicationTests          : Running with Spring Boot v3.3.0, Spring v6.1.8
+2025-01-13 17:29:42.454  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.BlacklistApplicationTests          : No active profile set, falling back to 1 default profile: "default"
+2025-01-13 17:29:49.517 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : Initializing HttpService...
+2025-01-13 17:29:49.825 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : HttpService is initialized.
+2025-01-13 17:29:49.856 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : HttpCollectorDriver.init started...
+2025-01-13 17:29:49.964  INFO DESKTOP-CN7SI54 --- [           main] e.a.c.h.f.a.SelfDeclaredFilter           : SelfDeclaredFilter is active
+2025-01-13 17:29:50.262  WARN DESKTOP-CN7SI54 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-01-13 17:29:50.374  WARN DESKTOP-CN7SI54 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 131f3a44-9a06-4087-b33e-3fb1fd2b7f6f
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-01-13 17:29:53.986 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : Initialization in onApplicationEvent()...
+2025-01-13 17:29:53.987  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : System name: blacklist
+2025-01-13 17:29:53.988  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : SSL mode: DISABLED
+2025-01-13 17:29:53.988  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : Authentication policy: DECLARED
+2025-01-13 17:29:53.989 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : registerToServiceRegistry started...
+2025-01-13 17:29:53.989 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : skipRegistration started...
+2025-01-13 17:29:53.990 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : checkServiceRegistryConnection started...
+2025-01-13 17:29:53.991 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.ServiceCollector                 : getServiceModel started...
+2025-01-13 17:29:53.991 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:53.992 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:53.992 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : acquireService started...
+2025-01-13 17:29:53.993 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : acquireServiceFromSR started...
+2025-01-13 17:29:54.008 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : createRequestPayload started...
+2025-01-13 17:29:54.010 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpUtilities                    : calculateAuthorizationHeader started...
+2025-01-13 17:29:54.012 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : sendRequest started...
+2025-01-13 17:29:54.013 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : Sending POST request to: http://localhost:8443/serviceregistry/service-discovery/lookup?verbose=true
+2025-01-13 17:29:54.961 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : convertLookupResponse started...
+2025-01-13 17:29:54.961 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.i.p.v.HttpOperationsValidator      : HttpOperationsValidator.validateAndNormalize started...
+2025-01-13 17:29:54.962 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameValidator                : Validate name started: lookup
+2025-01-13 17:29:54.962 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:54.975 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameValidator                : Validate name started: revoke
+2025-01-13 17:29:54.976 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:54.977 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameValidator                : Validate name started: register
+2025-01-13 17:29:54.977 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:54.980  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : Service Registry is accessable...
+2025-01-13 17:29:54.980 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.ArrowheadHttpService             : consumeService started...
+2025-01-13 17:29:54.980 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.ServiceCollector                 : getServiceModel started...
+2025-01-13 17:29:54.982 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:54.983 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:54.984 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:54.985 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpUtilities                    : calculateAuthorizationHeader started...
+2025-01-13 17:29:54.986 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : sendRequest started...
+2025-01-13 17:29:54.986 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : Sending DELETE request to: http://127.0.0.1:8443/serviceregistry/system-discovery/revoke
+2025-01-13 17:29:55.021 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.a.AddressNormalizer            : normalize started...
+2025-01-13 17:29:55.022 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.ArrowheadHttpService             : consumeService started...
+2025-01-13 17:29:55.023 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.ServiceCollector                 : getServiceModel started...
+2025-01-13 17:29:55.023 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:55.024 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:55.024 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:55.024 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpUtilities                    : calculateAuthorizationHeader started...
+2025-01-13 17:29:55.024 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : sendRequest started...
+2025-01-13 17:29:55.024 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : Sending POST request to: http://127.0.0.1:8443/serviceregistry/system-discovery/register
+2025-01-13 17:29:55.062 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : registerService started...
+2025-01-13 17:29:55.063 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.ArrowheadHttpService             : consumeService started...
+2025-01-13 17:29:55.064 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.ServiceCollector                 : getServiceModel started...
+2025-01-13 17:29:55.065 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:55.065 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:55.067 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : acquireService started...
+2025-01-13 17:29:55.067 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : acquireServiceFromSR started...
+2025-01-13 17:29:55.067 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : createRequestPayload started...
+2025-01-13 17:29:55.068 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpUtilities                    : calculateAuthorizationHeader started...
+2025-01-13 17:29:55.068 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : sendRequest started...
+2025-01-13 17:29:55.070 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : Sending POST request to: http://localhost:8443/serviceregistry/service-discovery/lookup?verbose=true
+2025-01-13 17:29:55.108 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.HttpCollectorDriver              : convertLookupResponse started...
+2025-01-13 17:29:55.109 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.i.p.v.HttpOperationsValidator      : HttpOperationsValidator.validateAndNormalize started...
+2025-01-13 17:29:55.109 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameValidator                : Validate name started: lookup
+2025-01-13 17:29:55.109 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:55.109 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameValidator                : Validate name started: revoke
+2025-01-13 17:29:55.109 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:55.110 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameValidator                : Validate name started: register
+2025-01-13 17:29:55.110 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:55.110 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:55.110 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpUtilities                    : calculateAuthorizationHeader started...
+2025-01-13 17:29:55.110 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : sendRequest started...
+2025-01-13 17:29:55.110 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : Sending POST request to: http://127.0.0.1:8443/serviceregistry/service-discovery/register
+2025-01-13 17:29:55.202 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : registerService started...
+2025-01-13 17:29:55.203 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.ArrowheadHttpService             : consumeService started...
+2025-01-13 17:29:55.205 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.c.ServiceCollector                 : getServiceModel started...
+2025-01-13 17:29:55.205 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:55.206 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:55.207 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:55.207 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpUtilities                    : calculateAuthorizationHeader started...
+2025-01-13 17:29:55.207 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : sendRequest started...
+2025-01-13 17:29:55.208 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.c.h.HttpService                      : Sending POST request to: http://127.0.0.1:8443/serviceregistry/service-discovery/register
+2025-01-13 17:29:55.270  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : System blacklist published 2 service(s).
+2025-01-13 17:29:55.271 DEBUG DESKTOP-CN7SI54 --- [           main] e.a.b.i.BlacklistApplicationInitListener : Initialization in onApplicationEvent() is done.
+2025-01-13 17:29:55.291  INFO DESKTOP-CN7SI54 --- [           main] e.a.b.BlacklistApplicationTests          : Started BlacklistApplicationTests in 13.359 seconds (process running for 15.743)
+2025-01-13 17:29:58.295 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.b.i.BlacklistApplicationInitListener : destroy called...
+2025-01-13 17:29:58.296 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.b.i.BlacklistApplicationInitListener : revokeServices started...
+2025-01-13 17:29:58.296 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.b.i.BlacklistApplicationInitListener : skipRegistration started...
+2025-01-13 17:29:58.297 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.b.i.BlacklistApplicationInitListener : checkServiceRegistryConnection started...
+2025-01-13 17:29:58.297 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.c.ServiceCollector                 : getServiceModel started...
+2025-01-13 17:29:58.298 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:58.299 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:58.300  INFO DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.b.i.BlacklistApplicationInitListener : Service Registry is accessable...
+2025-01-13 17:29:58.301 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.h.ArrowheadHttpService             : consumeService started...
+2025-01-13 17:29:58.302 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.c.ServiceCollector                 : getServiceModel started...
+2025-01-13 17:29:58.302 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:58.303 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:58.303 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.s.v.n.NameNormalizer               : normalize name started
+2025-01-13 17:29:58.303 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.h.HttpUtilities                    : calculateAuthorizationHeader started...
+2025-01-13 17:29:58.305 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.h.HttpService                      : sendRequest started...
+2025-01-13 17:29:58.305 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.c.h.HttpService                      : Sending DELETE request to: http://127.0.0.1:8443/blacklist::blacklist-management::1.0.0/serviceregistry/service-discovery/revoke
+2025-01-13 17:29:58.360 ERROR DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.b.i.BlacklistApplicationInitListener : WebClientResponseException: 404 Not Found from DELETE http://127.0.0.1:8443/blacklist::blacklist-management::1.0.0/serviceregistry/service-discovery/revoke, http://127.0.0.1:8443/blacklist::blacklist-management::1.0.0/serviceregistry/service-discovery/revoke
+2025-01-13 17:29:58.362 DEBUG DESKTOP-CN7SI54 --- [ionShutdownHook] e.a.b.i.BlacklistApplicationInitListener : eu.arrowhead.common.exception.ExternalServerError: WebClientResponseException: 404 Not Found from DELETE http://127.0.0.1:8443/blacklist::blacklist-management::1.0.0/serviceregistry/service-discovery/revoke, http://127.0.0.1:8443/blacklist::blacklist-management::1.0.0/serviceregistry/service-discovery/revoke

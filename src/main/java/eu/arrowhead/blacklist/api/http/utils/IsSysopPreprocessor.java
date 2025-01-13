@@ -9,7 +9,7 @@ import eu.arrowhead.common.http.HttpUtilities;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Service
-public class SystemNamePreprocessor {
+public class IsSysopPreprocessor {
 	//=================================================================================================
 	// members
 
@@ -18,11 +18,8 @@ public class SystemNamePreprocessor {
 	//=================================================================================================
 	// methods
 	//-------------------------------------------------------------------------------------------------
-	public String process(final HttpServletRequest request, final String origin) throws InvalidParameterException {
-		logger.debug("SystemName process started");
-
-		final String name = HttpUtilities.acquireName(request, origin);
-
-		return name;
+	public boolean process(final HttpServletRequest request, final String origin) throws InvalidParameterException {
+		logger.debug("isSysop process started...");
+		return HttpUtilities.isSysop(request, origin);
 	}
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import eu.arrowhead.blacklist.BlacklistConstants;
+import eu.arrowhead.blacklist.api.http.utils.IsSysopPreprocessor;
 import eu.arrowhead.blacklist.api.http.utils.SystemNamePreprocessor;
 import eu.arrowhead.blacklist.service.ManagementService;
 import eu.arrowhead.blacklist.service.dto.BlacklistCreateListRequestDTO;
@@ -45,7 +46,10 @@ public class ManagementAPI {
 	private ManagementService managementService;
 	
 	@Autowired
-	private SystemNamePreprocessor preprocessor;
+	private SystemNamePreprocessor systemNamepreprocessor;
+	
+	@Autowired
+	private IsSysopPreprocessor isSysopPreprocessor;
 
 	private final Logger logger = LogManager.getLogger(this.getClass());
 
@@ -98,7 +102,7 @@ public class ManagementAPI {
 		logger.debug("Create started");
 
 		final String origin = HttpMethod.POST.name() + " " + BlacklistConstants.HTTP_API_MANAGEMENT_PATH + BlacklistConstants.HTTP_API_CREATE_PATH;
-		final String identifiedName = preprocessor.process(httpServletRequest, origin);
+		final String identifiedName = systemNamepreprocessor.process(httpServletRequest, origin);
 		
 		return managementService.create(dto, origin, identifiedName);
 	}
@@ -120,12 +124,14 @@ public class ManagementAPI {
 					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorMessageDTO.class)) })
 	})
 	@DeleteMapping(path = BlacklistConstants.HTTP_API_REMOVE_PATH)
-	public ResponseEntity<Void> remove(@PathVariable final List<String> systemNameList) {
+	public ResponseEntity<Void> remove(final HttpServletRequest httpServletRequest, @PathVariable final List<String> systemNameList) {
 		logger.debug("remove started");
 
 		final String origin = HttpMethod.DELETE.name() + " " + BlacklistConstants.HTTP_API_MANAGEMENT_PATH + BlacklistConstants.HTTP_API_REMOVE_PATH;
-
-		managementService.remove(systemNameList, origin);
+		final boolean isSysop = isSysopPreprocessor.process(httpServletRequest, origin);
+		final String revokerName = systemNamepreprocessor.process(httpServletRequest, origin);
+		managementService.remove(systemNameList, isSysop, revokerName, origin);
+		
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	

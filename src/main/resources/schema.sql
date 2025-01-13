@@ -1,3 +1,17 @@
+-- Logs
+
+CREATE TABLE IF NOT EXISTS `logs` (
+  `log_id` varchar(100) NOT NULL,
+  `entry_date` timestamp(3) NULL DEFAULT NULL,
+  `logger` varchar(100) DEFAULT NULL,
+  `log_level` varchar(100) DEFAULT NULL,
+  `message` mediumtext,
+  `exception` mediumtext,
+  PRIMARY KEY (`log_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;  
+
+-- Entry
+
 CREATE TABLE IF NOT EXISTS `entry` (
 	`id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`system_name` varchar(63) NOT NULL,

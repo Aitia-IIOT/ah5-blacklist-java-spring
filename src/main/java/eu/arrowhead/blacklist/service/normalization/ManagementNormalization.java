@@ -1,5 +1,6 @@
 package eu.arrowhead.blacklist.service.normalization;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -38,7 +39,6 @@ public class ManagementNormalization {
 	//-------------------------------------------------------------------------------------------------
 	public BlacklistQueryRequestDTO normalizeBlacklistQueryRequestDTO(final BlacklistQueryRequestDTO dto) {
 		logger.debug("normalizeBlacklistQueryRequestDTO started...");
-		Assert.notNull(dto, "normalizeBlacklistQueryRequestDTO is null");
 		
 		if (dto == null) {
 			return new BlacklistQueryRequestDTO(null, null, null, null, null, null, null);
@@ -62,6 +62,12 @@ public class ManagementNormalization {
 				dto.reason(),
 				// alives at
 				Utilities.isEmpty(dto.alivesAt()) ? "" : dto.alivesAt().trim());
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	public List<String> normalizeSystemNames(final List<String> names) {
+		logger.debug("normalizeSystemNames started...");
+		return names.stream().map(n -> nameNormalizer.normalize(n)).collect(Collectors.toList());
 	}
 	
 	//=================================================================================================

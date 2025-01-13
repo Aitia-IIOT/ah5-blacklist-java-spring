@@ -3,6 +3,7 @@ package eu.arrowhead.blacklist.service.validation;
 import java.time.DateTimeException;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
@@ -141,6 +142,19 @@ public class ManagementValidation {
 		}
 	}
 	
+	//-------------------------------------------------------------------------------------------------
+	public void validateSystemNameList(final List<String> names, final String origin) {
+		logger.debug("validateSystemNameList started...");
+		
+		if (Utilities.isEmpty(names)) {
+			throw new InvalidParameterException("System name list is missing or empty", origin);
+		}
+		if (Utilities.containsNullOrEmpty(names)) {
+			throw new InvalidParameterException("System name list contains null or empty element!");
+
+		}
+	}
+	
 	// VALIDATION AND NORMALIZATION
 	
 	//-------------------------------------------------------------------------------------------------
@@ -165,6 +179,15 @@ public class ManagementValidation {
 		final BlacklistQueryRequestDTO normalized = managementNormalizer.normalizeBlacklistQueryRequestDTO(dto);
 		return normalized;
 		
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	public List<String> validateAndNormalizeSystemNameList(final List<String> names, final String origin) {
+		logger.debug("validateAndNormalizeSystemNameList started...");
+		
+		validateSystemNameList(names, origin);
+		final List<String> normalizedNames = managementNormalizer.normalizeSystemNames(names);
+		return normalizedNames;
 	}
 	
 }
