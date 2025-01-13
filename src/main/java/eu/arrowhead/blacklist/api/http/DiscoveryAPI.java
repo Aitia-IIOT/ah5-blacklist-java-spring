@@ -1,7 +1,5 @@
 package eu.arrowhead.blacklist.api.http;
 
-import java.util.Map.Entry;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,8 +65,7 @@ public class DiscoveryAPI {
 
 		final String origin = HttpMethod.GET.name() + " " + BlacklistConstants.HTTP_API_BASE_PATH + BlacklistConstants.HTTP_API_CHECK_PATH;
 
-		//return discoveryService.check(systemName, origin);
-		return false;
+		return discoveryService.check(systemName, origin);
 	}
 	
 	// lookup

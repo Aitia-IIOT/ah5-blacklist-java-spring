@@ -16,7 +16,7 @@ import eu.arrowhead.common.Utilities;
 import eu.arrowhead.common.service.validation.name.NameNormalizer;
 
 @Service
-public class ManagementNormalization {
+public class Normalization {
 	//=================================================================================================
 	// members
 	
@@ -68,6 +68,12 @@ public class ManagementNormalization {
 	public List<String> normalizeSystemNames(final List<String> names) {
 		logger.debug("normalizeSystemNames started...");
 		return names.stream().map(n -> nameNormalizer.normalize(n)).collect(Collectors.toList());
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	public String normalizeSystemName(final String name) {
+		logger.debug("normalizeSystemName started...");
+		return nameNormalizer.normalize(name);
 	}
 	
 	//=================================================================================================

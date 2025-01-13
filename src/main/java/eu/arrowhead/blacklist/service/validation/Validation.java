@@ -17,7 +17,7 @@ import eu.arrowhead.blacklist.service.dto.BlacklistCreateListRequestDTO;
 import eu.arrowhead.blacklist.service.dto.BlacklistCreateRequestDTO;
 import eu.arrowhead.blacklist.service.dto.BlacklistQueryRequestDTO;
 import eu.arrowhead.blacklist.service.dto.enums.Mode;
-import eu.arrowhead.blacklist.service.normalization.ManagementNormalization;
+import eu.arrowhead.blacklist.service.normalization.Normalization;
 import eu.arrowhead.common.Utilities;
 import eu.arrowhead.common.exception.InvalidParameterException;
 import eu.arrowhead.common.service.validation.PageValidator;
@@ -25,7 +25,7 @@ import eu.arrowhead.common.service.validation.name.NameNormalizer;
 import eu.arrowhead.common.service.validation.name.NameValidator;
 
 @Service
-public class ManagementValidation {
+public class Validation {
 	
 	//=================================================================================================
 	// members
@@ -42,7 +42,7 @@ public class ManagementValidation {
 	private PageValidator pageValidator;
 	
 	@Autowired
-	private ManagementNormalization managementNormalizer;
+	private Normalization normalizer;
 	
 	//=================================================================================================
 	// methods
@@ -155,6 +155,15 @@ public class ManagementValidation {
 		}
 	}
 	
+	//-------------------------------------------------------------------------------------------------
+	public void validateSystemName(final String name, final String origin) {
+		logger.debug("validateSystemName started...");
+		
+		if (Utilities.isEmpty(name)) {
+			throw new InvalidParameterException("System name is empty", origin);
+		}
+	}
+	
 	// VALIDATION AND NORMALIZATION
 	
 	//-------------------------------------------------------------------------------------------------
@@ -163,7 +172,7 @@ public class ManagementValidation {
 		
 		validateBlacklistCreateListRequestDTO(dto, origin);
 		
-		final BlacklistCreateListRequestDTO normalized = managementNormalizer.normalizeBlacklistCreateListRequestDTO(dto);
+		final BlacklistCreateListRequestDTO normalized = normalizer.normalizeBlacklistCreateListRequestDTO(dto);
 		
 		normalized.entities().forEach(e -> nameValidator.validateName(e.systemName()));
 		
@@ -176,7 +185,7 @@ public class ManagementValidation {
 		
 		validateBlacklistQueryRequestDTO(dto, origin);
 		
-		final BlacklistQueryRequestDTO normalized = managementNormalizer.normalizeBlacklistQueryRequestDTO(dto);
+		final BlacklistQueryRequestDTO normalized = normalizer.normalizeBlacklistQueryRequestDTO(dto);
 		return normalized;
 		
 	}
@@ -186,8 +195,15 @@ public class ManagementValidation {
 		logger.debug("validateAndNormalizeSystemNameList started...");
 		
 		validateSystemNameList(names, origin);
-		final List<String> normalizedNames = managementNormalizer.normalizeSystemNames(names);
+		final List<String> normalizedNames = normalizer.normalizeSystemNames(names);
 		return normalizedNames;
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	public String validateAndNormalizeSystemName(final String name, final String origin) {
+		logger.debug("validateAndNormalizeSystemName");
+		final String normalizedName = normalizer.normalizeSystemName(name);
+		return normalizedName;
 	}
 	
 }

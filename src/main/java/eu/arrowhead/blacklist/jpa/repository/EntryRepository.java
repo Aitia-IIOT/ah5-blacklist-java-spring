@@ -19,5 +19,8 @@ public interface EntryRepository extends RefreshableRepository<Entry, Long>  {
 	public List<Entry> findAllBySystemNameIn(final List<String> names);
 	
 	//-------------------------------------------------------------------------------------------------
+	public List<Entry> findAllBySystemName(final String name);
+	
+	//-------------------------------------------------------------------------------------------------
 	public Page<Entry> findAllByIdIn(final List<Long> ids, Pageable pageble);
 }

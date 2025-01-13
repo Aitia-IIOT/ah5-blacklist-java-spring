@@ -124,6 +124,37 @@ public class EntryDbService {
 		}
 	}
 	
+	//-------------------------------------------------------------------------------------------------
+	// Returns true, if there is a record with the given system name, the active flag is set, and the expiration date is in the future.
+	public boolean isActiveEntryForName(final String systemName, final String origin) {
+		logger.debug("checkSystemName");
+		Assert.isTrue(!Utilities.isEmpty(systemName), "System name is missing or empty");
+		
+		try {
+			synchronized (LOCK) {
+				
+				// finding entries with the matching system name
+				List<Entry> entries = entryRepo.findAllBySystemName(systemName);
+				if (entries.size() == 0) {
+					return false;
+				}
+				
+				for (Entry entry : entries) {
+					// the active flag has to be set and the expiration date has to be in the future
+					if (entry.getActive() && entry.getExpiresAt().isAfter(ZonedDateTime.now())) {
+						return true;
+					}
+				}
+				return false;
+			}
+		} catch (final Exception ex) {
+			logger.error(ex.getMessage());
+			logger.debug(ex);
+			throw new InternalServerError("Database operation error");
+		}
+		
+	}
+	
 	//=================================================================================================
 	// assistant methods
 	

@@ -18,7 +18,7 @@ import eu.arrowhead.blacklist.service.dto.BlacklistCreateRequestDTO;
 import eu.arrowhead.blacklist.service.dto.BlacklistEntryListResponseDTO;
 import eu.arrowhead.blacklist.service.dto.BlacklistQueryRequestDTO;
 import eu.arrowhead.blacklist.service.dto.DTOConverter;
-import eu.arrowhead.blacklist.service.validation.ManagementValidation;
+import eu.arrowhead.blacklist.service.validation.Validation;
 import eu.arrowhead.common.Constants;
 import eu.arrowhead.common.Utilities;
 import eu.arrowhead.common.exception.InternalServerError;
@@ -34,7 +34,7 @@ public class ManagementService {
 	private final Logger logger = LogManager.getLogger(this.getClass());
 	
 	@Autowired
-	private ManagementValidation managementValidator;
+	private Validation validator;
 	
 	@Autowired
 	private DTOConverter dtoConverter;
@@ -52,7 +52,7 @@ public class ManagementService {
 	public BlacklistEntryListResponseDTO query(final BlacklistQueryRequestDTO dto, final String origin) {
 		logger.debug("ManagementService query started...");
 		
-		final BlacklistQueryRequestDTO normalized = managementValidator.validateAndNormalizeBlacklistQueryRequestDTO(dto, origin);
+		final BlacklistQueryRequestDTO normalized = validator.validateAndNormalizeBlacklistQueryRequestDTO(dto, origin);
 		
 		final PageRequest pageRequest = pageService.getPageRequest(normalized.pagination(), Direction.DESC, Entry.SORTABLE_FIELDS_BY, Entry.DEFAULT_SORT_FIELD, origin);
 		
@@ -77,7 +77,7 @@ public class ManagementService {
 	public BlacklistEntryListResponseDTO create(final BlacklistCreateListRequestDTO dto, final String origin, final String requesterName) {
 		logger.debug("ManagementService create started...");
 		
-		final BlacklistCreateListRequestDTO normalized = managementValidator.validateAndNormalizeBlacklistCreateListRequestDTO(dto, origin);
+		final BlacklistCreateListRequestDTO normalized = validator.validateAndNormalizeBlacklistCreateListRequestDTO(dto, origin);
 		checkSelfBlacklisting(dto.entities(), requesterName, origin);
 		
 		List<Entry> createdEnties;
@@ -96,7 +96,7 @@ public class ManagementService {
 		// only sysop can remove istelf from blacklist
 		checkSysopRemoval(systemNameList, isSysop, origin);
 		
-		final List<String> normalizedList = managementValidator.validateAndNormalizeSystemNameList(systemNameList, origin);
+		final List<String> normalizedList = validator.validateAndNormalizeSystemNameList(systemNameList, origin);
 		try {
 			dbService.unsetActiveByNameList(normalizedList, revokerName, origin);
 		} catch (final InternalServerError ex) {
