@@ -8,6 +8,7 @@ import eu.arrowhead.common.jpa.RefreshableRepository;
 
 @Repository
 public interface EntryRepository extends RefreshableRepository<Entry, Long>  {
+
 	//=================================================================================================
 	// methods
 }

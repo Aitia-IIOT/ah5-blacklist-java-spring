@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import eu.arrowhead.blacklist.BlacklistConstants;
+import eu.arrowhead.blacklist.api.http.utils.SystemNamePreprocessor;
 import eu.arrowhead.blacklist.service.ManagementService;
 import eu.arrowhead.blacklist.service.dto.BlacklistCreateListRequestDTO;
 import eu.arrowhead.blacklist.service.dto.BlacklistEntryListResponseDTO;
@@ -29,6 +31,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping(BlacklistConstants.HTTP_API_MANAGEMENT_PATH)
@@ -40,6 +43,9 @@ public class ManagementAPI {
 
 	@Autowired
 	private ManagementService managementService;
+	
+	@Autowired
+	private SystemNamePreprocessor preprocessor;
 
 	private final Logger logger = LogManager.getLogger(this.getClass());
 
@@ -88,12 +94,13 @@ public class ManagementAPI {
 					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorMessageDTO.class)) })
 	})
 	@PostMapping(path = BlacklistConstants.HTTP_API_CREATE_PATH, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody BlacklistEntryListResponseDTO create(@RequestBody final BlacklistCreateListRequestDTO dto) {
+	public @ResponseBody BlacklistEntryListResponseDTO create(final HttpServletRequest httpServletRequest, @RequestBody final BlacklistCreateListRequestDTO dto) {
 		logger.debug("Create started");
 
 		final String origin = HttpMethod.POST.name() + " " + BlacklistConstants.HTTP_API_MANAGEMENT_PATH + BlacklistConstants.HTTP_API_CREATE_PATH;
-
-		return managementService.create(dto, origin);
+		final String identifiedName = preprocessor.process(httpServletRequest, origin);
+		
+		return managementService.create(dto, origin, identifiedName);
 	}
 	
 	// remove
@@ -118,8 +125,8 @@ public class ManagementAPI {
 
 		final String origin = HttpMethod.DELETE.name() + " " + BlacklistConstants.HTTP_API_MANAGEMENT_PATH + BlacklistConstants.HTTP_API_REMOVE_PATH;
 
-		//return managementService.remove(systemNameList, origin);
-		return null;
+		managementService.remove(systemNameList, origin);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 }
