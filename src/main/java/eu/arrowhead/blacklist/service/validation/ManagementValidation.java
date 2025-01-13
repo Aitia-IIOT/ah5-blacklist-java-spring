@@ -11,11 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import eu.arrowhead.blacklist.BlacklistConstants;
+import eu.arrowhead.blacklist.jpa.entity.Entry;
 import eu.arrowhead.blacklist.service.dto.BlacklistCreateListRequestDTO;
 import eu.arrowhead.blacklist.service.dto.BlacklistCreateRequestDTO;
+import eu.arrowhead.blacklist.service.dto.BlacklistQueryRequestDTO;
+import eu.arrowhead.blacklist.service.dto.enums.Mode;
 import eu.arrowhead.blacklist.service.normalization.ManagementNormalization;
 import eu.arrowhead.common.Utilities;
 import eu.arrowhead.common.exception.InvalidParameterException;
+import eu.arrowhead.common.service.validation.PageValidator;
 import eu.arrowhead.common.service.validation.name.NameNormalizer;
 import eu.arrowhead.common.service.validation.name.NameValidator;
 
@@ -32,6 +36,9 @@ public class ManagementValidation {
 
 	@Autowired
 	private NameValidator nameValidator;
+	
+	@Autowired
+	private PageValidator pageValidator;
 	
 	@Autowired
 	private ManagementNormalization managementNormalizer;
@@ -98,6 +105,42 @@ public class ManagementValidation {
 		}
 	}
 	
+	//-------------------------------------------------------------------------------------------------
+	public void validateBlacklistQueryRequestDTO(final BlacklistQueryRequestDTO dto, final String origin) {
+		logger.debug("validateBlacklistQueryRequestDTO started...");
+		
+		if (dto != null) {
+			// pagination
+			pageValidator.validatePageParameter(dto.pagination(), Entry.SORTABLE_FIELDS_BY, origin);
+			// system names
+			if (!Utilities.isEmpty(dto.systemNames()) && Utilities.containsNullOrEmpty(dto.systemNames())) {
+				throw new InvalidParameterException("System name list contains null or empty element", origin);
+			}
+			// mode
+			if (dto.mode() != null && !(dto.mode() instanceof Mode)) {
+				throw new InvalidParameterException("Mode is invalid. Possible values: " + Mode.values().toString());
+			}
+			// issuers
+			if (!Utilities.isEmpty(dto.issuers()) && Utilities.containsNullOrEmpty(dto.issuers())) {
+				throw new InvalidParameterException("Issuer name list contains null or empty element", origin);
+			}
+			// revokers
+			if (!Utilities.isEmpty(dto.revokers()) && Utilities.containsNullOrEmpty(dto.revokers())) {
+				throw new InvalidParameterException("Revoker name list contains null or empty element", origin);
+			}
+			// reason -> no need to validate
+			// alivesAt
+			if (!Utilities.isEmpty(dto.alivesAt())) {
+				ZonedDateTime alivesAt = null;
+				try {
+					alivesAt = Utilities.parseUTCStringToZonedDateTime(dto.alivesAt());
+				} catch (final DateTimeException ex) {
+					throw new InvalidParameterException("Alives at date has an invalid time format, UTC string expected (example: 2024-10-11T14:30:00Z)", origin);
+				}
+			}
+		}
+	}
+	
 	// VALIDATION AND NORMALIZATION
 	
 	//-------------------------------------------------------------------------------------------------
@@ -112,4 +155,16 @@ public class ManagementValidation {
 		
 		return normalized;
 	}
+	
+	//-------------------------------------------------------------------------------------------------
+	public BlacklistQueryRequestDTO validateAndNormalizeBlacklistQueryRequestDTO(final BlacklistQueryRequestDTO dto, final String origin) {
+		logger.debug("validateAndNormalizeBlacklistQueryRequestDTO started...");
+		
+		validateBlacklistQueryRequestDTO(dto, origin);
+		
+		final BlacklistQueryRequestDTO normalized = managementNormalizer.normalizeBlacklistQueryRequestDTO(dto);
+		return normalized;
+		
+	}
+	
 }

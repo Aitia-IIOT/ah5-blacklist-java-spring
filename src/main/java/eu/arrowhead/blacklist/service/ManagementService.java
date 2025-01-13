@@ -5,6 +5,9 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -18,6 +21,7 @@ import eu.arrowhead.blacklist.service.dto.DTOConverter;
 import eu.arrowhead.blacklist.service.validation.ManagementValidation;
 import eu.arrowhead.common.Utilities;
 import eu.arrowhead.common.exception.InvalidParameterException;
+import eu.arrowhead.common.service.PageService;
 
 @Service
 public class ManagementService {
@@ -36,6 +40,9 @@ public class ManagementService {
 	@Autowired
 	private EntryDbService dbService;
 	
+	@Autowired
+	private PageService pageService;
+	
 	//=================================================================================================
 	// methods
 	
@@ -43,9 +50,19 @@ public class ManagementService {
 	public BlacklistEntryListResponseDTO query(final BlacklistQueryRequestDTO dto, final String origin) {
 		logger.debug("ManagementService query started...");
 		
-		//TODO 
+		BlacklistQueryRequestDTO normalized = managementValidator.validateAndNormalizeBlacklistQueryRequestDTO(dto, origin);
 		
-		return null;
+		final PageRequest pageRequest = pageService.getPageRequest(normalized.pagination(), Direction.DESC, Entry.SORTABLE_FIELDS_BY, Entry.DEFAULT_SORT_FIELD, origin);
+		Page<Entry> matchingEnties = dbService.getPageByFilters(
+				pageRequest, 
+				normalized.systemNames(),
+				normalized.mode(),
+				normalized.issuers(),
+				normalized.revokers(),
+				normalized.reason(),
+				Utilities.parseUTCStringToZonedDateTime(normalized.alivesAt())
+				);
+		return dtoConverter.convertEntriesToBlacklistEntryListResponseDTO(matchingEnties.toList(), matchingEnties.getTotalElements());
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -56,7 +73,7 @@ public class ManagementService {
 		checkSelfBlacklisting(dto.entities(), requesterName, origin);
 		
 		List<Entry> createdEnties = dbService.createBulk(normalized.entities(), requesterName);
-		return dtoConverter.convertEntryListToBlacklistEntryListResponseDTO(createdEnties);
+		return dtoConverter.convertEntriesToBlacklistEntryListResponseDTO(createdEnties, createdEnties.size());
 	}
 	
 	//-------------------------------------------------------------------------------------------------

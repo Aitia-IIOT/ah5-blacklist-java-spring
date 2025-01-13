@@ -21,7 +21,7 @@ public class DTOConverter {
 	// methods
 
 	//-------------------------------------------------------------------------------------------------
-	public BlacklistEntryListResponseDTO convertEntryListToBlacklistEntryListResponseDTO(final List<Entry> entryList) {
+	public BlacklistEntryListResponseDTO convertEntriesToBlacklistEntryListResponseDTO(final List<Entry> entryList, final long count) {
 		logger.debug("convertEntryListToBlacklistEntryListResponseDTO started...");
 		
 		if (entryList == null) { 
@@ -50,7 +50,7 @@ public class DTOConverter {
 						e.getActive()
 						))
 				.collect(Collectors.toList()),
-				entryList.size());
+				count);
 		
 	}
 }
