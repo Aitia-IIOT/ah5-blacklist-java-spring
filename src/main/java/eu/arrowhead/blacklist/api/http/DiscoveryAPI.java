@@ -90,8 +90,8 @@ public class DiscoveryAPI {
 
 		final String origin = HttpMethod.GET.name() + " " + BlacklistConstants.HTTP_API_BASE_PATH + BlacklistConstants.HTTP_API_LOOKUP_PATH;
 		final String identifiedName = preprocessor.process(httpServletRequest, origin);
-		//return discoveryService.lookup(identifiedName, origin);
-		return null;
+		
+		return discoveryService.lookup(identifiedName, origin);
 	}
 
 }

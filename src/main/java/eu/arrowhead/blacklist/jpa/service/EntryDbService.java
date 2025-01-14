@@ -70,7 +70,7 @@ public class EntryDbService {
 			// With filters
 			if (entries == null) {
 				synchronized (LOCK) {
-					List<Long> matchingIDs = new ArrayList<>();
+					final List<Long> matchingIDs = new ArrayList<>();
 					final List<Entry> toFilter = Utilities.isEmpty(systemNames) ? entryRepo.findAll() : entryRepo.findAllBySystemNameIn(systemNames);
 					for (final Entry entry : toFilter) {
 						if (mode != null && !modeMatch(mode, entry.getActive())) {
@@ -111,7 +111,7 @@ public class EntryDbService {
 		try {
 			synchronized (LOCK) {
 				final List<Entry> toInactivate = entryRepo.findAllBySystemNameIn(names).stream().filter(Entry::getActive).collect(Collectors.toList());
-				for (Entry entry : toInactivate) {
+				for (final Entry entry : toInactivate) {
 					entry.setActive(false);
 					entry.setRevokedBy(revokerName);
 				}
@@ -127,25 +127,51 @@ public class EntryDbService {
 	//-------------------------------------------------------------------------------------------------
 	// Returns true, if there is a record with the given system name, the active flag is set, and the expiration date is in the future.
 	public boolean isActiveEntryForName(final String systemName, final String origin) {
-		logger.debug("checkSystemName");
+		logger.debug("isActiveEntryForName, name: {}", systemName);
 		Assert.isTrue(!Utilities.isEmpty(systemName), "System name is missing or empty");
 		
 		try {
 			synchronized (LOCK) {
 				
-				// finding entries with the matching system name
-				List<Entry> entries = entryRepo.findAllBySystemName(systemName);
+				// finding the matching system name
+				final List<Entry> entries = entryRepo.findAllBySystemName(systemName);
 				if (entries.size() == 0) {
 					return false;
 				}
 				
-				for (Entry entry : entries) {
-					// the active flag has to be set and the expiration date has to be in the future
-					if (entry.getActive() && entry.getExpiresAt().isAfter(ZonedDateTime.now())) {
+				for (final Entry entry : entries) {
+					// check if there is an active and not expired record
+					if (entry.getActive() && !isExpired(entry)) {
 						return true;
 					}
 				}
 				return false;
+			}
+		} catch (final Exception ex) {
+			logger.error(ex.getMessage());
+			logger.debug(ex);
+			throw new InternalServerError("Database operation error");
+		}
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	public List<Entry> getActiveEntriesForName(final String systemName, final String origin) {
+		logger.debug("getActiveEntriesForName, name: {}", systemName);
+		Assert.isTrue(!Utilities.isEmpty(systemName), "System name is missing or empty");
+		
+		try {
+			synchronized (LOCK) {
+				// finding entries with the matching system name
+				List<Entry> entries = entryRepo.findAllBySystemName(systemName);
+				List<Entry> activeEntries = new ArrayList<>();
+				
+				for (Entry entry : entries) {
+					// finding the active entries
+					if (entry.getActive() && !isExpired(entry)) {
+						activeEntries.add(entry);
+					}
+				}
+				return activeEntries;
 			}
 		} catch (final Exception ex) {
 			logger.error(ex.getMessage());
@@ -190,6 +216,12 @@ public class EntryDbService {
 			default:
 				return true;
 		}
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	// Returns true, if the expiration date is not null and it is in the past
+	private boolean isExpired(final Entry entry) {
+		return entry.getExpiresAt() != null && entry.getExpiresAt().isBefore(ZonedDateTime.now());
 	}
 
 }
