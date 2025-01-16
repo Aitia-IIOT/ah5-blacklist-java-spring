@@ -30,4 +30,8 @@ public class BlacklistConstants {
 	public static final int SYSTEM_NAME_LENGTH = ArrowheadEntity.VARCHAR_SMALL;
 	public static final int REASON_LENGTH = ArrowheadEntity.VARCHAR_LARGE;
 	
+	// Blacklist parameters
+	public static final String WHITELIST = "whitelist";
+	public static final String $WHITELIST_WD = "#{'${" + WHITELIST + "}'.split(',')}";
+	
 }
