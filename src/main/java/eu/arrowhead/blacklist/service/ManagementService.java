@@ -1,20 +1,17 @@
 package eu.arrowhead.blacklist.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import eu.arrowhead.blacklist.BlacklistConstants;
 import eu.arrowhead.blacklist.jpa.entity.Entry;
 import eu.arrowhead.blacklist.jpa.service.EntryDbService;
 import eu.arrowhead.blacklist.service.dto.BlacklistCreateListRequestDTO;
@@ -49,8 +46,8 @@ public class ManagementService {
 	@Autowired
 	private PageService pageService;
 	
-	@Value(BlacklistConstants.$WHITELIST_WD)
-	private List<String> whitelist;
+	@Autowired
+	private WhitelistService whitelistService;
 	
 	//=================================================================================================
 	// methods
@@ -87,7 +84,7 @@ public class ManagementService {
 		final BlacklistCreateListRequestDTO normalizedDto = validator.validateAndNormalizeBlacklistCreateListRequestDTO(dto, origin);
 		final String normalizedRequesterName = validator.validateAndNormalizeSystemName(requesterName, origin);
 		checkSelfBlacklisting(normalizedDto.entities(), normalizedRequesterName, origin);
-		checkWhitelist(normalizedDto.entities().stream().map(e -> e.systemName()).collect(Collectors.toList()), origin);
+		whitelistService.checkWhitelist(normalizedDto.entities().stream().map(e -> e.systemName()).collect(Collectors.toList()), origin);
 		List<Entry> createdEnties;
 		try {
 			createdEnties = dbService.createBulk(normalizedDto.entities(), normalizedRequesterName);
@@ -133,22 +130,6 @@ public class ManagementService {
 		Assert.notNull(names, "System name list is null!");
 		if (names.contains(Constants.SYSOP) && !isSysop) {
 			throw new InvalidParameterException("Only sysop can remove itself from the blacklist!", origin);
-		}
-	}
-	
-	//-------------------------------------------------------------------------------------------------
-	private void checkWhitelist(final List<String> names, final String origin) {
-		
-		List<String> namesOnWhitelist = new ArrayList<>();
-		
-		for (final String name : names) {
-			if (whitelist.contains(name)) {
-				namesOnWhitelist.add(name);
-			}
-		}
-		
-		if (!namesOnWhitelist.isEmpty()) {
-			throw new InvalidParameterException("The following system names cannod be added, because they are on the whitelist: " + namesOnWhitelist.stream().collect(Collectors.joining(", ")), origin);
 		}
 	}
 }
