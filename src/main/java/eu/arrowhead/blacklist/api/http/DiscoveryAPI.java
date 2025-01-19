@@ -59,11 +59,11 @@ public class DiscoveryAPI {
 			@ApiResponse(responseCode = Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR, description = Constants.SWAGGER_HTTP_500_MESSAGE, content = {
 					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorMessageDTO.class)) })
 	})
-	@GetMapping(path = BlacklistConstants.HTTP_API_CHECK_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = BlacklistConstants.HTTP_API_OP_CHECK_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
 	public boolean check(@PathVariable(required = true) final String systemName) {
 		logger.debug("Check started for {}", systemName);
 
-		final String origin = HttpMethod.GET.name() + " " + BlacklistConstants.HTTP_API_BASE_PATH + BlacklistConstants.HTTP_API_CHECK_PATH;
+		final String origin = HttpMethod.GET.name() + " " + BlacklistConstants.HTTP_API_BASE_PATH + BlacklistConstants.HTTP_API_OP_CHECK_PATH;
 
 		return discoveryService.check(systemName, origin);
 	}
@@ -84,11 +84,11 @@ public class DiscoveryAPI {
 			@ApiResponse(responseCode = Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR, description = Constants.SWAGGER_HTTP_500_MESSAGE, content = {
 					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorMessageDTO.class)) })
 	})
-	@GetMapping(path = BlacklistConstants.HTTP_API_LOOKUP_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = BlacklistConstants.HTTP_API_OP_LOOKUP, produces = MediaType.APPLICATION_JSON_VALUE)
 	public BlacklistEntryListResponseDTO lookup(final HttpServletRequest httpServletRequest) {
 		logger.debug("Lookup started");
 
-		final String origin = HttpMethod.GET.name() + " " + BlacklistConstants.HTTP_API_BASE_PATH + BlacklistConstants.HTTP_API_LOOKUP_PATH;
+		final String origin = HttpMethod.GET.name() + " " + BlacklistConstants.HTTP_API_BASE_PATH + BlacklistConstants.HTTP_API_OP_LOOKUP;
 		final String identifiedName = preprocessor.process(httpServletRequest, origin);
 		
 		return discoveryService.lookup(identifiedName, origin);

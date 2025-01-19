@@ -72,11 +72,11 @@ public class ManagementAPI {
 			@ApiResponse(responseCode = Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR, description = Constants.SWAGGER_HTTP_500_MESSAGE, content = {
 					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorMessageDTO.class)) })
 	})
-	@PostMapping(path = BlacklistConstants.HTTP_API_QUERY_PATH, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(path = BlacklistConstants.HTTP_API_OP_QUERY, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody BlacklistEntryListResponseDTO query(@RequestBody final BlacklistQueryRequestDTO dto) {
 		logger.debug("query started");
 
-		final String origin = HttpMethod.POST.name() + " " + BlacklistConstants.HTTP_API_MANAGEMENT_PATH + BlacklistConstants.HTTP_API_QUERY_PATH;
+		final String origin = HttpMethod.POST.name() + " " + BlacklistConstants.HTTP_API_MANAGEMENT_PATH + BlacklistConstants.HTTP_API_OP_QUERY;
 
 		return managementService.query(dto, origin);
 	}
@@ -97,11 +97,11 @@ public class ManagementAPI {
 			@ApiResponse(responseCode = Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR, description = Constants.SWAGGER_HTTP_500_MESSAGE, content = {
 					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorMessageDTO.class)) })
 	})
-	@PostMapping(path = BlacklistConstants.HTTP_API_CREATE_PATH, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(path = BlacklistConstants.HTTP_API_OP_CREATE, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody BlacklistEntryListResponseDTO create(final HttpServletRequest httpServletRequest, @RequestBody final BlacklistCreateListRequestDTO dto) {
 		logger.debug("Create started");
 
-		final String origin = HttpMethod.POST.name() + " " + BlacklistConstants.HTTP_API_MANAGEMENT_PATH + BlacklistConstants.HTTP_API_CREATE_PATH;
+		final String origin = HttpMethod.POST.name() + " " + BlacklistConstants.HTTP_API_MANAGEMENT_PATH + BlacklistConstants.HTTP_API_OP_CREATE;
 		final String identifiedName = systemNamepreprocessor.process(httpServletRequest, origin);
 		
 		return managementService.create(dto, origin, identifiedName);
@@ -123,11 +123,11 @@ public class ManagementAPI {
 			@ApiResponse(responseCode = Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR, description = Constants.SWAGGER_HTTP_500_MESSAGE, content = {
 					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorMessageDTO.class)) })
 	})
-	@DeleteMapping(path = BlacklistConstants.HTTP_API_REMOVE_PATH)
+	@DeleteMapping(path = BlacklistConstants.HTTP_API_OP_REMOVE_PATH)
 	public ResponseEntity<Void> remove(final HttpServletRequest httpServletRequest, @PathVariable final List<String> systemNameList) {
 		logger.debug("remove started");
 
-		final String origin = HttpMethod.DELETE.name() + " " + BlacklistConstants.HTTP_API_MANAGEMENT_PATH + BlacklistConstants.HTTP_API_REMOVE_PATH;
+		final String origin = HttpMethod.DELETE.name() + " " + BlacklistConstants.HTTP_API_MANAGEMENT_PATH + BlacklistConstants.HTTP_API_OP_REMOVE_PATH;
 		final boolean isSysop = isSysopPreprocessor.process(httpServletRequest, origin);
 		final String revokerName = systemNamepreprocessor.process(httpServletRequest, origin);
 		managementService.remove(systemNameList, isSysop, revokerName, origin);

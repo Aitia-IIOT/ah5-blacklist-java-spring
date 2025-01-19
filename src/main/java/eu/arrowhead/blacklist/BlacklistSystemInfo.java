@@ -40,12 +40,12 @@ public class BlacklistSystemInfo extends SystemInfo {
 		
 		final HttpOperationModel check = new HttpOperationModel.Builder()
 				.method(HttpMethod.GET.name())
-				.path(BlacklistConstants.HTTP_API_CHECK_PATH)
+				.path(BlacklistConstants.HTTP_API_OP_CHECK)
 				.build();
 		
 		final HttpOperationModel lookup = new HttpOperationModel.Builder()
 				.method(HttpMethod.GET.name())
-				.path(BlacklistConstants.HTTP_API_LOOKUP_PATH)
+				.path(BlacklistConstants.HTTP_API_OP_LOOKUP)
 				.build();
 
 		final HttpInterfaceModel discovery_interface = new HttpInterfaceModel.Builder(templateName, getDomainAddress(), getServerPort())
@@ -65,17 +65,17 @@ public class BlacklistSystemInfo extends SystemInfo {
 		
 		final HttpOperationModel query = new HttpOperationModel.Builder()
 				.method(HttpMethod.POST.name())
-				.path(BlacklistConstants.HTTP_API_QUERY_PATH)
+				.path(BlacklistConstants.HTTP_API_OP_QUERY)
 				.build();
 		
 		final HttpOperationModel create = new HttpOperationModel.Builder()
 				.method(HttpMethod.POST.name())
-				.path(BlacklistConstants.HTTP_API_CREATE_PATH)
+				.path(BlacklistConstants.HTTP_API_OP_CREATE)
 				.build();
 		
 		final HttpOperationModel remove = new HttpOperationModel.Builder()
 				.method(HttpMethod.DELETE.name())
-				.path(BlacklistConstants.HTTP_API_REMOVE_PATH)
+				.path(BlacklistConstants.HTTP_API_OP_REMOVE)
 				.build();
 
 		final HttpInterfaceModel management_interface = new HttpInterfaceModel.Builder(templateName, getDomainAddress(), getServerPort())

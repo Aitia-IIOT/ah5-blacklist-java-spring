@@ -127,7 +127,7 @@ public class EntryDbService {
 	//-------------------------------------------------------------------------------------------------
 	// Returns true, if there is a record with the given system name, the active flag is set, and the expiration date is in the future.
 	public boolean isActiveEntryForName(final String systemName, final String origin) {
-		logger.debug("isActiveEntryForName, name: {}", systemName);
+		logger.debug("isActiveEntryForName started, name: {}", systemName);
 		Assert.isTrue(!Utilities.isEmpty(systemName), "System name is missing or empty");
 		
 		try {
