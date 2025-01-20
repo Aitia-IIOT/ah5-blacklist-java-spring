@@ -88,7 +88,7 @@ public class BlacklistSystemInfo extends SystemInfo {
 		final ServiceModel management = new ServiceModel.Builder()
 				.serviceDefinition(Constants.SERVICE_DEF_BLACKLIST_MANAGEMENT)
 				.version(BlacklistConstants.VERSION_MANAGEMENT)
-				.metadata(BlacklistConstants.METADATA_KEY_UNRESTRICTED_DISCOVERY, true)
+				.metadata(BlacklistConstants.METADATA_KEY_UNRESTRICTED_DISCOVERY, false)
 				.serviceInterface(management_interface)
 				.build();
 		
