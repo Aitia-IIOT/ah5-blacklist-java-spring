@@ -57,7 +57,6 @@ public class ManagementAPI {
 	// methods
 
 	// query
-	//POST /mgmt/query BlacklistQueryRequestDTO -> BlacklistEntryListResponseDTO
 	//-------------------------------------------------------------------------------------------------
 	@Operation(summary = "Returns the blacklist entries that match various filters specified by the requester")
 	@ApiResponses(value = {
@@ -82,7 +81,6 @@ public class ManagementAPI {
 	}
 
 	// create
-	// POST /mgmt/create BlacklistCreateListRequestDTO -> BlacklistEntryListResponseDTO
 	//-------------------------------------------------------------------------------------------------
 	@Operation(summary = "Adds new entries to the blacklist.")
 	@ApiResponses(value = {
@@ -108,7 +106,6 @@ public class ManagementAPI {
 	}
 
 	// remove
-	// DELETE /mgmt/remove String list as query param
 	//-------------------------------------------------------------------------------------------------
 	@Operation(summary = "Inactivates the entries that apply to the systems with the specified names")
 	@ApiResponses(value = {

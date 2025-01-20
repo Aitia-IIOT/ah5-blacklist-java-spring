@@ -44,7 +44,6 @@ public class DiscoveryAPI {
 	// methods
 
 	// check
-	// GET /check/{systemname} -> boolean
 	//-------------------------------------------------------------------------------------------------
 	@Operation(summary = "Returns if the specified system name is on the blacklist (boolean value)")
 	@ApiResponses(value = {
@@ -69,7 +68,6 @@ public class DiscoveryAPI {
 	}
 
 	// lookup
-	// GET /lookup -> BlacklistEntryListResponseDTO
 	//-------------------------------------------------------------------------------------------------
 	@Operation(summary = "Returns the active blacklist entries of the requester")
 	@ApiResponses(value = {
