@@ -28,42 +28,42 @@ import eu.arrowhead.common.service.PageService;
 
 @Service
 public class ManagementService {
-	
+
 	//=================================================================================================
 	// members
-	
+
 	private final Logger logger = LogManager.getLogger(this.getClass());
-	
+
 	@Autowired
 	private Validation validator;
-	
+
 	@Autowired
 	private DTOConverter dtoConverter;
-	
+
 	@Autowired
 	private EntryDbService dbService;
-	
+
 	@Autowired
 	private PageService pageService;
-	
+
 	@Autowired
 	private WhitelistService whitelistService;
-	
+
 	//=================================================================================================
 	// methods
-	
+
 	//-------------------------------------------------------------------------------------------------
 	public BlacklistEntryListResponseDTO query(final BlacklistQueryRequestDTO dto, final String origin) {
 		logger.debug("ManagementService query started...");
-		
+
 		final BlacklistQueryRequestDTO normalized = validator.validateAndNormalizeBlacklistQueryRequestDTO(dto, origin);
-		
+
 		final PageRequest pageRequest = pageService.getPageRequest(normalized.pagination(), Direction.DESC, Entry.SORTABLE_FIELDS_BY, Entry.DEFAULT_SORT_FIELD, origin);
-		
+
 		Page<Entry> matchingEnties;
 		try {
 			matchingEnties = dbService.getPageByFilters(
-					pageRequest, 
+					pageRequest,
 					normalized.systemNames(),
 					normalized.mode(),
 					normalized.issuers(),
@@ -76,11 +76,11 @@ public class ManagementService {
 		}
 		return dtoConverter.convertEntriesToBlacklistEntryListResponseDTO(matchingEnties.toList(), matchingEnties.getTotalElements());
 	}
-	
+
 	//-------------------------------------------------------------------------------------------------
 	public BlacklistEntryListResponseDTO create(final BlacklistCreateListRequestDTO dto, final String origin, final String requesterName) {
 		logger.debug("ManagementService create started...");
-		
+
 		final BlacklistCreateListRequestDTO normalizedDto = validator.validateAndNormalizeBlacklistCreateListRequestDTO(dto, origin);
 		final String normalizedRequesterName = validator.validateAndNormalizeSystemName(requesterName, origin);
 		checkSelfBlacklisting(normalizedDto.entities(), normalizedRequesterName, origin);
@@ -93,14 +93,14 @@ public class ManagementService {
 		}
 		return dtoConverter.convertEntriesToBlacklistEntryListResponseDTO(createdEnties, createdEnties.size());
 	}
-	
+
 	//-------------------------------------------------------------------------------------------------
 	public void remove(final List<String> systemNameList, final boolean isSysop, final String revokerName, final String origin) {
 		logger.debug("ManagementService remove started...");
-		
+
 		// only sysop can remove istelf from blacklist
 		checkSysopRemoval(systemNameList, isSysop, origin);
-		
+
 		final List<String> normalizedList = validator.validateAndNormalizeSystemNameList(systemNameList, origin);
 		final String normalizedRevokerName = validator.validateAndNormalizeSystemName(revokerName, origin);
 		try {
@@ -109,22 +109,22 @@ public class ManagementService {
 			throw new InternalServerError(ex.getMessage(), origin);
 		}
 	}
-	
+
 	//=================================================================================================
 	// assistant methods
-	
+
 	//-------------------------------------------------------------------------------------------------
 	private void checkSelfBlacklisting(final List<BlacklistCreateRequestDTO> candidates, final String requesterName, final String origin) {
 		Assert.notNull(candidates, "Candidates is null!");
 		Assert.isTrue(!Utilities.containsNull(candidates), "Candidate list contains null element!");
-		
+
 		for (final BlacklistCreateRequestDTO candidate : candidates) {
 			if (candidate.systemName().equals(requesterName)) {
 				throw new InvalidParameterException("It is not allowed to add yourself to the blacklist!", origin);
 			}
 		}
 	}
-	
+
 	//-------------------------------------------------------------------------------------------------
 	private void checkSysopRemoval(final List<String> names, final boolean isSysop, final String origin) {
 		Assert.notNull(names, "System name list is null!");

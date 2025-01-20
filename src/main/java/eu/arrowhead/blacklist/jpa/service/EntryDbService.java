@@ -21,24 +21,24 @@ import eu.arrowhead.common.exception.InternalServerError;
 
 @Service
 public class EntryDbService {
-	
+
 	//=================================================================================================
 	// members
-	
+
 	@Autowired
 	private EntryRepository entryRepo;
-	
+
 	private final Logger logger = LogManager.getLogger(this.getClass());
-	
+
 	private static final Object LOCK = new Object();
-	
+
 	//=================================================================================================
 	// methods
-	
+
 	//-------------------------------------------------------------------------------------------------
 	public List<Entry> createBulk(final List<BlacklistCreateRequestDTO> candidates, final String requesterName) {
 		logger.debug("createBulk started...");
-		
+
 		try {
 			return entryRepo.saveAllAndFlush(createEntriesFromDTOs(candidates, requesterName));
 		} catch (final Exception ex) {
@@ -47,26 +47,26 @@ public class EntryDbService {
 			throw new InternalServerError("Database operation error");
 		}
 	}
-	
+
 	//-------------------------------------------------------------------------------------------------
-	public Page<Entry> getPageByFilters(final PageRequest pagination, final List<String> systemNames, final Mode mode, 
+	public Page<Entry> getPageByFilters(final PageRequest pagination, final List<String> systemNames, final Mode mode,
 			final List<String> issuers, final List<String> revokers, final String reason, final ZonedDateTime alivesAt) {
 		logger.debug("getByFilters started...");
 		Assert.notNull(pagination, "page is null");
-		
+
 		try {
 			Page<Entry> entries = null;
-			
+
 			// Without filters
 			if (Utilities.isEmpty(systemNames)
 					&& mode == null
 					&& Utilities.isEmpty(issuers)
 					&& Utilities.isEmpty(revokers)
 					&& Utilities.isEmpty(reason)
-					&& alivesAt == null){
+					&& alivesAt == null) {
 				entries = entryRepo.findAll(pagination);
 			}
-			
+
 			// With filters
 			if (entries == null) {
 				synchronized (LOCK) {
@@ -89,25 +89,25 @@ public class EntryDbService {
 						if (entry.getExpiresAt() != null && alivesAt != null && !(alivesAt.isBefore(entry.getExpiresAt()) || alivesAt.isEqual(entry.getExpiresAt()))) {
 							continue;
 						}
-						
+
 						matchingIDs.add(entry.getId());
 					}
 					entries = entryRepo.findAllByIdIn(matchingIDs, pagination);
 				}
 			}
-			return entries;	
+			return entries;
 		} catch (final Exception ex) {
 			logger.error(ex.getMessage());
 			logger.debug(ex);
 			throw new InternalServerError("Database operation error");
 		}
 	}
-	
+
 	//-------------------------------------------------------------------------------------------------
 	public void unsetActiveByNameList(final List<String> names, final String revokerName, final String origin) {
 		logger.debug("unsetActiveByNameList started...");
 		Assert.isTrue(!Utilities.isEmpty(names), "System name list is missing or empty");
-		
+
 		try {
 			synchronized (LOCK) {
 				final List<Entry> toInactivate = entryRepo.findAllBySystemNameIn(names).stream().filter(Entry::getActive).collect(Collectors.toList());
@@ -123,22 +123,22 @@ public class EntryDbService {
 			throw new InternalServerError("Database operation error");
 		}
 	}
-	
+
 	//-------------------------------------------------------------------------------------------------
 	// Returns true, if there is a record with the given system name, the active flag is set, and the expiration date is in the future.
 	public boolean isActiveEntryForName(final String systemName, final String origin) {
 		logger.debug("isActiveEntryForName started, name: {}", systemName);
 		Assert.isTrue(!Utilities.isEmpty(systemName), "System name is missing or empty");
-		
+
 		try {
 			synchronized (LOCK) {
-				
+
 				// finding the matching system name
 				final List<Entry> entries = entryRepo.findAllBySystemName(systemName);
 				if (entries.size() == 0) {
 					return false;
 				}
-				
+
 				for (final Entry entry : entries) {
 					// check if there is an active and not expired record
 					if (entry.getActive() && !isExpired(entry)) {
@@ -153,18 +153,18 @@ public class EntryDbService {
 			throw new InternalServerError("Database operation error");
 		}
 	}
-	
+
 	//-------------------------------------------------------------------------------------------------
 	public List<Entry> getActiveEntriesForName(final String systemName, final String origin) {
 		logger.debug("getActiveEntriesForName, name: {}", systemName);
 		Assert.isTrue(!Utilities.isEmpty(systemName), "System name is missing or empty");
-		
+
 		try {
 			synchronized (LOCK) {
 				// finding entries with the matching system name
 				List<Entry> entries = entryRepo.findAllBySystemName(systemName);
 				List<Entry> activeEntries = new ArrayList<>();
-				
+
 				for (Entry entry : entries) {
 					// finding the active entries
 					if (entry.getActive() && !isExpired(entry)) {
@@ -178,12 +178,12 @@ public class EntryDbService {
 			logger.debug(ex);
 			throw new InternalServerError("Database operation error");
 		}
-		
+
 	}
-	
+
 	//=================================================================================================
 	// assistant methods
-	
+
 	//-------------------------------------------------------------------------------------------------
 	private List<Entry> createEntriesFromDTOs(final List<BlacklistCreateRequestDTO> candidates, final String requesterName) {
 		return candidates
@@ -204,7 +204,7 @@ public class EntryDbService {
 						))
 				.collect(Collectors.toList());
 	}
-	
+
 	//-------------------------------------------------------------------------------------------------
 	// Returns true, if the record activity state matches the filtering mode
 	private boolean modeMatch(final Mode mode, final boolean active) {
@@ -217,7 +217,7 @@ public class EntryDbService {
 				return true;
 		}
 	}
-	
+
 	//-------------------------------------------------------------------------------------------------
 	// Returns true, if the expiration date is not null and it is in the past
 	private boolean isExpired(final Entry entry) {

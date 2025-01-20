@@ -15,12 +15,12 @@ import eu.arrowhead.common.model.SystemModel;
 
 @Component
 public class BlacklistSystemInfo extends SystemInfo {
-	
+
 	//=================================================================================================
 	// members
-	
+
 	private SystemModel systemModel;
-	
+
 	//=================================================================================================
 	// methods
 
@@ -33,16 +33,16 @@ public class BlacklistSystemInfo extends SystemInfo {
 	//-------------------------------------------------------------------------------------------------
 	@Override
 	public List<ServiceModel> getServices() {
-		
+
 		final String templateName = getSslProperties().isSslEnabled() ? Constants.GENERIC_HTTPS_INTERFACE_TEMPLATE_NAME : Constants.GENERIC_HTTP_INTERFACE_TEMPLATE_NAME;
 
 		// discovery
-		
+
 		final HttpOperationModel check = new HttpOperationModel.Builder()
 				.method(HttpMethod.GET.name())
 				.path(BlacklistConstants.HTTP_API_OP_CHECK)
 				.build();
-		
+
 		final HttpOperationModel lookup = new HttpOperationModel.Builder()
 				.method(HttpMethod.GET.name())
 				.path(BlacklistConstants.HTTP_API_OP_LOOKUP)
@@ -53,26 +53,26 @@ public class BlacklistSystemInfo extends SystemInfo {
 				.operation(Constants.SERVICE_OP_CHECK, check)
 				.operation(Constants.SERVICE_OP_LOOKUP, lookup)
 				.build();
-		
+
 		final ServiceModel discovery = new ServiceModel.Builder()
-				.serviceDefinition(Constants.SERVICE_DEF_BLACKLIST_DISCOVERY) 
+				.serviceDefinition(Constants.SERVICE_DEF_BLACKLIST_DISCOVERY)
 				.version(BlacklistConstants.VERSION_DISCOVERY)
 				.metadata(BlacklistConstants.METADATA_KEY_UNRESTRICTED_DISCOVERY, true)
 				.serviceInterface(discovery_interface)
 				.build();
 
 		// management
-		
+
 		final HttpOperationModel query = new HttpOperationModel.Builder()
 				.method(HttpMethod.POST.name())
 				.path(BlacklistConstants.HTTP_API_OP_QUERY)
 				.build();
-		
+
 		final HttpOperationModel create = new HttpOperationModel.Builder()
 				.method(HttpMethod.POST.name())
 				.path(BlacklistConstants.HTTP_API_OP_CREATE)
 				.build();
-		
+
 		final HttpOperationModel remove = new HttpOperationModel.Builder()
 				.method(HttpMethod.DELETE.name())
 				.path(BlacklistConstants.HTTP_API_OP_REMOVE)
@@ -84,14 +84,14 @@ public class BlacklistSystemInfo extends SystemInfo {
 				.operation(Constants.SERVICE_OP_BLACKLIST_CREATE, create)
 				.operation(Constants.SERVICE_OP_BLACKLIST_REMOVE, remove)
 				.build();
-		
+
 		final ServiceModel management = new ServiceModel.Builder()
 				.serviceDefinition(Constants.SERVICE_DEF_BLACKLIST_MANAGEMENT)
 				.version(BlacklistConstants.VERSION_MANAGEMENT)
 				.metadata(BlacklistConstants.METADATA_KEY_UNRESTRICTED_DISCOVERY, false)
 				.serviceInterface(management_interface)
 				.build();
-		
+
 		return List.of(discovery, management);
 	}
 

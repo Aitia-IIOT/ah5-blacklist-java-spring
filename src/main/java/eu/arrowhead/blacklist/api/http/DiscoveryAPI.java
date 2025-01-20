@@ -28,13 +28,13 @@ import jakarta.servlet.http.HttpServletRequest;
 @RequestMapping(BlacklistConstants.HTTP_API_BASE_PATH)
 @SecurityRequirement(name = Constants.SECURITY_REQ_AUTHORIZATION)
 public class DiscoveryAPI {
-	
+
 	//=================================================================================================
 	// members
 
 	@Autowired
 	private DiscoveryService discoveryService;
-	
+
 	@Autowired
 	private SystemNamePreprocessor preprocessor;
 
@@ -42,7 +42,7 @@ public class DiscoveryAPI {
 
 	//=================================================================================================
 	// methods
-	
+
 	// check
 	// GET /check/{systemname} -> boolean
 	//-------------------------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ public class DiscoveryAPI {
 
 		return discoveryService.check(systemName, origin);
 	}
-	
+
 	// lookup
 	// GET /lookup -> BlacklistEntryListResponseDTO
 	//-------------------------------------------------------------------------------------------------
@@ -90,7 +90,7 @@ public class DiscoveryAPI {
 
 		final String origin = HttpMethod.GET.name() + " " + BlacklistConstants.HTTP_API_BASE_PATH + BlacklistConstants.HTTP_API_OP_LOOKUP;
 		final String identifiedName = preprocessor.process(httpServletRequest, origin);
-		
+
 		return discoveryService.lookup(identifiedName, origin);
 	}
 

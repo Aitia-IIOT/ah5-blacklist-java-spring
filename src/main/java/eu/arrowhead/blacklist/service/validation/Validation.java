@@ -26,33 +26,33 @@ import eu.arrowhead.common.service.validation.name.NameValidator;
 
 @Service
 public class Validation {
-	
+
 	//=================================================================================================
 	// members
-	
+
 	private final Logger logger = LogManager.getLogger(this.getClass());
-	
+
 	@Autowired
 	private NameNormalizer nameNormalizer; //for checking duplications
 
 	@Autowired
 	private NameValidator nameValidator;
-	
+
 	@Autowired
 	private PageValidator pageValidator;
-	
+
 	@Autowired
 	private Normalization normalizer;
-	
+
 	//=================================================================================================
 	// methods
-	
+
 	// VALIDATION
-	
+
 	//-------------------------------------------------------------------------------------------------
 	public void validateBlacklistCreateListRequestDTO(final BlacklistCreateListRequestDTO dto, final String origin) {
 		logger.debug("validateBlacklistCreateListRequestDTO started...");
-		
+
 		if (dto == null) {
 			throw new InvalidParameterException("Request payload is missing", origin);
 		}
@@ -60,7 +60,7 @@ public class Validation {
 		if (Utilities.isEmpty(dto.entities())) {
 			throw new InvalidParameterException("Request payload is empty", origin);
 		}
-		
+
 		final Set<String> names = new HashSet<>();
 		for (BlacklistCreateRequestDTO entity : dto.entities()) {
 			if (entity == null) {
@@ -81,7 +81,7 @@ public class Validation {
 			}
 
 			names.add(nameNormalizer.normalize(entity.systemName()));
-			
+
 			// expires at
 			if (!Utilities.isEmpty(entity.expiresAt())) {
 				ZonedDateTime expiresAt = null;
@@ -94,22 +94,22 @@ public class Validation {
 					throw new InvalidParameterException("Expiration time is in the past", origin);
 				}
 			}
-			
+
 			// reason
 			if (Utilities.isEmpty(entity.reason())) {
 				throw new InvalidParameterException("You cannot blacklist a system without specifying the reason", origin);
 			}
-			
-			if(entity.reason().length() > BlacklistConstants.REASON_LENGTH) {
+
+			if (entity.reason().length() > BlacklistConstants.REASON_LENGTH) {
 				throw new InvalidParameterException("Reason is too long", origin);
 			}
 		}
 	}
-	
+
 	//-------------------------------------------------------------------------------------------------
 	public void validateBlacklistQueryRequestDTO(final BlacklistQueryRequestDTO dto, final String origin) {
 		logger.debug("validateBlacklistQueryRequestDTO started...");
-		
+
 		if (dto != null) {
 			// pagination
 			pageValidator.validatePageParameter(dto.pagination(), Entry.SORTABLE_FIELDS_BY, origin);
@@ -141,11 +141,11 @@ public class Validation {
 			}
 		}
 	}
-	
+
 	//-------------------------------------------------------------------------------------------------
 	public void validateSystemNameList(final List<String> names, final String origin) {
 		logger.debug("validateSystemNameList started...");
-		
+
 		if (Utilities.isEmpty(names)) {
 			throw new InvalidParameterException("System name list is missing or empty", origin);
 		}
@@ -154,56 +154,56 @@ public class Validation {
 
 		}
 	}
-	
+
 	//-------------------------------------------------------------------------------------------------
 	public void validateSystemName(final String name, final String origin) {
 		logger.debug("validateSystemName started...");
-		
+
 		if (Utilities.isEmpty(name)) {
 			throw new InvalidParameterException("System name is empty", origin);
 		}
 	}
-	
+
 	// VALIDATION AND NORMALIZATION
-	
+
 	//-------------------------------------------------------------------------------------------------
 	public BlacklistCreateListRequestDTO validateAndNormalizeBlacklistCreateListRequestDTO(final BlacklistCreateListRequestDTO dto, final String origin) {
 		logger.debug("validateAndNormalizeBlacklistCreateListRequestDTO started...");
-		
+
 		validateBlacklistCreateListRequestDTO(dto, origin);
-		
+
 		final BlacklistCreateListRequestDTO normalized = normalizer.normalizeBlacklistCreateListRequestDTO(dto);
-		
+
 		normalized.entities().forEach(e -> nameValidator.validateName(e.systemName()));
-		
+
 		return normalized;
 	}
-	
+
 	//-------------------------------------------------------------------------------------------------
 	public BlacklistQueryRequestDTO validateAndNormalizeBlacklistQueryRequestDTO(final BlacklistQueryRequestDTO dto, final String origin) {
 		logger.debug("validateAndNormalizeBlacklistQueryRequestDTO started...");
-		
+
 		validateBlacklistQueryRequestDTO(dto, origin);
-		
+
 		final BlacklistQueryRequestDTO normalized = normalizer.normalizeBlacklistQueryRequestDTO(dto);
 		return normalized;
-		
+
 	}
-	
+
 	//-------------------------------------------------------------------------------------------------
 	public List<String> validateAndNormalizeSystemNameList(final List<String> names, final String origin) {
 		logger.debug("validateAndNormalizeSystemNameList started...");
-		
+
 		validateSystemNameList(names, origin);
 		final List<String> normalizedNames = normalizer.normalizeSystemNames(names);
 		return normalizedNames;
 	}
-	
+
 	//-------------------------------------------------------------------------------------------------
 	public String validateAndNormalizeSystemName(final String name, final String origin) {
 		logger.debug("validateAndNormalizeSystemName");
 		final String normalizedName = normalizer.normalizeSystemName(name);
 		return normalizedName;
 	}
-	
+
 }

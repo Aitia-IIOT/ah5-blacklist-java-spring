@@ -11,7 +11,7 @@ import eu.arrowhead.common.Constants;
 import eu.arrowhead.common.jpa.RefreshableRepositoryImpl;
 
 @SpringBootApplication
-@ComponentScan(    basePackages = Constants.BASE_PACKAGE,
+@ComponentScan(basePackages = Constants.BASE_PACKAGE,
     excludeFilters = @ComponentScan.Filter(
         type = FilterType.ASSIGNABLE_TYPE,
         classes = eu.arrowhead.common.http.filter.authorization.BlacklistFilter.class
@@ -20,7 +20,7 @@ import eu.arrowhead.common.jpa.RefreshableRepositoryImpl;
 @EnableJpaRepositories(basePackages = BlacklistConstants.DATABASE_REPOSITORY_PACKAGE, repositoryBaseClass = RefreshableRepositoryImpl.class)
 public class BlacklistApplication {
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		SpringApplication.run(BlacklistApplication.class, args);
 	}
 

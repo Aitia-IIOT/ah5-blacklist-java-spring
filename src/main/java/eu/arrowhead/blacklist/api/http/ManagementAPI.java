@@ -38,16 +38,16 @@ import jakarta.servlet.http.HttpServletRequest;
 @RequestMapping(BlacklistConstants.HTTP_API_MANAGEMENT_PATH)
 @SecurityRequirement(name = Constants.SECURITY_REQ_AUTHORIZATION)
 public class ManagementAPI {
-	
+
 	//=================================================================================================
 	// members
 
 	@Autowired
 	private ManagementService managementService;
-	
+
 	@Autowired
 	private SystemNamePreprocessor systemNamepreprocessor;
-	
+
 	@Autowired
 	private IsSysopPreprocessor isSysopPreprocessor;
 
@@ -80,7 +80,7 @@ public class ManagementAPI {
 
 		return managementService.query(dto, origin);
 	}
-	
+
 	// create
 	// POST /mgmt/create BlacklistCreateListRequestDTO -> BlacklistEntryListResponseDTO
 	//-------------------------------------------------------------------------------------------------
@@ -103,10 +103,10 @@ public class ManagementAPI {
 
 		final String origin = HttpMethod.POST.name() + " " + BlacklistConstants.HTTP_API_MANAGEMENT_PATH + BlacklistConstants.HTTP_API_OP_CREATE;
 		final String identifiedName = systemNamepreprocessor.process(httpServletRequest, origin);
-		
+
 		return managementService.create(dto, origin, identifiedName);
 	}
-	
+
 	// remove
 	// DELETE /mgmt/remove String list as query param
 	//-------------------------------------------------------------------------------------------------
@@ -131,8 +131,8 @@ public class ManagementAPI {
 		final boolean isSysop = isSysopPreprocessor.process(httpServletRequest, origin);
 		final String revokerName = systemNamepreprocessor.process(httpServletRequest, origin);
 		managementService.remove(systemNameList, isSysop, revokerName, origin);
-		
+
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
-	
+
 }

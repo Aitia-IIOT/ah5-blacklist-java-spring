@@ -4,12 +4,10 @@ import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import eu.arrowhead.blacklist.BlacklistConstants;
-import eu.arrowhead.blacklist.BlacklistSystemInfo;
 import eu.arrowhead.blacklist.service.DiscoveryService;
 import eu.arrowhead.common.Constants;
 import eu.arrowhead.common.Utilities;
@@ -25,15 +23,15 @@ import jakarta.servlet.http.HttpServletResponse;
 @ConditionalOnProperty(name = Constants.ENABLE_BLACKLIST_FILTER, matchIfMissing = true)
 @Order(Constants.REQUEST_FILTER_ORDER_AUTHORIZATION_BLACKLIST)
 public class BlacklistFilter extends ArrowheadFilter {
-	
+
 	//=================================================================================================
 	// members
-	
+
 	@Autowired
 	private DiscoveryService discoveryService;
-	
+
 	private static final String SLASH = "/";
-	
+
 	//=================================================================================================
 	// assistant methods
 
@@ -41,10 +39,10 @@ public class BlacklistFilter extends ArrowheadFilter {
 	@Override
 	protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response, final FilterChain chain) throws IOException, ServletException {
 		log.debug("BlacklistFilter is active");
-		
+
 		// if requester is sysop, no need for check
 		final boolean isSysop = Boolean.valueOf(request.getAttribute(Constants.HTTP_ATTR_ARROWHEAD_SYSOP_REQUEST).toString());
-		
+
 		// if request is self check, no need for check
 		boolean isSelfCheck = false;
 		final String systemName = request.getAttribute(Constants.HTTP_ATTR_ARROWHEAD_AUTHENTICATED_SYSTEM).toString();
@@ -52,7 +50,7 @@ public class BlacklistFilter extends ArrowheadFilter {
 		if (requestTarget.endsWith(BlacklistConstants.HTTP_API_OP_CHECK + SLASH + systemName)) {
 			isSelfCheck = true;
 		}
-		
+
 		if (!isSysop && !isSelfCheck) {
 			try {
 				if (discoveryService.check(systemName, "BlacklistFilter.java")) {

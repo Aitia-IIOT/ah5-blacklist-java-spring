@@ -8,12 +8,12 @@ import eu.arrowhead.common.init.ApplicationInitListener;
 
 @Component
 public class BlacklistApplicationInitListener extends ApplicationInitListener {
-	
+
 	//=================================================================================================
 	// members
 	 @Autowired
 	 private WhitelistService whitelistService;
-	
+
 	//=================================================================================================
 	// assistant methods
 
