@@ -17,7 +17,7 @@ public class WhitelistService {
 	//=================================================================================================
 	// members
 
-	@Value(BlacklistConstants.$WHITELIST_WD)
+	@Value(BlacklistConstants.$WHITELIST)
 	private List<String> whitelist;
 
 	@Autowired

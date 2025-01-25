@@ -41,6 +41,6 @@ public final class BlacklistConstants {
 
 	// Blacklist parameters
 	public static final String WHITELIST = "whitelist";
-	public static final String $WHITELIST_WD = "#{'${" + WHITELIST + "}'.split(',')}";
+	public static final String $WHITELIST = "#{'${" + WHITELIST + "}'.split(',')}";
 
 }

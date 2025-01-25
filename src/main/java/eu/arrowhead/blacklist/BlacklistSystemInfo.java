@@ -48,7 +48,7 @@ public class BlacklistSystemInfo extends SystemInfo {
 				.path(BlacklistConstants.HTTP_API_OP_LOOKUP)
 				.build();
 
-		final HttpInterfaceModel discovery_interface = new HttpInterfaceModel.Builder(templateName, getDomainAddress(), getServerPort())
+		final HttpInterfaceModel discoveryInterface = new HttpInterfaceModel.Builder(templateName, getDomainAddress(), getServerPort())
 				.basePath(BlacklistConstants.HTTP_API_BASE_PATH)
 				.operation(Constants.SERVICE_OP_CHECK, check)
 				.operation(Constants.SERVICE_OP_LOOKUP, lookup)
@@ -58,7 +58,7 @@ public class BlacklistSystemInfo extends SystemInfo {
 				.serviceDefinition(Constants.SERVICE_DEF_BLACKLIST_DISCOVERY)
 				.version(BlacklistConstants.VERSION_DISCOVERY)
 				.metadata(BlacklistConstants.METADATA_KEY_UNRESTRICTED_DISCOVERY, true)
-				.serviceInterface(discovery_interface)
+				.serviceInterface(discoveryInterface)
 				.build();
 
 		// management
@@ -78,7 +78,7 @@ public class BlacklistSystemInfo extends SystemInfo {
 				.path(BlacklistConstants.HTTP_API_OP_REMOVE)
 				.build();
 
-		final HttpInterfaceModel management_interface = new HttpInterfaceModel.Builder(templateName, getDomainAddress(), getServerPort())
+		final HttpInterfaceModel managementInterface = new HttpInterfaceModel.Builder(templateName, getDomainAddress(), getServerPort())
 				.basePath(BlacklistConstants.HTTP_API_MANAGEMENT_PATH)
 				.operation(Constants.SERVICE_OP_BLACKLIST_QUERY, query)
 				.operation(Constants.SERVICE_OP_BLACKLIST_CREATE, create)
@@ -89,7 +89,7 @@ public class BlacklistSystemInfo extends SystemInfo {
 				.serviceDefinition(Constants.SERVICE_DEF_BLACKLIST_MANAGEMENT)
 				.version(BlacklistConstants.VERSION_MANAGEMENT)
 				.metadata(BlacklistConstants.METADATA_KEY_UNRESTRICTED_DISCOVERY, false)
-				.serviceInterface(management_interface)
+				.serviceInterface(managementInterface)
 				.build();
 
 		return List.of(discovery, management);

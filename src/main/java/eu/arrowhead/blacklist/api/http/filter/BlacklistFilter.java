@@ -40,18 +40,11 @@ public class BlacklistFilter extends ArrowheadFilter {
 	protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response, final FilterChain chain) throws IOException, ServletException {
 		log.debug("BlacklistFilter is active");
 
-		// if requester is sysop, no need for check
-		final boolean isSysop = Boolean.valueOf(request.getAttribute(Constants.HTTP_ATTR_ARROWHEAD_SYSOP_REQUEST).toString());
 
-		// if request is self check, no need for check
-		boolean isSelfCheck = false;
 		final String systemName = request.getAttribute(Constants.HTTP_ATTR_ARROWHEAD_AUTHENTICATED_SYSTEM).toString();
-		String requestTarget = Utilities.stripEndSlash(request.getRequestURL().toString());
-		if (requestTarget.endsWith(BlacklistConstants.HTTP_API_OP_CHECK + SLASH + systemName)) {
-			isSelfCheck = true;
-		}
 
-		if (!isSysop && !isSelfCheck) {
+		final boolean isSysop = Boolean.valueOf(request.getAttribute(Constants.HTTP_ATTR_ARROWHEAD_SYSOP_REQUEST).toString());
+		if (!isSysop && !isSelfCheck(request, systemName) && !isLookup(request)) {
 			try {
 				if (discoveryService.check(systemName, "BlacklistFilter.java")) {
 					throw new ForbiddenException(systemName + " system is blacklisted!");
@@ -61,5 +54,25 @@ public class BlacklistFilter extends ArrowheadFilter {
 			}
 		}
 		chain.doFilter(request, response);
+	}
+
+	//-------------------------------------------------------------------------------------------------
+	private boolean isLookup(final HttpServletRequest request) {
+
+		String requestTarget = Utilities.stripEndSlash(request.getRequestURL().toString());
+		if (requestTarget.endsWith(BlacklistConstants.HTTP_API_OP_LOOKUP)) {
+			return true;
+		}
+		return false;
+	}
+
+	//-------------------------------------------------------------------------------------------------
+	private boolean isSelfCheck(final HttpServletRequest request, final String systemName) {
+
+		String requestTarget = Utilities.stripEndSlash(request.getRequestURL().toString());
+		if (requestTarget.endsWith(BlacklistConstants.HTTP_API_OP_CHECK + SLASH + systemName)) {
+			return true;
+		}
+		return false;
 	}
 }
