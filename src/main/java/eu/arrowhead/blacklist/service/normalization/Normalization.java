@@ -9,11 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import eu.arrowhead.blacklist.service.dto.BlacklistCreateListRequestDTO;
-import eu.arrowhead.blacklist.service.dto.BlacklistCreateRequestDTO;
-import eu.arrowhead.blacklist.service.dto.BlacklistQueryRequestDTO;
+import eu.arrowhead.blacklist.service.dto.NormalizedBlacklistQueryRequestDTO;
 import eu.arrowhead.common.Utilities;
 import eu.arrowhead.common.service.validation.name.NameNormalizer;
+import eu.arrowhead.dto.BlacklistCreateListRequestDTO;
+import eu.arrowhead.dto.BlacklistCreateRequestDTO;
+import eu.arrowhead.dto.BlacklistQueryRequestDTO;
+import eu.arrowhead.dto.enums.Mode;
 
 @Service
 public class Normalization {
@@ -37,21 +39,21 @@ public class Normalization {
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	public BlacklistQueryRequestDTO normalizeBlacklistQueryRequestDTO(final BlacklistQueryRequestDTO dto) {
+	public NormalizedBlacklistQueryRequestDTO normalizeBlacklistQueryRequestDTO(final BlacklistQueryRequestDTO dto) {
 		logger.debug("normalizeBlacklistQueryRequestDTO started...");
 
 		if (dto == null) {
-			return new BlacklistQueryRequestDTO(null, null, null, null, null, null, null);
+			return new NormalizedBlacklistQueryRequestDTO(null, null, null, null, null, null, null);
 		}
 
-		return new BlacklistQueryRequestDTO(
+		return new NormalizedBlacklistQueryRequestDTO(
 				// pagination
 				dto.pagination(), //no need to normalize, because it will happen in the getPageRequest method,
 				// system names
 				Utilities.isEmpty(dto.systemNames()) ? null
 					: dto.systemNames().stream().map(n -> nameNormalizer.normalize(n)).collect(Collectors.toList()),
 				// mode
-				dto.mode(),
+				Mode.valueOf(dto.mode().toUpperCase()),
 				// issuers
 				Utilities.isEmpty(dto.issuers()) ? null
 						: dto.issuers().stream().map(n -> nameNormalizer.normalize(n)).collect(Collectors.toList()),

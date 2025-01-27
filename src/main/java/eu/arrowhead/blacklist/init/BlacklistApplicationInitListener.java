@@ -23,6 +23,6 @@ public class BlacklistApplicationInitListener extends ApplicationInitListener {
 		logger.debug("customInit started...");
 
 		// removing systems, that are on the whitelist from the database
-		whitelistService.cleanDatabase("BlacklistApplicationInitListener.customInit");
+		whitelistService.cleanDatabase();
 	}
 }

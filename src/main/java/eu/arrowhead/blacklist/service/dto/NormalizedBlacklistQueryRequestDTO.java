@@ -1,10 +1,11 @@
 package eu.arrowhead.blacklist.service.dto;
+
 import java.util.List;
 
-import eu.arrowhead.blacklist.service.dto.enums.Mode;
 import eu.arrowhead.dto.PageDTO;
+import eu.arrowhead.dto.enums.Mode;
 
-public record BlacklistQueryRequestDTO(
+public record NormalizedBlacklistQueryRequestDTO(
 		PageDTO pagination,
 		List<String> systemNames,
 		Mode mode,
@@ -12,5 +13,4 @@ public record BlacklistQueryRequestDTO(
 		List<String> revokers,
 		String reason,
 		String alivesAt) {
-
 }

@@ -10,14 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import eu.arrowhead.blacklist.jpa.entity.Entry;
 import eu.arrowhead.blacklist.jpa.repository.EntryRepository;
-import eu.arrowhead.blacklist.service.dto.BlacklistCreateRequestDTO;
-import eu.arrowhead.blacklist.service.dto.enums.Mode;
 import eu.arrowhead.common.Utilities;
+import eu.arrowhead.common.exception.ArrowheadException;
 import eu.arrowhead.common.exception.InternalServerError;
+import eu.arrowhead.dto.BlacklistCreateRequestDTO;
+import eu.arrowhead.dto.enums.Mode;
 
 @Service
 public class EntryDbService {
@@ -36,6 +38,7 @@ public class EntryDbService {
 	// methods
 
 	//-------------------------------------------------------------------------------------------------
+	@Transactional(rollbackFor = ArrowheadException.class)
 	public List<Entry> createBulk(final List<BlacklistCreateRequestDTO> candidates, final String requesterName) {
 		logger.debug("createBulk started...");
 
@@ -86,7 +89,7 @@ public class EntryDbService {
 						if (!Utilities.isEmpty(reason) && !entry.getReason().toLowerCase().contains(reason.toLowerCase())) {
 							continue;
 						}
-						if (entry.getExpiresAt() != null && alivesAt != null && !(alivesAt.isBefore(entry.getExpiresAt()) || alivesAt.isEqual(entry.getExpiresAt()))) {
+						if (alivesAt != null && (!entry.getActive() || (entry.getExpiresAt() != null && alivesAt.isAfter(entry.getExpiresAt())))) {
 							continue;
 						}
 
@@ -104,7 +107,8 @@ public class EntryDbService {
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	public void unsetActiveByNameList(final List<String> names, final String revokerName, final String origin) {
+	@Transactional(rollbackFor = ArrowheadException.class)
+	public void inactivateNameList(final List<String> names, final String revokerName) {
 		logger.debug("unsetActiveByNameList started...");
 		Assert.isTrue(!Utilities.isEmpty(names), "System name list is missing or empty");
 
@@ -112,8 +116,7 @@ public class EntryDbService {
 			synchronized (LOCK) {
 				final List<Entry> toInactivate = entryRepo.findAllBySystemNameIn(names).stream().filter(Entry::getActive).collect(Collectors.toList());
 				for (final Entry entry : toInactivate) {
-					entry.setActive(false);
-					entry.setRevokedBy(revokerName);
+					entry.inactivate(revokerName);
 				}
 				entryRepo.saveAllAndFlush(toInactivate);
 			}
@@ -126,22 +129,17 @@ public class EntryDbService {
 
 	//-------------------------------------------------------------------------------------------------
 	// Returns true, if there is a record with the given system name, the active flag is set, and the expiration date is in the future.
-	public boolean isActiveEntryForName(final String systemName, final String origin) {
-		logger.debug("isActiveEntryForName started, name: {}", systemName);
+	public boolean isActiveEntryForName(final String systemName) {
+		logger.debug("isActiveEntryForName started, name: {}");
 		Assert.isTrue(!Utilities.isEmpty(systemName), "System name is missing or empty");
 
 		try {
 			synchronized (LOCK) {
 
 				// finding the matching system name
-				final List<Entry> entries = entryRepo.findAllBySystemName(systemName);
-				if (entries.size() == 0) {
-					return false;
-				}
-
+				final List<Entry> entries = entryRepo.findAllBySystemNameAndActive(systemName, true);
 				for (final Entry entry : entries) {
-					// check if there is an active and not expired record
-					if (entry.getActive() && !isExpired(entry)) {
+					if (!isExpired(entry)) {
 						return true;
 					}
 				}
@@ -155,23 +153,14 @@ public class EntryDbService {
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	public List<Entry> getActiveEntriesForName(final String systemName, final String origin) {
+	public List<Entry> getActiveEntriesForName(final String systemName) {
 		logger.debug("getActiveEntriesForName, name: {}", systemName);
 		Assert.isTrue(!Utilities.isEmpty(systemName), "System name is missing or empty");
 
 		try {
 			synchronized (LOCK) {
-				// finding entries with the matching system name
-				List<Entry> entries = entryRepo.findAllBySystemName(systemName);
-				List<Entry> activeEntries = new ArrayList<>();
-
-				for (Entry entry : entries) {
-					// finding the active entries
-					if (entry.getActive() && !isExpired(entry)) {
-						activeEntries.add(entry);
-					}
-				}
-				return activeEntries;
+				final List<Entry> entries = entryRepo.findAllBySystemName(systemName);
+				return entries.stream().filter(e -> !isExpired(e)).toList();
 			}
 		} catch (final Exception ex) {
 			logger.error(ex.getMessage());
@@ -191,14 +180,10 @@ public class EntryDbService {
 				.map(c -> new Entry(
 						// system name
 						c.systemName(),
-						// active
-						true,
 						// expires at
 						Utilities.parseUTCStringToZonedDateTime(c.expiresAt()),
 						// created by
 						requesterName,
-						// revoked by
-						null,
 						// reason
 						c.reason()
 						))

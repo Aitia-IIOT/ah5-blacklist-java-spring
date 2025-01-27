@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 
 import eu.arrowhead.blacklist.jpa.entity.Entry;
 import eu.arrowhead.blacklist.jpa.service.EntryDbService;
-import eu.arrowhead.blacklist.service.dto.BlacklistEntryListResponseDTO;
 import eu.arrowhead.blacklist.service.dto.DTOConverter;
 import eu.arrowhead.blacklist.service.validation.Validation;
 import eu.arrowhead.common.exception.InternalServerError;
+import eu.arrowhead.dto.BlacklistEntryListResponseDTO;
 
 @Service
 public class DiscoveryService {
@@ -41,7 +41,7 @@ public class DiscoveryService {
 		final String normalizedName = validator.validateAndNormalizeSystemName(systemName, origin);
 
 		try {
-			return dbService.isActiveEntryForName(normalizedName, origin);
+			return dbService.isActiveEntryForName(normalizedName);
 		} catch (final InternalServerError ex) {
 			throw new InternalServerError(ex.getMessage(), origin);
 		}
@@ -54,7 +54,7 @@ public class DiscoveryService {
 		final String normalizedName = validator.validateAndNormalizeSystemName(requester, origin);
 
 		try {
-			List<Entry> entries = dbService.getActiveEntriesForName(normalizedName, origin);
+			final List<Entry> entries = dbService.getActiveEntriesForName(normalizedName);
 			return dtoConverter.convertEntriesToBlacklistEntryListResponseDTO(entries, entries.size());
 		} catch (final InternalServerError ex) {
 			throw new InternalServerError(ex.getMessage(), origin);

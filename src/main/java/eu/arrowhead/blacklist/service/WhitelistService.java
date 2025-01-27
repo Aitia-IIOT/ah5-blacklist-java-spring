@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import eu.arrowhead.blacklist.BlacklistConstants;
 import eu.arrowhead.blacklist.jpa.service.EntryDbService;
+import eu.arrowhead.blacklist.service.normalization.Normalization;
 import eu.arrowhead.common.exception.InvalidParameterException;
 
 @Service
@@ -23,6 +24,9 @@ public class WhitelistService {
 	@Autowired
 	private EntryDbService dbService;
 
+	@Autowired
+	private Normalization normalizer;
+
 	//=================================================================================================
 	// methods
 
@@ -30,7 +34,8 @@ public class WhitelistService {
 	// Throws exception, if the provided system name list contains element(s) that are on the whitelist
 	public void checkWhitelist(final List<String> names, final String origin) {
 
-		List<String> namesOnWhitelist = names.stream().filter(n -> whitelist.contains(n)).collect(Collectors.toList());
+		final List<String> normalizedNames = normalizer.normalizeSystemNames(names);
+		final List<String> namesOnWhitelist = normalizedNames.stream().filter(n -> whitelist.contains(n)).collect(Collectors.toList());
 
 		if (!namesOnWhitelist.isEmpty()) {
 			throw new InvalidParameterException("The following system names cannod be added, because they are on the whitelist: " + namesOnWhitelist.stream().collect(Collectors.joining(", ")), origin);
@@ -39,8 +44,8 @@ public class WhitelistService {
 
 	//-------------------------------------------------------------------------------------------------
 	// Inactivates entries in the database, that refer to whitelisted systems
-	public void cleanDatabase(final String origin) {
+	public void cleanDatabase() {
 
-		dbService.unsetActiveByNameList(whitelist, BlacklistConstants.SYSTEM_NAME, origin);
+		dbService.inactivateNameList(whitelist, BlacklistConstants.SYSTEM_NAME);
 	}
 }

@@ -14,17 +14,17 @@ import org.springframework.util.Assert;
 
 import eu.arrowhead.blacklist.jpa.entity.Entry;
 import eu.arrowhead.blacklist.jpa.service.EntryDbService;
-import eu.arrowhead.blacklist.service.dto.BlacklistCreateListRequestDTO;
-import eu.arrowhead.blacklist.service.dto.BlacklistCreateRequestDTO;
-import eu.arrowhead.blacklist.service.dto.BlacklistEntryListResponseDTO;
-import eu.arrowhead.blacklist.service.dto.BlacklistQueryRequestDTO;
 import eu.arrowhead.blacklist.service.dto.DTOConverter;
+import eu.arrowhead.blacklist.service.dto.NormalizedBlacklistQueryRequestDTO;
 import eu.arrowhead.blacklist.service.validation.Validation;
-import eu.arrowhead.common.Constants;
 import eu.arrowhead.common.Utilities;
 import eu.arrowhead.common.exception.InternalServerError;
 import eu.arrowhead.common.exception.InvalidParameterException;
 import eu.arrowhead.common.service.PageService;
+import eu.arrowhead.dto.BlacklistCreateListRequestDTO;
+import eu.arrowhead.dto.BlacklistCreateRequestDTO;
+import eu.arrowhead.dto.BlacklistEntryListResponseDTO;
+import eu.arrowhead.dto.BlacklistQueryRequestDTO;
 
 @Service
 public class ManagementService {
@@ -56,7 +56,7 @@ public class ManagementService {
 	public BlacklistEntryListResponseDTO query(final BlacklistQueryRequestDTO dto, final String origin) {
 		logger.debug("ManagementService query started...");
 
-		final BlacklistQueryRequestDTO normalized = validator.validateAndNormalizeBlacklistQueryRequestDTO(dto, origin);
+		final NormalizedBlacklistQueryRequestDTO normalized = validator.validateAndNormalizeBlacklistQueryRequestDTO(dto, origin);
 
 		final PageRequest pageRequest = pageService.getPageRequest(normalized.pagination(), Direction.DESC, Entry.SORTABLE_FIELDS_BY, Entry.DEFAULT_SORT_FIELD, origin);
 
@@ -99,12 +99,12 @@ public class ManagementService {
 		logger.debug("ManagementService remove started...");
 
 		// only sysop can remove istelf from blacklist
-		checkSysopRemoval(systemNameList, isSysop, origin);
+		checkSysopRemoval(systemNameList, isSysop, revokerName, origin);
 
 		final List<String> normalizedList = validator.validateAndNormalizeSystemNameList(systemNameList, origin);
 		final String normalizedRevokerName = validator.validateAndNormalizeSystemName(revokerName, origin);
 		try {
-			dbService.unsetActiveByNameList(normalizedList, normalizedRevokerName, origin);
+			dbService.inactivateNameList(normalizedList, normalizedRevokerName);
 		} catch (final InternalServerError ex) {
 			throw new InternalServerError(ex.getMessage(), origin);
 		}
@@ -126,9 +126,9 @@ public class ManagementService {
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	private void checkSysopRemoval(final List<String> names, final boolean isSysop, final String origin) {
+	private void checkSysopRemoval(final List<String> names, final boolean isSysop, final String requesterName, final String origin) {
 		Assert.notNull(names, "System name list is null!");
-		if (names.contains(Constants.SYSOP) && !isSysop) {
+		if (names.contains(requesterName) && !isSysop) {
 			throw new InvalidParameterException("Only sysop can remove itself from the blacklist!", origin);
 		}
 	}

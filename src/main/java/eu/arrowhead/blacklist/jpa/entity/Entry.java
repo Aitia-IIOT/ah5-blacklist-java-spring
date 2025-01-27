@@ -3,9 +3,12 @@ package eu.arrowhead.blacklist.jpa.entity;
 import java.time.ZonedDateTime;
 import java.util.List;
 
+import org.springframework.util.Assert;
+
 import eu.arrowhead.common.jpa.ArrowheadEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.AssertTrue;
 
 @Entity
 public class Entry extends ArrowheadEntity {
@@ -48,12 +51,12 @@ public class Entry extends ArrowheadEntity {
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	public Entry(final String systemName, final boolean active, final ZonedDateTime expiresAt, final String createdBy, final String revokedBy, final String reason) {
+	public Entry(final String systemName, final ZonedDateTime expiresAt, final String createdBy, final String reason) {
 		this.systemName = systemName;
 		this.expiresAt = expiresAt;
-		this.active = active;
+		this.active = true;
 		this.createdBy = createdBy;
-		this.revokedBy = revokedBy;
+		this.revokedBy = null;
 		this.reason = reason;
 	}
 
@@ -93,10 +96,6 @@ public class Entry extends ArrowheadEntity {
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	public void setActive(final boolean active) {
-		this.active = active;
-	}
-	//-------------------------------------------------------------------------------------------------
 	public String getCreatedBy() {
 		return createdBy;
 	}
@@ -113,6 +112,8 @@ public class Entry extends ArrowheadEntity {
 
 	//-------------------------------------------------------------------------------------------------
 	public void setRevokedBy(final String revokedBy) {
+		Assert.isTrue(!this.active, "The entry is still active!");
+
 		this.revokedBy = revokedBy;
 	}
 
@@ -124,6 +125,14 @@ public class Entry extends ArrowheadEntity {
 	//-------------------------------------------------------------------------------------------------
 	public void setReason(final String reason) {
 		this.reason = reason;
+	}
+
+	//-------------------------------------------------------------------------------------------------
+	public void inactivate(final String revoker) {
+		Assert.notNull(revoker, "Revoker is null!");
+
+		this.revokedBy = revoker;
+		this.active = false;
 	}
 
 }

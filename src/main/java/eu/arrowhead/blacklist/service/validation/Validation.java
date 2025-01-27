@@ -2,9 +2,11 @@ package eu.arrowhead.blacklist.service.validation;
 
 import java.time.DateTimeException;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,16 +15,17 @@ import org.springframework.stereotype.Service;
 
 import eu.arrowhead.blacklist.BlacklistConstants;
 import eu.arrowhead.blacklist.jpa.entity.Entry;
-import eu.arrowhead.blacklist.service.dto.BlacklistCreateListRequestDTO;
-import eu.arrowhead.blacklist.service.dto.BlacklistCreateRequestDTO;
-import eu.arrowhead.blacklist.service.dto.BlacklistQueryRequestDTO;
-import eu.arrowhead.blacklist.service.dto.enums.Mode;
+import eu.arrowhead.blacklist.service.dto.NormalizedBlacklistQueryRequestDTO;
 import eu.arrowhead.blacklist.service.normalization.Normalization;
 import eu.arrowhead.common.Utilities;
 import eu.arrowhead.common.exception.InvalidParameterException;
 import eu.arrowhead.common.service.validation.PageValidator;
 import eu.arrowhead.common.service.validation.name.NameNormalizer;
 import eu.arrowhead.common.service.validation.name.NameValidator;
+import eu.arrowhead.dto.BlacklistCreateListRequestDTO;
+import eu.arrowhead.dto.BlacklistCreateRequestDTO;
+import eu.arrowhead.dto.BlacklistQueryRequestDTO;
+import eu.arrowhead.dto.enums.Mode;
 
 @Service
 public class Validation {
@@ -33,7 +36,7 @@ public class Validation {
 	private final Logger logger = LogManager.getLogger(this.getClass());
 
 	@Autowired
-	private NameNormalizer nameNormalizer; //for checking duplications
+	private NameNormalizer nameNormalizer; // for checking duplications
 
 	@Autowired
 	private NameValidator nameValidator;
@@ -62,7 +65,7 @@ public class Validation {
 		}
 
 		final Set<String> names = new HashSet<>();
-		for (BlacklistCreateRequestDTO entity : dto.entities()) {
+		for (final BlacklistCreateRequestDTO entity : dto.entities()) {
 			if (entity == null) {
 				throw new InvalidParameterException("Entity list contains null element", origin);
 			}
@@ -77,7 +80,7 @@ public class Validation {
 			}
 
 			if (names.contains(nameNormalizer.normalize(entity.systemName()))) {
-				throw new InvalidParameterException("Duplicate system name: " + entity.systemName(), origin);
+				throw new InvalidParameterException("Duplicated system name: " + entity.systemName(), origin);
 			}
 
 			names.add(nameNormalizer.normalize(entity.systemName()));
@@ -118,8 +121,17 @@ public class Validation {
 				throw new InvalidParameterException("System name list contains null or empty element", origin);
 			}
 			// mode
-			if (dto.mode() != null && !(dto.mode() instanceof Mode)) {
-				throw new InvalidParameterException("Mode is invalid. Possible values: " + Mode.values().toString());
+			if (dto.mode() != null) {
+				try {
+					Mode.valueOf(dto.mode().toUpperCase());
+				} catch (IllegalArgumentException ex) {
+					// throwing exception containing the possible values of mode
+					List<String> possibleValues = new ArrayList<>(Mode.values().length);
+					for (Mode mode : Mode.values()) {
+						possibleValues.add(mode.toString());
+					}
+					throw new InvalidParameterException("Mode is invalid. Possible values: " + possibleValues.stream().collect(Collectors.joining(", ")));
+				}
 			}
 			// issuers
 			if (!Utilities.isEmpty(dto.issuers()) && Utilities.containsNullOrEmpty(dto.issuers())) {
@@ -150,7 +162,7 @@ public class Validation {
 			throw new InvalidParameterException("System name list is missing or empty", origin);
 		}
 		if (Utilities.containsNullOrEmpty(names)) {
-			throw new InvalidParameterException("System name list contains null or empty element!");
+			throw new InvalidParameterException("System name list contains null or empty element!", origin);
 
 		}
 	}
@@ -180,12 +192,11 @@ public class Validation {
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	public BlacklistQueryRequestDTO validateAndNormalizeBlacklistQueryRequestDTO(final BlacklistQueryRequestDTO dto, final String origin) {
+	public NormalizedBlacklistQueryRequestDTO validateAndNormalizeBlacklistQueryRequestDTO(final BlacklistQueryRequestDTO dto, final String origin) {
 		logger.debug("validateAndNormalizeBlacklistQueryRequestDTO started...");
 
 		validateBlacklistQueryRequestDTO(dto, origin);
-
-		final BlacklistQueryRequestDTO normalized = normalizer.normalizeBlacklistQueryRequestDTO(dto);
+		final NormalizedBlacklistQueryRequestDTO normalized = normalizer.normalizeBlacklistQueryRequestDTO(dto);
 		return normalized;
 
 	}
