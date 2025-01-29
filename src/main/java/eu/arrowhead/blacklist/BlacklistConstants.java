@@ -65,6 +65,7 @@ public final class BlacklistConstants {
 			"server.ssl.trust-store-type",
 			"server.ssl.trust-store",
 			"server.ssl.trust-store-password",
-			"disable.hostname.verifier");
+			"disable.hostname.verifier",
+			"mqtt.client.password");
 
 }
