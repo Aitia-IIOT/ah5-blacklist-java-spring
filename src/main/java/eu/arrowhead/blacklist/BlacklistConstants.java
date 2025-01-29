@@ -23,22 +23,17 @@ public final class BlacklistConstants {
 	public static final String HTTP_API_BASE_PATH = "/blacklist";
 	public static final String HTTP_API_MANAGEMENT_PATH = HTTP_API_BASE_PATH + "/mgmt";
 	public static final String HTTP_API_MONITOR_PATH = HTTP_API_BASE_PATH + "/monitor";
-
 	public static final String HTTP_API_OP_CHECK = "/check";
 	public static final String HTTP_API_PARAM_NAME = "{systemName}";
 	public static final String HTTP_API_OP_CHECK_PATH = HTTP_API_OP_CHECK + "/" + HTTP_API_PARAM_NAME;
-
 	public static final String HTTP_API_OP_LOOKUP = "/lookup";
-
 	public static final String HTTP_API_OP_QUERY = "/query";
-
 	public static final String HTTP_API_OP_CREATE = "/create";
-
 	public static final String HTTP_API_OP_REMOVE = "/remove";
 	public static final String HTTP_API_PARAM_NAME_LIST = "{systemNameList}";
 	public static final String HTTP_API_OP_REMOVE_PATH = HTTP_API_OP_REMOVE + "/" + HTTP_API_PARAM_NAME_LIST;
-
 	public static final String HTTP_API_OP_GET_CONFIG_PATH = "/get-config";
+	public static final String HTTP_API_GENERAL_MANAGEMENT_PATH = HTTP_API_BASE_PATH + "/general/mgmt";
 
 	// DTO field length limitations
 	public static final int SYSTEM_NAME_LENGTH = ArrowheadEntity.VARCHAR_SMALL;

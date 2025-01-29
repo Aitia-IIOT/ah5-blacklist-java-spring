@@ -1,7 +1,6 @@
 package eu.arrowhead.blacklist.service.dto;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -12,7 +11,6 @@ import eu.arrowhead.blacklist.jpa.entity.Entry;
 import eu.arrowhead.common.Utilities;
 import eu.arrowhead.dto.BlacklistEntryDTO;
 import eu.arrowhead.dto.BlacklistEntryListResponseDTO;
-import eu.arrowhead.dto.KeyValuesDTO;
 
 @Service
 public class DTOConverter {
@@ -55,14 +53,6 @@ public class DTOConverter {
 						))
 				.collect(Collectors.toList()),
 				count);
-
-	}
-	
-	//-------------------------------------------------------------------------------------------------
-	public KeyValuesDTO convertConfigMapToDTO(final Map<String, String> map) {
-		logger.debug("convertConfigMapToDTO started...");
-
-		return new KeyValuesDTO(map);
 
 	}
 }

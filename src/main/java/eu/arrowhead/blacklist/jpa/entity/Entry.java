@@ -8,7 +8,6 @@ import org.springframework.util.Assert;
 import eu.arrowhead.common.jpa.ArrowheadEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.validation.constraints.AssertTrue;
 
 @Entity
 public class Entry extends ArrowheadEntity {
@@ -112,8 +111,6 @@ public class Entry extends ArrowheadEntity {
 
 	//-------------------------------------------------------------------------------------------------
 	public void setRevokedBy(final String revokedBy) {
-		Assert.isTrue(!this.active, "The entry is still active!");
-
 		this.revokedBy = revokedBy;
 	}
 
@@ -125,6 +122,11 @@ public class Entry extends ArrowheadEntity {
 	//-------------------------------------------------------------------------------------------------
 	public void setReason(final String reason) {
 		this.reason = reason;
+	}
+
+	//-------------------------------------------------------------------------------------------------
+	public void setActive(final boolean active) {
+		this.active = active;
 	}
 
 	//-------------------------------------------------------------------------------------------------

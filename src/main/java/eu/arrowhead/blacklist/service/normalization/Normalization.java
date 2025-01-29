@@ -48,7 +48,7 @@ public class Normalization {
 
 		return new NormalizedBlacklistQueryRequestDTO(
 				// pagination
-				dto.pagination(), //no need to normalize, because it will happen in the getPageRequest method,
+				dto.pagination(), // no need to normalize, because it will happen in the getPageRequest method
 				// system names
 				Utilities.isEmpty(dto.systemNames()) ? null
 					: dto.systemNames().stream().map(n -> nameNormalizer.normalize(n)).collect(Collectors.toList()),

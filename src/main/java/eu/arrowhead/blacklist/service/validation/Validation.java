@@ -123,14 +123,14 @@ public class Validation {
 			// mode
 			if (dto.mode() != null) {
 				try {
-					Mode.valueOf(dto.mode().toUpperCase());
-				} catch (IllegalArgumentException ex) {
+					Mode.valueOf(dto.mode().trim().toUpperCase());
+				} catch (final IllegalArgumentException ex) {
 					// throwing exception containing the possible values of mode
-					List<String> possibleValues = new ArrayList<>(Mode.values().length);
-					for (Mode mode : Mode.values()) {
+					final List<String> possibleValues = new ArrayList<>(Mode.values().length);
+					for (final Mode mode : Mode.values()) {
 						possibleValues.add(mode.toString());
 					}
-					throw new InvalidParameterException("Mode is invalid. Possible values: " + possibleValues.stream().collect(Collectors.joining(", ")));
+					throw new InvalidParameterException("Mode is invalid. Possible values: " + String.join(", ", possibleValues));
 				}
 			}
 			// issuers
