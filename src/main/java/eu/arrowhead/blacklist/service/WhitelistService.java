@@ -45,7 +45,7 @@ public class WhitelistService {
 		final List<String> namesOnWhitelist = names.stream().filter(n -> normalizedWhitelist.contains(n)).collect(Collectors.toList());
 
 		if (!namesOnWhitelist.isEmpty()) {
-			throw new InvalidParameterException("The following system names cannot be added, because they are on the whitelist: " + namesOnWhitelist.stream().collect(Collectors.joining(", ")), origin);
+			throw new InvalidParameterException("The following system names cannot be added, because they are on the whitelist: " + String.join(", ", namesOnWhitelist), origin);
 		}
 	}
 
