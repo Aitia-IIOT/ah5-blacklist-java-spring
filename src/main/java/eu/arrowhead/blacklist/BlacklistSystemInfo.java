@@ -92,7 +92,52 @@ public class BlacklistSystemInfo extends SystemInfo {
 				.serviceInterface(managementInterface)
 				.build();
 
-		return List.of(discovery, management);
+		// general management
+
+		final HttpOperationModel log = new HttpOperationModel.Builder()
+				.method(HttpMethod.POST.name())
+				.path(Constants.HTTP_API_OP_LOGS_PATH)
+				.build();
+
+		final HttpOperationModel config = new HttpOperationModel.Builder()
+				.method(HttpMethod.GET.name())
+				.path(Constants.HTTP_API_OP_GET_CONFIG_PATH)
+				.build();
+
+		final HttpInterfaceModel generalManagementInterface = new HttpInterfaceModel.Builder(templateName, getDomainAddress(), getServerPort())
+				.basePath(BlacklistConstants.HTTP_API_GENERAL_MANAGEMENT_PATH)
+				.operation(Constants.SERVICE_OP_GET_LOG, log)
+				.operation(Constants.SERVICE_OP_GET_CONFIG, config)
+				.build();
+
+		final ServiceModel generalManagement = new ServiceModel.Builder()
+				.serviceDefinition(Constants.SERVICE_DEF_GENERAL_MANAGEMENT)
+				.version(BlacklistConstants.VERSION_GENERAL_MANAGEMENT)
+				.metadata(BlacklistConstants.METADATA_KEY_UNRESTRICTED_DISCOVERY, false)
+				.serviceInterface(generalManagementInterface)
+				.build();
+
+		// monitor
+
+		final HttpOperationModel echo = new HttpOperationModel.Builder()
+				.method(HttpMethod.GET.name())
+				.path(BlacklistConstants.HTTP_API_OP_ECHO)
+				.build();
+
+		final HttpInterfaceModel monitorInterface = new HttpInterfaceModel.Builder(templateName, getDomainAddress(), getServerPort())
+				.basePath(BlacklistConstants.HTTP_API_MONITOR_PATH)
+				.operation(Constants.SERVICE_OP_ECHO, echo)
+				.build();
+
+		final ServiceModel monitor = new ServiceModel.Builder()
+				.serviceDefinition(Constants.SERVICE_DEF_MONITOR)
+				.version(BlacklistConstants.VERSION_MONITOR)
+				.metadata(BlacklistConstants.METADATA_KEY_UNRESTRICTED_DISCOVERY, false)
+				.serviceInterface(monitorInterface)
+				.build();
+
+
+		return List.of(discovery, management, generalManagement, monitor);
 	}
 
 	//-------------------------------------------------------------------------------------------------

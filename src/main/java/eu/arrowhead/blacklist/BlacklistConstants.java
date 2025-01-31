@@ -13,6 +13,8 @@ public final class BlacklistConstants {
 	public static final String SYSTEM_NAME = "blacklist";
 	public static final String VERSION_DISCOVERY = "1.0.0";
 	public static final String VERSION_MANAGEMENT = "1.0.0";
+	public static final String VERSION_GENERAL_MANAGEMENT = "1.0.0";
+	public static final String VERSION_MONITOR = "1.0.0";
 	public static final String METADATA_KEY_UNRESTRICTED_DISCOVERY = "unrestricted-discovery";
 
 	// JPA related
@@ -32,8 +34,8 @@ public final class BlacklistConstants {
 	public static final String HTTP_API_OP_REMOVE = "/remove";
 	public static final String HTTP_API_PARAM_NAME_LIST = "{systemNameList}";
 	public static final String HTTP_API_OP_REMOVE_PATH = HTTP_API_OP_REMOVE + "/" + HTTP_API_PARAM_NAME_LIST;
-	public static final String HTTP_API_OP_GET_CONFIG_PATH = "/get-config";
 	public static final String HTTP_API_GENERAL_MANAGEMENT_PATH = HTTP_API_BASE_PATH + "/general/mgmt";
+	public static final String HTTP_API_OP_ECHO = "/echo";
 
 	// DTO field length limitations
 	public static final int SYSTEM_NAME_LENGTH = ArrowheadEntity.VARCHAR_SMALL;
