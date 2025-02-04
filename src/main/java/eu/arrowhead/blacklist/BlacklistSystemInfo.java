@@ -1,0 +1,160 @@
+package eu.arrowhead.blacklist;
+
+import java.util.List;
+
+import org.springframework.http.HttpMethod;
+import org.springframework.stereotype.Component;
+
+import eu.arrowhead.common.Constants;
+import eu.arrowhead.common.SystemInfo;
+import eu.arrowhead.common.http.filter.authentication.AuthenticationPolicy;
+import eu.arrowhead.common.http.model.HttpInterfaceModel;
+import eu.arrowhead.common.http.model.HttpOperationModel;
+import eu.arrowhead.common.model.ServiceModel;
+import eu.arrowhead.common.model.SystemModel;
+
+@Component
+public class BlacklistSystemInfo extends SystemInfo {
+
+	//=================================================================================================
+	// members
+
+	private SystemModel systemModel;
+
+	//=================================================================================================
+	// methods
+
+	//-------------------------------------------------------------------------------------------------
+	@Override
+	public String getSystemName() {
+		return BlacklistConstants.SYSTEM_NAME;
+	}
+
+	//-------------------------------------------------------------------------------------------------
+	@Override
+	public List<ServiceModel> getServices() {
+
+		final String templateName = getSslProperties().isSslEnabled() ? Constants.GENERIC_HTTPS_INTERFACE_TEMPLATE_NAME : Constants.GENERIC_HTTP_INTERFACE_TEMPLATE_NAME;
+
+		// discovery
+
+		final HttpOperationModel check = new HttpOperationModel.Builder()
+				.method(HttpMethod.GET.name())
+				.path(BlacklistConstants.HTTP_API_OP_CHECK)
+				.build();
+
+		final HttpOperationModel lookup = new HttpOperationModel.Builder()
+				.method(HttpMethod.GET.name())
+				.path(BlacklistConstants.HTTP_API_OP_LOOKUP)
+				.build();
+
+		final HttpInterfaceModel discoveryInterface = new HttpInterfaceModel.Builder(templateName, getDomainAddress(), getServerPort())
+				.basePath(BlacklistConstants.HTTP_API_BASE_PATH)
+				.operation(Constants.SERVICE_OP_CHECK, check)
+				.operation(Constants.SERVICE_OP_LOOKUP, lookup)
+				.build();
+
+		final ServiceModel discovery = new ServiceModel.Builder()
+				.serviceDefinition(Constants.SERVICE_DEF_BLACKLIST_DISCOVERY)
+				.version(BlacklistConstants.VERSION_DISCOVERY)
+				.metadata(BlacklistConstants.METADATA_KEY_UNRESTRICTED_DISCOVERY, true)
+				.serviceInterface(discoveryInterface)
+				.build();
+
+		// management
+
+		final HttpOperationModel query = new HttpOperationModel.Builder()
+				.method(HttpMethod.POST.name())
+				.path(BlacklistConstants.HTTP_API_OP_QUERY)
+				.build();
+
+		final HttpOperationModel create = new HttpOperationModel.Builder()
+				.method(HttpMethod.POST.name())
+				.path(BlacklistConstants.HTTP_API_OP_CREATE)
+				.build();
+
+		final HttpOperationModel remove = new HttpOperationModel.Builder()
+				.method(HttpMethod.DELETE.name())
+				.path(BlacklistConstants.HTTP_API_OP_REMOVE)
+				.build();
+
+		final HttpInterfaceModel managementInterface = new HttpInterfaceModel.Builder(templateName, getDomainAddress(), getServerPort())
+				.basePath(BlacklistConstants.HTTP_API_MANAGEMENT_PATH)
+				.operation(Constants.SERVICE_OP_BLACKLIST_QUERY, query)
+				.operation(Constants.SERVICE_OP_BLACKLIST_CREATE, create)
+				.operation(Constants.SERVICE_OP_BLACKLIST_REMOVE, remove)
+				.build();
+
+		final ServiceModel management = new ServiceModel.Builder()
+				.serviceDefinition(Constants.SERVICE_DEF_BLACKLIST_MANAGEMENT)
+				.version(BlacklistConstants.VERSION_MANAGEMENT)
+				.metadata(BlacklistConstants.METADATA_KEY_UNRESTRICTED_DISCOVERY, false)
+				.serviceInterface(managementInterface)
+				.build();
+
+		// general management
+
+		final HttpOperationModel log = new HttpOperationModel.Builder()
+				.method(HttpMethod.POST.name())
+				.path(Constants.HTTP_API_OP_LOGS_PATH)
+				.build();
+
+		final HttpOperationModel config = new HttpOperationModel.Builder()
+				.method(HttpMethod.GET.name())
+				.path(Constants.HTTP_API_OP_GET_CONFIG_PATH)
+				.build();
+
+		final HttpInterfaceModel generalManagementInterface = new HttpInterfaceModel.Builder(templateName, getDomainAddress(), getServerPort())
+				.basePath(BlacklistConstants.HTTP_API_GENERAL_MANAGEMENT_PATH)
+				.operation(Constants.SERVICE_OP_GET_LOG, log)
+				.operation(Constants.SERVICE_OP_GET_CONFIG, config)
+				.build();
+
+		final ServiceModel generalManagement = new ServiceModel.Builder()
+				.serviceDefinition(Constants.SERVICE_DEF_GENERAL_MANAGEMENT)
+				.version(BlacklistConstants.VERSION_GENERAL_MANAGEMENT)
+				.metadata(BlacklistConstants.METADATA_KEY_UNRESTRICTED_DISCOVERY, false)
+				.serviceInterface(generalManagementInterface)
+				.build();
+
+		// monitor
+
+		final HttpOperationModel echo = new HttpOperationModel.Builder()
+				.method(HttpMethod.GET.name())
+				.path(BlacklistConstants.HTTP_API_OP_ECHO)
+				.build();
+
+		final HttpInterfaceModel monitorInterface = new HttpInterfaceModel.Builder(templateName, getDomainAddress(), getServerPort())
+				.basePath(BlacklistConstants.HTTP_API_MONITOR_PATH)
+				.operation(Constants.SERVICE_OP_ECHO, echo)
+				.build();
+
+		final ServiceModel monitor = new ServiceModel.Builder()
+				.serviceDefinition(Constants.SERVICE_DEF_MONITOR)
+				.version(BlacklistConstants.VERSION_MONITOR)
+				.metadata(BlacklistConstants.METADATA_KEY_UNRESTRICTED_DISCOVERY, false)
+				.serviceInterface(monitorInterface)
+				.build();
+
+
+		return List.of(discovery, management, generalManagement, monitor);
+	}
+
+	//-------------------------------------------------------------------------------------------------
+	@Override
+	public SystemModel getSystemModel() {
+		if (systemModel == null) {
+			SystemModel.Builder builder = new SystemModel.Builder()
+					.address(getAddress())
+					.version(Constants.AH_FRAMEWORK_VERSION);
+
+			if (AuthenticationPolicy.CERTIFICATE == this.getAuthenticationPolicy()) {
+				builder = builder.metadata(Constants.METADATA_KEY_X509_PUBLIC_KEY, getPublicKey());
+			}
+
+			systemModel = builder.build();
+		}
+
+		return systemModel;
+	}
+}
