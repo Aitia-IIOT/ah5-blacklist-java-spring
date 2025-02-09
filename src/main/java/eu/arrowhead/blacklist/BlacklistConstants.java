@@ -37,6 +37,10 @@ public final class BlacklistConstants {
 	public static final String HTTP_API_GENERAL_MANAGEMENT_PATH = HTTP_API_BASE_PATH + "/general/mgmt";
 	public static final String HTTP_API_OP_ECHO = "/echo";
 
+	// MQTT API topics
+	public static final String MQTT_API_BASE_TOPIC = "arrowhead/blacklist";
+	public static final String MQTT_API_DISCOVERY_TOPIC = MQTT_API_BASE_TOPIC + "/discovery";
+
 	// DTO field length limitations
 	public static final int SYSTEM_NAME_LENGTH = ArrowheadEntity.VARCHAR_SMALL;
 	public static final int REASON_LENGTH = ArrowheadEntity.VARCHAR_LARGE;
@@ -70,4 +74,10 @@ public final class BlacklistConstants {
 			"disable.hostname.verifier",
 			"mqtt.client.password");
 
+	//=================================================================================================
+	// assistant methods
+
+	private BlacklistConstants() {
+		throw new UnsupportedOperationException();
+	}
 }
