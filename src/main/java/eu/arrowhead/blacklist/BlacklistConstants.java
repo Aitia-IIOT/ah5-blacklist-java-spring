@@ -44,8 +44,11 @@ public final class BlacklistConstants {
 	public static final String MQTT_API_BASE_TOPIC = "arrowhead/blacklist";
 	public static final String MQTT_API_DISCOVERY_TOPIC = MQTT_API_BASE_TOPIC + "/discovery";
 	public static final String MQTT_API_MANAGEMENT_TOPIC = MQTT_API_BASE_TOPIC + "/management";
+	public static final String MQTT_API_GENERAL_MANAGEMENT_TOPIC = MQTT_API_BASE_TOPIC + "/general/management";
+	public static final String MQTT_API_MONITOR_TOPIC = MQTT_API_BASE_TOPIC + "/monitor";
 
 	// DTO field length limitations
+
 	public static final int SYSTEM_NAME_LENGTH = ArrowheadEntity.VARCHAR_SMALL;
 	public static final int REASON_LENGTH = ArrowheadEntity.VARCHAR_LARGE;
 

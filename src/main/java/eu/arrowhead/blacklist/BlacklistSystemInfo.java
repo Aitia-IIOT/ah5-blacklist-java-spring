@@ -16,6 +16,7 @@ import eu.arrowhead.common.model.InterfaceModel;
 import eu.arrowhead.common.model.ServiceModel;
 import eu.arrowhead.common.model.SystemModel;
 import eu.arrowhead.common.mqtt.model.MqttInterfaceModel;
+import jakarta.annotation.PostConstruct;
 
 @Component
 public class BlacklistSystemInfo extends SystemInfo {
@@ -24,6 +25,9 @@ public class BlacklistSystemInfo extends SystemInfo {
 	// members
 
 	private SystemModel systemModel;
+
+	private String httpTemplateName;
+	private String mqttTemplateName;
 
 	//=================================================================================================
 	// methods
@@ -38,12 +42,46 @@ public class BlacklistSystemInfo extends SystemInfo {
 	@Override
 	public List<ServiceModel> getServices() {
 
-		final String httpTemplateName = getSslProperties().isSslEnabled() ? Constants.GENERIC_HTTPS_INTERFACE_TEMPLATE_NAME : Constants.GENERIC_HTTP_INTERFACE_TEMPLATE_NAME;
-		final String mqttTemplateName = getSslProperties().isSslEnabled() ? Constants.GENERIC_MQTTS_INTERFACE_TEMPLATE_NAME : Constants.GENERIC_MQTT_INTERFACE_TEMPLATE_NAME;
+		return List.of(
+				getDiscoveryServiceModel(),
+				getManagementServiceModel(),
+				getGeneralManagementServiceModel(),
+				getMonitorServiceModel());
+	}
 
-		// discovery
+	//-------------------------------------------------------------------------------------------------
+	@Override
+	public SystemModel getSystemModel() {
+		if (systemModel == null) {
+			SystemModel.Builder builder = new SystemModel.Builder()
+					.address(getAddress())
+					.version(Constants.AH_FRAMEWORK_VERSION);
 
-		List<InterfaceModel> discoveryInterfaces = new ArrayList<>();
+			if (AuthenticationPolicy.CERTIFICATE == this.getAuthenticationPolicy()) {
+				builder = builder.metadata(Constants.METADATA_KEY_X509_PUBLIC_KEY, getPublicKey());
+			}
+
+			systemModel = builder.build();
+		}
+
+		return systemModel;
+	}
+
+	//=================================================================================================
+	// assistant methods
+
+	//-------------------------------------------------------------------------------------------------
+	@Override
+	@PostConstruct
+	protected void customInit() {
+		httpTemplateName = getSslProperties().isSslEnabled() ? Constants.GENERIC_HTTPS_INTERFACE_TEMPLATE_NAME : Constants.GENERIC_HTTP_INTERFACE_TEMPLATE_NAME;
+		mqttTemplateName = getSslProperties().isSslEnabled() ? Constants.GENERIC_MQTTS_INTERFACE_TEMPLATE_NAME : Constants.GENERIC_MQTT_INTERFACE_TEMPLATE_NAME;
+	}
+
+	//-------------------------------------------------------------------------------------------------
+	private ServiceModel getDiscoveryServiceModel() {
+
+		final List<InterfaceModel> discoveryInterfaces = new ArrayList<>();
 
 		final HttpOperationModel httpCheckOp = new HttpOperationModel.Builder()
 				.method(HttpMethod.GET.name())
@@ -72,16 +110,17 @@ public class BlacklistSystemInfo extends SystemInfo {
 			discoveryInterfaces.add(mqttDiscoveryIntf);
 		}
 
-		final ServiceModel discovery = new ServiceModel.Builder()
+		return new ServiceModel.Builder()
 				.serviceDefinition(Constants.SERVICE_DEF_BLACKLIST_DISCOVERY)
 				.version(BlacklistConstants.VERSION_DISCOVERY)
 				.metadata(BlacklistConstants.METADATA_KEY_UNRESTRICTED_DISCOVERY, true)
 				.serviceInterfaces(discoveryInterfaces)
 				.build();
+	}
 
-		// management
-
-		List<InterfaceModel> managementInterfaces = new ArrayList<>();
+	//-------------------------------------------------------------------------------------------------
+	private ServiceModel getManagementServiceModel() {
+		final List<InterfaceModel> managementInterfaces = new ArrayList<>();
 
 		final HttpOperationModel httpQueryOp = new HttpOperationModel.Builder()
 				.method(HttpMethod.POST.name())
@@ -116,76 +155,83 @@ public class BlacklistSystemInfo extends SystemInfo {
 			managementInterfaces.add(mqttManagementIntf);
 		}
 
-		final ServiceModel management = new ServiceModel.Builder()
+		return new ServiceModel.Builder()
 				.serviceDefinition(Constants.SERVICE_DEF_BLACKLIST_MANAGEMENT)
 				.version(BlacklistConstants.VERSION_MANAGEMENT)
 				.metadata(BlacklistConstants.METADATA_KEY_UNRESTRICTED_DISCOVERY, false)
 				.serviceInterfaces(managementInterfaces)
 				.build();
+	}
 
-		// general management
+	//-------------------------------------------------------------------------------------------------
+	private ServiceModel getGeneralManagementServiceModel() {
 
-		final HttpOperationModel log = new HttpOperationModel.Builder()
+		final List<InterfaceModel> generalManagementInterfaces = new ArrayList<>();
+
+		final HttpOperationModel httpLogOp = new HttpOperationModel.Builder()
 				.method(HttpMethod.POST.name())
 				.path(Constants.HTTP_API_OP_LOGS_PATH)
 				.build();
 
-		final HttpOperationModel config = new HttpOperationModel.Builder()
+		final HttpOperationModel httpConfigOp = new HttpOperationModel.Builder()
 				.method(HttpMethod.GET.name())
 				.path(Constants.HTTP_API_OP_GET_CONFIG_PATH)
 				.build();
 
-		final HttpInterfaceModel generalManagementInterface = new HttpInterfaceModel.Builder(httpTemplateName, getDomainAddress(), getServerPort())
+		final HttpInterfaceModel httpGeneralManagementIntf = new HttpInterfaceModel.Builder(httpTemplateName, getDomainAddress(), getServerPort())
 				.basePath(BlacklistConstants.HTTP_API_GENERAL_MANAGEMENT_PATH)
-				.operation(Constants.SERVICE_OP_GET_LOG, log)
-				.operation(Constants.SERVICE_OP_GET_CONFIG, config)
+				.operation(Constants.SERVICE_OP_GET_LOG, httpLogOp)
+				.operation(Constants.SERVICE_OP_GET_CONFIG, httpConfigOp)
 				.build();
 
-		final ServiceModel generalManagement = new ServiceModel.Builder()
+		generalManagementInterfaces.add(httpGeneralManagementIntf);
+
+		if (isMqttApiEnabled()) {
+			final MqttInterfaceModel mqttGeneralManagementIntf = new MqttInterfaceModel.Builder(mqttTemplateName, getMqttBrokerAddress(), getMqttBrokerPort())
+					.topic(BlacklistConstants.MQTT_API_GENERAL_MANAGEMENT_TOPIC)
+					.operations(Set.of(Constants.SERVICE_OP_GET_LOG, Constants.SERVICE_OP_GET_CONFIG))
+					.build();
+			generalManagementInterfaces.add(mqttGeneralManagementIntf);
+		}
+
+		return new ServiceModel.Builder()
 				.serviceDefinition(Constants.SERVICE_DEF_GENERAL_MANAGEMENT)
 				.version(BlacklistConstants.VERSION_GENERAL_MANAGEMENT)
 				.metadata(BlacklistConstants.METADATA_KEY_UNRESTRICTED_DISCOVERY, false)
-				.serviceInterface(generalManagementInterface)
+				.serviceInterfaces(generalManagementInterfaces)
 				.build();
+	}
 
-		// monitor
+	//-------------------------------------------------------------------------------------------------
+	private ServiceModel getMonitorServiceModel() {
+		final List<InterfaceModel> monitorInterfaces = new ArrayList<>();
 
-		final HttpOperationModel echo = new HttpOperationModel.Builder()
+		final HttpOperationModel httpEchoOp = new HttpOperationModel.Builder()
 				.method(HttpMethod.GET.name())
 				.path(BlacklistConstants.HTTP_API_OP_ECHO)
 				.build();
 
-		final HttpInterfaceModel monitorInterface = new HttpInterfaceModel.Builder(httpTemplateName, getDomainAddress(), getServerPort())
+		final HttpInterfaceModel httpMonitorIntf = new HttpInterfaceModel.Builder(httpTemplateName, getDomainAddress(), getServerPort())
 				.basePath(BlacklistConstants.HTTP_API_MONITOR_PATH)
-				.operation(Constants.SERVICE_OP_ECHO, echo)
+				.operation(Constants.SERVICE_OP_ECHO, httpEchoOp)
 				.build();
 
-		final ServiceModel monitor = new ServiceModel.Builder()
+		monitorInterfaces.add(httpMonitorIntf);
+
+		if (isMqttApiEnabled()) {
+			final MqttInterfaceModel mqttMonitorIntf = new MqttInterfaceModel.Builder(mqttTemplateName, getMqttBrokerAddress(), getMqttBrokerPort())
+					.topic(BlacklistConstants.MQTT_API_MONITOR_TOPIC)
+					.operations(Set.of(Constants.SERVICE_OP_ECHO))
+					.build();
+			monitorInterfaces.add(mqttMonitorIntf);
+
+		}
+
+		return new ServiceModel.Builder()
 				.serviceDefinition(Constants.SERVICE_DEF_MONITOR)
 				.version(BlacklistConstants.VERSION_MONITOR)
 				.metadata(BlacklistConstants.METADATA_KEY_UNRESTRICTED_DISCOVERY, false)
-				.serviceInterface(monitorInterface)
+				.serviceInterfaces(monitorInterfaces)
 				.build();
-
-
-		return List.of(discovery, management, generalManagement, monitor);
-	}
-
-	//-------------------------------------------------------------------------------------------------
-	@Override
-	public SystemModel getSystemModel() {
-		if (systemModel == null) {
-			SystemModel.Builder builder = new SystemModel.Builder()
-					.address(getAddress())
-					.version(Constants.AH_FRAMEWORK_VERSION);
-
-			if (AuthenticationPolicy.CERTIFICATE == this.getAuthenticationPolicy()) {
-				builder = builder.metadata(Constants.METADATA_KEY_X509_PUBLIC_KEY, getPublicKey());
-			}
-
-			systemModel = builder.build();
-		}
-
-		return systemModel;
 	}
 }
