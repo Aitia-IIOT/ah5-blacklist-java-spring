@@ -1,6 +1,7 @@
 package eu.arrowhead.blacklist.api.mqtt;
 
 import java.security.InvalidParameterException;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,24 +10,28 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+
 import eu.arrowhead.blacklist.BlacklistConstants;
-import eu.arrowhead.blacklist.service.DiscoveryService;
+import eu.arrowhead.blacklist.service.ManagementService;
 import eu.arrowhead.common.Constants;
 import eu.arrowhead.common.exception.ArrowheadException;
 import eu.arrowhead.common.mqtt.MqttStatus;
 import eu.arrowhead.common.mqtt.handler.MqttTopicHandler;
 import eu.arrowhead.common.mqtt.model.MqttRequestModel;
+import eu.arrowhead.dto.BlacklistCreateListRequestDTO;
 import eu.arrowhead.dto.BlacklistEntryListResponseDTO;
+import eu.arrowhead.dto.BlacklistQueryRequestDTO;
 
 @Service
 @ConditionalOnProperty(name = Constants.MQTT_API_ENABLED, matchIfMissing = false)
-public class DiscoveryMqttHandler extends MqttTopicHandler {
+public class ManagementMqttHandler extends MqttTopicHandler {
 
 	//=================================================================================================
 	// members
 
 	@Autowired
-	private DiscoveryService discoveryService;
+	private ManagementService managementService;
 
 	private final Logger logger = LogManager.getLogger(getClass());
 
@@ -36,28 +41,34 @@ public class DiscoveryMqttHandler extends MqttTopicHandler {
 	//-------------------------------------------------------------------------------------------------
 	@Override
 	public String topic() {
-		return BlacklistConstants.MQTT_API_DISCOVERY_TOPIC;
+		return BlacklistConstants.MQTT_API_MANAGEMENT_TOPIC;
 	}
 
 	//-------------------------------------------------------------------------------------------------
 	@Override
 	public void handle(final MqttRequestModel request) throws ArrowheadException {
-		logger.debug("DiscoveryMqttHandler.handle started");
+		logger.debug("ManagementMqttHandler.handle started");
 		Assert.isTrue(request.getRequestTopic().equals(topic()), "MQTT topic-handler mismatch");
 
 		MqttStatus responseStatus = MqttStatus.OK;
 		Object responsePayload = null;
 
 		switch (request.getOperation()) {
-		case Constants.SERVICE_OP_CHECK:
-			final String systemName = readPayload(request.getPayload(), String.class);
-			responsePayload = check(systemName);
+		case Constants.SERVICE_OP_BLACKLIST_QUERY:
+			final BlacklistQueryRequestDTO queryDto = readPayload(request.getPayload(), BlacklistQueryRequestDTO.class);
+			responsePayload = query(queryDto);
 			break;
 
-		case Constants.SERVICE_OP_LOOKUP:
-			responsePayload = lookup(request.getRequester());
+		case Constants.SERVICE_OP_BLACKLIST_CREATE:
+			final BlacklistCreateListRequestDTO createDto = readPayload(request.getPayload(), BlacklistCreateListRequestDTO.class);
+			responsePayload = create(createDto, request.getRequester());
 			break;
 
+		case Constants.SERVICE_OP_BLACKLIST_REMOVE:
+			final List<String> systemNames = readPayload(request.getPayload(), new TypeReference<List<String>>() {
+			});
+			remove(systemNames, request.isSysOp(), request.getRequester());
+			break;
 		default:
 			throw new InvalidParameterException("Unknown operation: " + request.getOperation());
 		}
@@ -68,20 +79,27 @@ public class DiscoveryMqttHandler extends MqttTopicHandler {
 	//=================================================================================================
 	// assistant methods
 
-	// check
+	// query
 	//-------------------------------------------------------------------------------------------------
-	private boolean check(final String systemName) {
-		logger.debug("DiscoveryMqttHandler.check started");
+	private BlacklistEntryListResponseDTO query(final BlacklistQueryRequestDTO dto) {
+		logger.debug("ManagementMqttHandler.query started");
 
-		return discoveryService.check(systemName, topic());
+		return managementService.query(dto, topic());
 	}
 
-	// lookup
+	// create
 	//-------------------------------------------------------------------------------------------------
-	private BlacklistEntryListResponseDTO lookup(final String identifiedRequester) {
-		logger.debug("DiscoveryMqttHandler.lookup started");
+	private BlacklistEntryListResponseDTO create(final BlacklistCreateListRequestDTO dto, final String identifiedRequester) {
+		logger.debug("ManagementMqttHandler.create started");
 
-		return discoveryService.lookup(identifiedRequester, topic());
+		return managementService.create(dto, topic(), identifiedRequester);
 	}
 
+	// remove
+	//-------------------------------------------------------------------------------------------------
+	private void remove(final List<String> systemNames, final boolean isSysop, final String identifiedRequester) {
+		logger.debug("ManagementMqttHandler.remove started");
+
+		managementService.remove(systemNames, isSysop, identifiedRequester, topic());
+	}
 }

@@ -18,10 +18,12 @@ public final class BlacklistConstants {
 	public static final String METADATA_KEY_UNRESTRICTED_DISCOVERY = "unrestricted-discovery";
 
 	// JPA related
+
 	public static final String DATABASE_ENTITY_PACKAGE = "eu.arrowhead.blacklist.jpa.entity";
 	public static final String DATABASE_REPOSITORY_PACKAGE = "eu.arrowhead.blacklist.jpa.repository";
 
 	// HTTP API paths
+
 	public static final String HTTP_API_BASE_PATH = "/blacklist";
 	public static final String HTTP_API_MANAGEMENT_PATH = HTTP_API_BASE_PATH + "/mgmt";
 	public static final String HTTP_API_MONITOR_PATH = HTTP_API_BASE_PATH + "/monitor";
@@ -38,21 +40,24 @@ public final class BlacklistConstants {
 	public static final String HTTP_API_OP_ECHO = "/echo";
 
 	// MQTT API topics
+
 	public static final String MQTT_API_BASE_TOPIC = "arrowhead/blacklist";
 	public static final String MQTT_API_DISCOVERY_TOPIC = MQTT_API_BASE_TOPIC + "/discovery";
+	public static final String MQTT_API_MANAGEMENT_TOPIC = MQTT_API_BASE_TOPIC + "/management";
 
 	// DTO field length limitations
 	public static final int SYSTEM_NAME_LENGTH = ArrowheadEntity.VARCHAR_SMALL;
 	public static final int REASON_LENGTH = ArrowheadEntity.VARCHAR_LARGE;
 
 	// Blacklist parameters
+
 	public static final String WHITELIST = "whitelist";
 	public static final String $WHITELIST = "#{'${" + WHITELIST + "}'.split(',')}";
 
 	// Forbidden keys (for config service)
 
 	public static final List<String> FORBIDDEN_KEYS = List.of(
-			// database related
+			// Database related
 			"spring.datasource.url",
 			"spring.datasource.username",
 			"spring.datasource.password",
@@ -60,7 +65,7 @@ public final class BlacklistConstants {
 			"spring.jpa.hibernate.ddl-auto",
 			"spring.jpa.show-sql",
 
-			// cert related
+			// Cert related
 			"authenticator.secret.key",
 			"server.ssl.key-store-type",
 			"server.ssl.key-store",

@@ -81,33 +81,46 @@ public class BlacklistSystemInfo extends SystemInfo {
 
 		// management
 
-		final HttpOperationModel query = new HttpOperationModel.Builder()
+		List<InterfaceModel> managementInterfaces = new ArrayList<>();
+
+		final HttpOperationModel httpQueryOp = new HttpOperationModel.Builder()
 				.method(HttpMethod.POST.name())
 				.path(BlacklistConstants.HTTP_API_OP_QUERY)
 				.build();
 
-		final HttpOperationModel create = new HttpOperationModel.Builder()
+		final HttpOperationModel httpCreateOp = new HttpOperationModel.Builder()
 				.method(HttpMethod.POST.name())
 				.path(BlacklistConstants.HTTP_API_OP_CREATE)
 				.build();
 
-		final HttpOperationModel remove = new HttpOperationModel.Builder()
+		final HttpOperationModel httpRemoveOp = new HttpOperationModel.Builder()
 				.method(HttpMethod.DELETE.name())
 				.path(BlacklistConstants.HTTP_API_OP_REMOVE)
 				.build();
 
-		final HttpInterfaceModel managementInterface = new HttpInterfaceModel.Builder(httpTemplateName, getDomainAddress(), getServerPort())
+		final HttpInterfaceModel httpManagementIntf = new HttpInterfaceModel.Builder(httpTemplateName, getDomainAddress(), getServerPort())
 				.basePath(BlacklistConstants.HTTP_API_MANAGEMENT_PATH)
-				.operation(Constants.SERVICE_OP_BLACKLIST_QUERY, query)
-				.operation(Constants.SERVICE_OP_BLACKLIST_CREATE, create)
-				.operation(Constants.SERVICE_OP_BLACKLIST_REMOVE, remove)
+				.operation(Constants.SERVICE_OP_BLACKLIST_QUERY, httpQueryOp)
+				.operation(Constants.SERVICE_OP_BLACKLIST_CREATE, httpCreateOp)
+				.operation(Constants.SERVICE_OP_BLACKLIST_REMOVE, httpRemoveOp)
 				.build();
+
+		managementInterfaces.add(httpManagementIntf);
+
+		if (isMqttApiEnabled()) {
+			final MqttInterfaceModel mqttManagementIntf = new MqttInterfaceModel.Builder(mqttTemplateName, getMqttBrokerAddress(), getMqttBrokerPort())
+					.topic(BlacklistConstants.MQTT_API_MANAGEMENT_TOPIC)
+					.operations(Set.of(Constants.SERVICE_OP_BLACKLIST_CREATE, Constants.SERVICE_OP_BLACKLIST_QUERY,  Constants.SERVICE_OP_BLACKLIST_REMOVE))
+					.build();
+
+			managementInterfaces.add(mqttManagementIntf);
+		}
 
 		final ServiceModel management = new ServiceModel.Builder()
 				.serviceDefinition(Constants.SERVICE_DEF_BLACKLIST_MANAGEMENT)
 				.version(BlacklistConstants.VERSION_MANAGEMENT)
 				.metadata(BlacklistConstants.METADATA_KEY_UNRESTRICTED_DISCOVERY, false)
-				.serviceInterface(managementInterface)
+				.serviceInterfaces(managementInterfaces)
 				.build();
 
 		// general management
