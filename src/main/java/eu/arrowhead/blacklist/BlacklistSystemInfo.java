@@ -234,4 +234,23 @@ public class BlacklistSystemInfo extends SystemInfo {
 				.serviceInterfaces(monitorInterfaces)
 				.build();
 	}
+	
+	protected PublicConfigurationKeysAndDefaults getPublicConfigurationKeysAndDefaults() {
+		return new PublicConfigurationKeysAndDefaults(
+				Set.of(Constants.SERVER_ADDRESS,
+						Constants.SERVER_PORT,
+						Constants.MQTT_API_ENABLED,
+						Constants.DOMAIN_NAME,
+						Constants.AUTHENTICATION_POLICY,
+						Constants.ENABLE_MANAGEMENT_FILTER,
+						Constants.MANAGEMENT_POLICY,
+						Constants.ENABLE_BLACKLIST_FILTER,
+						Constants.FORCE_BLACKLIST_FILTER,
+						Constants.ALLOW_SELF_ADDRESSING,
+						Constants.ALLOW_NON_ROUTABLE_ADDRESSING,
+						Constants.MAX_PAGE_SIZE,
+						Constants.SERVICE_ADDRESS_ALIAS,
+						BlacklistConstants.WHITELIST),
+				BlacklistDefaults.class);
+	}
 }

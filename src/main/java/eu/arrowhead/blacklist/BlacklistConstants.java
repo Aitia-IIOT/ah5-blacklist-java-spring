@@ -55,32 +55,8 @@ public final class BlacklistConstants {
 	// Blacklist parameters
 
 	public static final String WHITELIST = "whitelist";
-	public static final String $WHITELIST = "#{'${" + WHITELIST + "}'.split(',')}";
+	public static final String $WHITELIST_WD = "#{'${" + WHITELIST + ":" + BlacklistDefaults.WHITELIST_DEFAULT + "}'.split(',')}";
 
-	// Forbidden keys (for config service)
-
-	public static final List<String> FORBIDDEN_KEYS = List.of(
-			// Database related
-			"spring.datasource.url",
-			"spring.datasource.username",
-			"spring.datasource.password",
-			"spring.datasource.driver-class-name",
-			"spring.jpa.hibernate.ddl-auto",
-			"spring.jpa.show-sql",
-
-			// Cert related
-			"authenticator.secret.key",
-			"server.ssl.key-store-type",
-			"server.ssl.key-store",
-			"server.ssl.key-store-password",
-			"server.ssl.key-alias",
-			"server.ssl.key-password",
-			"server.ssl.client-auth",
-			"server.ssl.trust-store-type",
-			"server.ssl.trust-store",
-			"server.ssl.trust-store-password",
-			"disable.hostname.verifier",
-			"mqtt.client.password");
 
 	//=================================================================================================
 	// assistant methods
