@@ -45,17 +45,18 @@ public class DiscoveryMqttHandler extends MqttTopicHandler {
 		logger.debug("DiscoveryMqttHandler.handle started");
 		Assert.isTrue(request.getRequestTopic().equals(topic()), "MQTT topic-handler mismatch");
 
+		final String origin = topic() + request.getOperation();
 		MqttStatus responseStatus = MqttStatus.OK;
 		Object responsePayload = null;
 
 		switch (request.getOperation()) {
 		case Constants.SERVICE_OP_CHECK:
 			final String systemName = readPayload(request.getPayload(), String.class);
-			responsePayload = check(systemName);
+			responsePayload = check(systemName, origin);
 			break;
 
 		case Constants.SERVICE_OP_LOOKUP:
-			responsePayload = lookup(request.getRequester());
+			responsePayload = lookup(request.getRequester(), origin);
 			break;
 
 		default:
@@ -70,18 +71,18 @@ public class DiscoveryMqttHandler extends MqttTopicHandler {
 
 	// check
 	//-------------------------------------------------------------------------------------------------
-	private boolean check(final String systemName) {
+	private boolean check(final String systemName, final String origin) {
 		logger.debug("DiscoveryMqttHandler.check started");
 
-		return discoveryService.check(systemName, topic());
+		return discoveryService.check(systemName, origin);
 	}
 
 	// lookup
 	//-------------------------------------------------------------------------------------------------
-	private BlacklistEntryListResponseDTO lookup(final String identifiedRequester) {
+	private BlacklistEntryListResponseDTO lookup(final String identifiedRequester, final String origin) {
 		logger.debug("DiscoveryMqttHandler.lookup started");
 
-		return discoveryService.lookup(identifiedRequester, topic());
+		return discoveryService.lookup(identifiedRequester, origin);
 	}
 
 }

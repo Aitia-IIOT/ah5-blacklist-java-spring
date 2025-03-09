@@ -54,18 +54,19 @@ public class GeneralManagementMqttHandler extends MqttTopicHandler {
 		logger.debug("ManagementMqttHandler.handle started");
 		Assert.isTrue(request.getRequestTopic().equals(topic()), "MQTT topic-handler mismatch");
 
+		final String origin = topic() + request.getOperation();
 		MqttStatus responseStatus = MqttStatus.OK;
 		Object responsePayload = null;
 
 		switch (request.getOperation()) {
 		case Constants.SERVICE_OP_GET_LOG:
 			final LogRequestDTO getLogDTO = readPayload(request.getPayload(), LogRequestDTO.class);
-			responsePayload = getLog(getLogDTO);
+			responsePayload = getLog(getLogDTO, origin);
 			break;
 
 		case Constants.SERVICE_OP_GET_CONFIG:
 			final List<String> getConfigDTO = readPayload(request.getPayload(), new TypeReference<List<String>>() { });
-			responsePayload = getConfig(getConfigDTO);
+			responsePayload = getConfig(getConfigDTO, origin);
 			break;
 
 		default:
@@ -79,14 +80,14 @@ public class GeneralManagementMqttHandler extends MqttTopicHandler {
 	// assistant methods
 
 	//-------------------------------------------------------------------------------------------------
-	private LogEntryListResponseDTO getLog(final LogRequestDTO dto) {
+	private LogEntryListResponseDTO getLog(final LogRequestDTO dto, final String origin) {
 		logger.debug("ManagementMqttHandler.getLog started");
-		return logService.getLogEntries(dto, topic());
+		return logService.getLogEntries(dto, origin);
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	private KeyValuesDTO getConfig(final List<String> dto) {
+	private KeyValuesDTO getConfig(final List<String> dto, final String origin) {
 		logger.debug("ManagementMqttHandler.getConfig started");
-		return configService.getConfig(dto, topic());
+		return configService.getConfig(dto, origin);
 	}
 }
