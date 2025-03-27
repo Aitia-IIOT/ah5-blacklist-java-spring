@@ -103,7 +103,7 @@ public class BlacklistSystemInfo extends SystemInfo {
 
 		if (isMqttApiEnabled()) {
 			final MqttInterfaceModel mqttDiscoveryIntf = new MqttInterfaceModel.Builder(mqttTemplateName, getMqttBrokerAddress(), getMqttBrokerPort())
-					.topic(BlacklistConstants.MQTT_API_DISCOVERY_TOPIC)
+					.baseTopic(BlacklistConstants.MQTT_API_DISCOVERY_BASE_TOPIC)
 					.operations(Set.of(Constants.SERVICE_OP_CHECK, Constants.SERVICE_OP_LOOKUP))
 					.build();
 
@@ -148,7 +148,7 @@ public class BlacklistSystemInfo extends SystemInfo {
 
 		if (isMqttApiEnabled()) {
 			final MqttInterfaceModel mqttManagementIntf = new MqttInterfaceModel.Builder(mqttTemplateName, getMqttBrokerAddress(), getMqttBrokerPort())
-					.topic(BlacklistConstants.MQTT_API_MANAGEMENT_TOPIC)
+					.baseTopic(BlacklistConstants.MQTT_API_MANAGEMENT_BASE_TOPIC)
 					.operations(Set.of(Constants.SERVICE_OP_BLACKLIST_CREATE, Constants.SERVICE_OP_BLACKLIST_QUERY,  Constants.SERVICE_OP_BLACKLIST_REMOVE))
 					.build();
 
@@ -188,7 +188,7 @@ public class BlacklistSystemInfo extends SystemInfo {
 
 		if (isMqttApiEnabled()) {
 			final MqttInterfaceModel mqttGeneralManagementIntf = new MqttInterfaceModel.Builder(mqttTemplateName, getMqttBrokerAddress(), getMqttBrokerPort())
-					.topic(BlacklistConstants.MQTT_API_GENERAL_MANAGEMENT_TOPIC)
+					.baseTopic(BlacklistConstants.MQTT_API_GENERAL_MANAGEMENT_BASE_TOPIC)
 					.operations(Set.of(Constants.SERVICE_OP_GET_LOG, Constants.SERVICE_OP_GET_CONFIG))
 					.build();
 			generalManagementInterfaces.add(mqttGeneralManagementIntf);
@@ -220,7 +220,7 @@ public class BlacklistSystemInfo extends SystemInfo {
 
 		if (isMqttApiEnabled()) {
 			final MqttInterfaceModel mqttMonitorIntf = new MqttInterfaceModel.Builder(mqttTemplateName, getMqttBrokerAddress(), getMqttBrokerPort())
-					.topic(BlacklistConstants.MQTT_API_MONITOR_TOPIC)
+					.baseTopic(BlacklistConstants.MQTT_API_MONITOR_BASE_TOPIC)
 					.operations(Set.of(Constants.SERVICE_OP_ECHO))
 					.build();
 			monitorInterfaces.add(mqttMonitorIntf);

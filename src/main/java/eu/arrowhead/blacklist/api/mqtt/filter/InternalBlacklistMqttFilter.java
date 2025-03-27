@@ -40,7 +40,7 @@ public class InternalBlacklistMqttFilter implements ArrowheadMqttFilter {
 	@Override
 	public void doFilter(final String authKey, final MqttRequestModel request) {
 		logger.debug("InternalBlacklistMqttFilter is active");
-		final String origin = request.getRequestTopic() + " " + request.getOperation();
+		final String origin = request.getBaseTopic() + " " + request.getOperation();
 
 		final String systemName = request.getRequester();
 
@@ -58,14 +58,14 @@ public class InternalBlacklistMqttFilter implements ArrowheadMqttFilter {
 	//-------------------------------------------------------------------------------------------------
 	private boolean isLookup(final MqttRequestModel request) {
 
-		return request.getRequestTopic().equals(BlacklistConstants.MQTT_API_DISCOVERY_TOPIC)
+		return request.getBaseTopic().equals(BlacklistConstants.MQTT_API_DISCOVERY_BASE_TOPIC)
 				&& request.getOperation().equals(Constants.SERVICE_OP_LOOKUP);
 	}
 
 	//-------------------------------------------------------------------------------------------------
 	private boolean isSelfCheck(final MqttRequestModel request) {
 
-		return request.getRequestTopic().equals(BlacklistConstants.MQTT_API_DISCOVERY_TOPIC)
+		return request.getBaseTopic().equals(BlacklistConstants.MQTT_API_DISCOVERY_BASE_TOPIC)
 				&& request.getOperation().equals(Constants.SERVICE_OP_CHECK)
 				&& normalizer.normalizeSystemName(request.getPayload().toString()).equals(normalizer.normalizeSystemName(request.getRequester()));
 	}

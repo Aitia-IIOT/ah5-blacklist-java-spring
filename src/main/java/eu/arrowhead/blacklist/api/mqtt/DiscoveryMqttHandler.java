@@ -35,28 +35,26 @@ public class DiscoveryMqttHandler extends MqttTopicHandler {
 
 	//-------------------------------------------------------------------------------------------------
 	@Override
-	public String topic() {
-		return BlacklistConstants.MQTT_API_DISCOVERY_TOPIC;
+	public String baseTopic() {
+		return BlacklistConstants.MQTT_API_DISCOVERY_BASE_TOPIC;
 	}
 
 	//-------------------------------------------------------------------------------------------------
 	@Override
 	public void handle(final MqttRequestModel request) throws ArrowheadException {
 		logger.debug("DiscoveryMqttHandler.handle started");
-		Assert.isTrue(request.getRequestTopic().equals(topic()), "MQTT topic-handler mismatch");
-
-		final String origin = topic() + request.getOperation();
+		Assert.isTrue(request.getBaseTopic().equals(baseTopic()), "MQTT topic-handler mismatch");
 		MqttStatus responseStatus = MqttStatus.OK;
 		Object responsePayload = null;
 
 		switch (request.getOperation()) {
 		case Constants.SERVICE_OP_CHECK:
 			final String systemName = readPayload(request.getPayload(), String.class);
-			responsePayload = check(systemName, origin);
+			responsePayload = check(systemName);
 			break;
 
 		case Constants.SERVICE_OP_LOOKUP:
-			responsePayload = lookup(request.getRequester(), origin);
+			responsePayload = lookup(request.getRequester());
 			break;
 
 		default:
@@ -71,18 +69,18 @@ public class DiscoveryMqttHandler extends MqttTopicHandler {
 
 	// check
 	//-------------------------------------------------------------------------------------------------
-	private boolean check(final String systemName, final String origin) {
+	private boolean check(final String systemName) {
 		logger.debug("DiscoveryMqttHandler.check started");
 
-		return discoveryService.check(systemName, origin);
+		return discoveryService.check(systemName, baseTopic() + Constants.SERVICE_OP_CHECK);
 	}
 
 	// lookup
 	//-------------------------------------------------------------------------------------------------
-	private BlacklistEntryListResponseDTO lookup(final String identifiedRequester, final String origin) {
+	private BlacklistEntryListResponseDTO lookup(final String identifiedRequester) {
 		logger.debug("DiscoveryMqttHandler.lookup started");
 
-		return discoveryService.lookup(identifiedRequester, origin);
+		return discoveryService.lookup(identifiedRequester, baseTopic() + Constants.SERVICE_OP_LOOKUP);
 	}
 
 }
