@@ -44,7 +44,6 @@ public class DiscoveryMqttHandler extends MqttTopicHandler {
 	public void handle(final MqttRequestModel request) throws ArrowheadException {
 		logger.debug("DiscoveryMqttHandler.handle started");
 		Assert.isTrue(request.getBaseTopic().equals(baseTopic()), "MQTT topic-handler mismatch");
-		MqttStatus responseStatus = MqttStatus.OK;
 		Object responsePayload = null;
 
 		switch (request.getOperation()) {
@@ -61,7 +60,7 @@ public class DiscoveryMqttHandler extends MqttTopicHandler {
 			throw new InvalidParameterException("Unknown operation: " + request.getOperation());
 		}
 
-		successResponse(request, responseStatus, responsePayload);
+		successResponse(request, MqttStatus.OK, responsePayload);
 	}
 
 	//=================================================================================================

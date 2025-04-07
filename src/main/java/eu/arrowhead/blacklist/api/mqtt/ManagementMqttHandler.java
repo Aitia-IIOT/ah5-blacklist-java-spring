@@ -61,6 +61,7 @@ public class ManagementMqttHandler extends MqttTopicHandler {
 		case Constants.SERVICE_OP_BLACKLIST_CREATE:
 			final BlacklistCreateListRequestDTO createDto = readPayload(request.getPayload(), BlacklistCreateListRequestDTO.class);
 			responsePayload = create(createDto, request.getRequester());
+			responseStatus = MqttStatus.CREATED;
 			break;
 
 		case Constants.SERVICE_OP_BLACKLIST_REMOVE:
@@ -91,7 +92,7 @@ public class ManagementMqttHandler extends MqttTopicHandler {
 	private BlacklistEntryListResponseDTO create(final BlacklistCreateListRequestDTO dto, final String identifiedRequester) {
 		logger.debug("ManagementMqttHandler.create started");
 
-		return managementService.create(dto, baseTopic() + Constants.SERVICE_OP_BLACKLIST_CREATE, identifiedRequester);
+		return managementService.create(dto, identifiedRequester, baseTopic() + Constants.SERVICE_OP_BLACKLIST_CREATE);
 	}
 
 	// remove
