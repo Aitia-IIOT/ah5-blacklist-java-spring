@@ -18,7 +18,7 @@ import eu.arrowhead.common.model.SystemModel;
 import eu.arrowhead.common.mqtt.model.MqttInterfaceModel;
 import jakarta.annotation.PostConstruct;
 
-@Component
+@Component(Constants.BEAN_NAME_SYSTEM_INFO)
 public class BlacklistSystemInfo extends SystemInfo {
 
 	//=================================================================================================
