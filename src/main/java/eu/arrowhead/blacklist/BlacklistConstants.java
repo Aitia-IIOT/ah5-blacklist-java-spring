@@ -1,7 +1,5 @@
 package eu.arrowhead.blacklist;
 
-import java.util.List;
-
 import eu.arrowhead.common.jpa.ArrowheadEntity;
 
 public final class BlacklistConstants {
