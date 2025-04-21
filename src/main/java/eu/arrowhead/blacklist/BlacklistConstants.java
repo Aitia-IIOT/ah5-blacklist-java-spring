@@ -13,7 +13,6 @@ public final class BlacklistConstants {
 	public static final String VERSION_MANAGEMENT = "1.0.0";
 	public static final String VERSION_GENERAL_MANAGEMENT = "1.0.0";
 	public static final String VERSION_MONITOR = "1.0.0";
-	public static final String METADATA_KEY_UNRESTRICTED_DISCOVERY = "unrestricted-discovery";
 
 	// JPA related
 

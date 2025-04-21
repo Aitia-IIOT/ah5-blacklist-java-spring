@@ -18,7 +18,7 @@ import eu.arrowhead.common.model.SystemModel;
 import eu.arrowhead.common.mqtt.model.MqttInterfaceModel;
 import jakarta.annotation.PostConstruct;
 
-@Component()
+@Component(Constants.BEAN_NAME_SYSTEM_INFO)
 public class BlacklistSystemInfo extends SystemInfo {
 
 	//=================================================================================================
@@ -113,7 +113,7 @@ public class BlacklistSystemInfo extends SystemInfo {
 		return new ServiceModel.Builder()
 				.serviceDefinition(Constants.SERVICE_DEF_BLACKLIST_DISCOVERY)
 				.version(BlacklistConstants.VERSION_DISCOVERY)
-				.metadata(BlacklistConstants.METADATA_KEY_UNRESTRICTED_DISCOVERY, true)
+				.metadata(Constants.METADATA_KEY_UNRESTRICTED_DISCOVERY, true)
 				.serviceInterfaces(discoveryInterfaces)
 				.build();
 	}
@@ -158,7 +158,7 @@ public class BlacklistSystemInfo extends SystemInfo {
 		return new ServiceModel.Builder()
 				.serviceDefinition(Constants.SERVICE_DEF_BLACKLIST_MANAGEMENT)
 				.version(BlacklistConstants.VERSION_MANAGEMENT)
-				.metadata(BlacklistConstants.METADATA_KEY_UNRESTRICTED_DISCOVERY, false)
+				.metadata(Constants.METADATA_KEY_UNRESTRICTED_DISCOVERY, false)
 				.serviceInterfaces(managementInterfaces)
 				.build();
 	}
@@ -197,7 +197,7 @@ public class BlacklistSystemInfo extends SystemInfo {
 		return new ServiceModel.Builder()
 				.serviceDefinition(Constants.SERVICE_DEF_GENERAL_MANAGEMENT)
 				.version(BlacklistConstants.VERSION_GENERAL_MANAGEMENT)
-				.metadata(BlacklistConstants.METADATA_KEY_UNRESTRICTED_DISCOVERY, false)
+				.metadata(Constants.METADATA_KEY_UNRESTRICTED_DISCOVERY, false)
 				.serviceInterfaces(generalManagementInterfaces)
 				.build();
 	}
@@ -230,7 +230,7 @@ public class BlacklistSystemInfo extends SystemInfo {
 		return new ServiceModel.Builder()
 				.serviceDefinition(Constants.SERVICE_DEF_MONITOR)
 				.version(BlacklistConstants.VERSION_MONITOR)
-				.metadata(BlacklistConstants.METADATA_KEY_UNRESTRICTED_DISCOVERY, false)
+				.metadata(Constants.METADATA_KEY_UNRESTRICTED_DISCOVERY, false)
 				.serviceInterfaces(monitorInterfaces)
 				.build();
 	}
