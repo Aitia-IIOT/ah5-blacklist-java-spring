@@ -246,6 +246,7 @@ public class BlacklistSystemInfo extends SystemInfo {
 						Constants.ENABLE_MANAGEMENT_FILTER,
 						Constants.MANAGEMENT_POLICY,
 						Constants.AUTHENTICATION_POLICY,
+						Constants.MAX_PAGE_SIZE,
 						BlacklistConstants.WHITELIST),
 				BlacklistDefaults.class);
 	}
