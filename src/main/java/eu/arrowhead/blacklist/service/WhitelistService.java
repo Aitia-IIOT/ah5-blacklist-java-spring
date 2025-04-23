@@ -21,7 +21,7 @@ public class WhitelistService {
 	//=================================================================================================
 	// members
 
-	@Value(BlacklistConstants.$WHITELIST)
+	@Value(BlacklistConstants.$WHITELIST_WD)
 	private List<String> whitelist;
 
 	private List<String> normalizedWhitelist;
