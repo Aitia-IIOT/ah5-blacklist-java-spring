@@ -41,11 +41,11 @@ public class BlacklistSystemInfo extends SystemInfo {
 	//-------------------------------------------------------------------------------------------------
 	@Override
 	public List<ServiceModel> getServices() {
-
+		// starting with management services speeds up management filters
 		return List.of(
-				getDiscoveryServiceModel(),
-				getManagementServiceModel(),
 				getGeneralManagementServiceModel(),
+				getManagementServiceModel(),
+				getDiscoveryServiceModel(),
 				getMonitorServiceModel());
 	}
 
