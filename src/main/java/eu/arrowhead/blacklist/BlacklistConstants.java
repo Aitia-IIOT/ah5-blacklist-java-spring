@@ -1,7 +1,5 @@
 package eu.arrowhead.blacklist;
 
-import java.util.List;
-
 import eu.arrowhead.common.jpa.ArrowheadEntity;
 
 public final class BlacklistConstants {
@@ -10,12 +8,10 @@ public final class BlacklistConstants {
 	// members
 
 	// System info related
-	public static final String SYSTEM_NAME = "blacklist";
 	public static final String VERSION_DISCOVERY = "1.0.0";
 	public static final String VERSION_MANAGEMENT = "1.0.0";
 	public static final String VERSION_GENERAL_MANAGEMENT = "1.0.0";
 	public static final String VERSION_MONITOR = "1.0.0";
-	public static final String METADATA_KEY_UNRESTRICTED_DISCOVERY = "unrestricted-discovery";
 
 	// JPA related
 
@@ -49,14 +45,12 @@ public final class BlacklistConstants {
 
 	// DTO field length limitations
 
-	public static final int SYSTEM_NAME_LENGTH = ArrowheadEntity.VARCHAR_SMALL;
 	public static final int REASON_LENGTH = ArrowheadEntity.VARCHAR_LARGE;
 
 	// Blacklist parameters
 
 	public static final String WHITELIST = "whitelist";
 	public static final String $WHITELIST_WD = "#{'${" + WHITELIST + ":" + BlacklistDefaults.WHITELIST_DEFAULT + "}'.split(',')}";
-
 
 	//=================================================================================================
 	// assistant methods
