@@ -49,6 +49,7 @@ public class ManagementMqttHandler extends MqttTopicHandler {
 	public void handle(final MqttRequestModel request) throws ArrowheadException {
 		logger.debug("ManagementMqttHandler.handle started");
 		Assert.isTrue(request.getBaseTopic().equals(baseTopic()), "MQTT topic-handler mismatch");
+
 		MqttStatus responseStatus = MqttStatus.OK;
 		Object responsePayload = null;
 
@@ -68,6 +69,7 @@ public class ManagementMqttHandler extends MqttTopicHandler {
 			});
 			remove(systemNames, request.isSysOp(), request.getRequester());
 			break;
+
 		default:
 			throw new InvalidParameterException("Unknown operation: " + request.getOperation());
 		}
@@ -91,7 +93,7 @@ public class ManagementMqttHandler extends MqttTopicHandler {
 	private BlacklistEntryListResponseDTO create(final BlacklistCreateListRequestDTO dto, final String identifiedRequester) {
 		logger.debug("ManagementMqttHandler.create started");
 
-		return managementService.create(dto, baseTopic() + Constants.SERVICE_OP_BLACKLIST_CREATE, identifiedRequester);
+		return managementService.create(dto, identifiedRequester, baseTopic() + Constants.SERVICE_OP_BLACKLIST_CREATE);
 	}
 
 	// remove

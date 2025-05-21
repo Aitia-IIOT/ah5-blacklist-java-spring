@@ -53,6 +53,5 @@ public class DTOConverter {
 						))
 				.collect(Collectors.toList()),
 				count);
-
 	}
 }

@@ -51,8 +51,9 @@ public class GeneralManagementMqttHandler extends MqttTopicHandler {
 	//-------------------------------------------------------------------------------------------------
 	@Override
 	public void handle(final MqttRequestModel request) throws ArrowheadException {
-		logger.debug("ManagementMqttHandler.handle started");
+		logger.debug("GeneralManagementMqttHandler.handle started");
 		Assert.isTrue(request.getBaseTopic().equals(baseTopic()), "MQTT topic-handler mismatch");
+
 		MqttStatus responseStatus = MqttStatus.OK;
 		Object responsePayload = null;
 
@@ -63,7 +64,8 @@ public class GeneralManagementMqttHandler extends MqttTopicHandler {
 			break;
 
 		case Constants.SERVICE_OP_GET_CONFIG:
-			final List<String> getConfigDTO = readPayload(request.getPayload(), new TypeReference<List<String>>() { });
+			final List<String> getConfigDTO = readPayload(request.getPayload(), new TypeReference<List<String>>() {
+			});
 			responsePayload = getConfig(getConfigDTO);
 			break;
 
@@ -79,13 +81,15 @@ public class GeneralManagementMqttHandler extends MqttTopicHandler {
 
 	//-------------------------------------------------------------------------------------------------
 	private LogEntryListResponseDTO getLog(final LogRequestDTO dto) {
-		logger.debug("ManagementMqttHandler.getLog started");
+		logger.debug("GeneralManagementMqttHandler.getLog started");
+
 		return logService.getLogEntries(dto, baseTopic() + Constants.SERVICE_OP_GET_LOG);
 	}
 
 	//-------------------------------------------------------------------------------------------------
 	private KeyValuesDTO getConfig(final List<String> dto) {
-		logger.debug("ManagementMqttHandler.getConfig started");
+		logger.debug("GeneralManagementMqttHandler.getConfig started");
+
 		return configService.getConfig(dto, baseTopic() + Constants.SERVICE_OP_GET_CONFIG);
 	}
 }

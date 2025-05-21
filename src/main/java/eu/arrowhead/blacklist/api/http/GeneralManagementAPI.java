@@ -68,6 +68,7 @@ public class GeneralManagementAPI {
 		logger.debug("getLogEntries started...");
 
 		final String origin = HttpMethod.POST.name() + " " + BlacklistConstants.HTTP_API_GENERAL_MANAGEMENT_PATH + Constants.HTTP_API_OP_LOGS_PATH;
+
 		return logService.getLogEntries(dto, origin);
 	}
 
@@ -86,10 +87,12 @@ public class GeneralManagementAPI {
 					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorMessageDTO.class)) })
 	})
 	@GetMapping(path = Constants.HTTP_API_OP_GET_CONFIG_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody public KeyValuesDTO getConfig(final @RequestParam(required = false) List<String> keys) {
+	@ResponseBody
+	public KeyValuesDTO getConfig(final @RequestParam(required = false) List<String> keys) {
 		logger.debug("getConfig started ...");
 
 		final String origin = HttpMethod.GET.name() + " " + BlacklistConstants.HTTP_API_GENERAL_MANAGEMENT_PATH + Constants.HTTP_API_OP_GET_CONFIG_PATH;
+
 		return configService.getConfig(keys, origin);
 	}
 }

@@ -44,6 +44,7 @@ public class DiscoveryMqttHandler extends MqttTopicHandler {
 	public void handle(final MqttRequestModel request) throws ArrowheadException {
 		logger.debug("DiscoveryMqttHandler.handle started");
 		Assert.isTrue(request.getBaseTopic().equals(baseTopic()), "MQTT topic-handler mismatch");
+
 		MqttStatus responseStatus = MqttStatus.OK;
 		Object responsePayload = null;
 
@@ -82,5 +83,4 @@ public class DiscoveryMqttHandler extends MqttTopicHandler {
 
 		return discoveryService.lookup(identifiedRequester, baseTopic() + Constants.SERVICE_OP_LOOKUP);
 	}
-
 }

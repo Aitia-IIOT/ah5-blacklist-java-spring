@@ -57,52 +57,51 @@ public class ManagementService {
 		logger.debug("ManagementService query started...");
 
 		final NormalizedBlacklistQueryRequestDTO normalized = validator.validateAndNormalizeBlacklistQueryRequestDTO(dto, origin);
-
 		final PageRequest pageRequest = pageService.getPageRequest(normalized.pagination(), Direction.DESC, Entry.SORTABLE_FIELDS_BY, Entry.DEFAULT_SORT_FIELD, origin);
 
-		Page<Entry> matchingEnties;
 		try {
-			matchingEnties = dbService.getPageByFilters(
+			final Page<Entry> matchingEntities = dbService.getPageByFilters(
 					pageRequest,
 					normalized.systemNames(),
 					normalized.mode(),
 					normalized.issuers(),
 					normalized.revokers(),
 					normalized.reason(),
-					Utilities.parseUTCStringToZonedDateTime(normalized.alivesAt())
-					);
+					Utilities.parseUTCStringToZonedDateTime(normalized.alivesAt()));
+
+			return dtoConverter.convertEntriesToBlacklistEntryListResponseDTO(matchingEntities.getContent(), matchingEntities.getTotalElements());
 		} catch (final InternalServerError ex) {
 			throw new InternalServerError(ex.getMessage(), origin);
 		}
-		return dtoConverter.convertEntriesToBlacklistEntryListResponseDTO(matchingEnties.toList(), matchingEnties.getTotalElements());
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	public BlacklistEntryListResponseDTO create(final BlacklistCreateListRequestDTO dto, final String origin, final String requesterName) {
+	public BlacklistEntryListResponseDTO create(final BlacklistCreateListRequestDTO dto, final String requesterName, final String origin) {
 		logger.debug("ManagementService create started...");
 
 		final BlacklistCreateListRequestDTO normalizedDto = validator.validateAndNormalizeBlacklistCreateListRequestDTO(dto, origin);
 		final String normalizedRequesterName = validator.validateAndNormalizeSystemName(requesterName, origin);
 		checkSelfBlacklisting(normalizedDto.entities(), normalizedRequesterName, origin);
 		whitelistService.checkWhitelist(normalizedDto.entities().stream().map(e -> e.systemName()).collect(Collectors.toList()), origin);
-		List<Entry> createdEnties;
 		try {
-			createdEnties = dbService.createBulk(normalizedDto.entities(), normalizedRequesterName);
+			final List<Entry> createdEntities = dbService.createBulk(normalizedDto.entities(), normalizedRequesterName);
+
+			return dtoConverter.convertEntriesToBlacklistEntryListResponseDTO(createdEntities, createdEntities.size());
 		} catch (final InternalServerError ex) {
 			throw new InternalServerError(ex.getMessage(), origin);
 		}
-		return dtoConverter.convertEntriesToBlacklistEntryListResponseDTO(createdEnties, createdEnties.size());
 	}
 
 	//-------------------------------------------------------------------------------------------------
 	public void remove(final List<String> systemNameList, final boolean isSysop, final String revokerName, final String origin) {
 		logger.debug("ManagementService remove started...");
 
-		// only sysop can remove istelf from blacklist
-		checkSysopRemoval(systemNameList, isSysop, revokerName, origin);
-
 		final List<String> normalizedList = validator.validateAndNormalizeSystemNameList(systemNameList, origin);
 		final String normalizedRevokerName = validator.validateAndNormalizeSystemName(revokerName, origin);
+
+		// only sysop can remove itself from blacklist
+		checkSysopRemoval(normalizedList, isSysop, normalizedRevokerName, origin);
+
 		try {
 			dbService.inactivateNameList(normalizedList, normalizedRevokerName);
 		} catch (final InternalServerError ex) {
@@ -115,21 +114,22 @@ public class ManagementService {
 
 	//-------------------------------------------------------------------------------------------------
 	private void checkSelfBlacklisting(final List<BlacklistCreateRequestDTO> candidates, final String requesterName, final String origin) {
-		Assert.notNull(candidates, "Candidates is null!");
-		Assert.isTrue(!Utilities.containsNull(candidates), "Candidate list contains null element!");
+		Assert.notNull(candidates, "Candidates is null");
+		Assert.isTrue(!Utilities.containsNull(candidates), "Candidate list contains null element");
 
 		for (final BlacklistCreateRequestDTO candidate : candidates) {
 			if (candidate.systemName().equals(requesterName)) {
-				throw new InvalidParameterException("It is not allowed to add yourself to the blacklist!", origin);
+				throw new InvalidParameterException("It is not allowed to add yourself to the blacklist", origin);
 			}
 		}
 	}
 
 	//-------------------------------------------------------------------------------------------------
 	private void checkSysopRemoval(final List<String> names, final boolean isSysop, final String requesterName, final String origin) {
-		Assert.notNull(names, "System name list is null!");
+		Assert.notNull(names, "System name list is null");
+
 		if (names.contains(requesterName) && !isSysop) {
-			throw new InvalidParameterException("Only sysop can remove itself from the blacklist!", origin);
+			throw new InvalidParameterException("Only sysop can remove itself from the blacklist", origin);
 		}
 	}
 }

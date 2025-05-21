@@ -11,8 +11,9 @@ public class BlacklistApplicationInitListener extends ApplicationInitListener {
 
 	//=================================================================================================
 	// members
-	 @Autowired
-	 private WhitelistService whitelistService;
+
+	@Autowired
+	private WhitelistService whitelistService;
 
 	//=================================================================================================
 	// assistant methods

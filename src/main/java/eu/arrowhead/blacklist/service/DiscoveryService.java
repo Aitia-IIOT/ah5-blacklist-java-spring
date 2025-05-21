@@ -55,10 +55,10 @@ public class DiscoveryService {
 
 		try {
 			final List<Entry> entries = dbService.getActiveEntriesForName(normalizedName);
+
 			return dtoConverter.convertEntriesToBlacklistEntryListResponseDTO(entries, entries.size());
 		} catch (final InternalServerError ex) {
 			throw new InternalServerError(ex.getMessage(), origin);
 		}
 	}
-
 }
