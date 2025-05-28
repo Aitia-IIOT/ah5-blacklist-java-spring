@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>arrowhead-blacklist</artifactId>
 	<version>${revision}</version>
-	<name>ah5-blacklist-java-spring</name>
+	<name>Arrowhead System Blacklist</name>
 	<description>Arrowhead System Blacklist using Spring Boot</description>
 	
 	<url>https://github.com/Aitia-IIOT/ah5-blacklist-java-spring</url>
