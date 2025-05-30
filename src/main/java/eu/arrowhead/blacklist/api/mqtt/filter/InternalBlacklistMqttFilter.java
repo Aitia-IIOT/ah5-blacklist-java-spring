@@ -43,7 +43,7 @@ public class InternalBlacklistMqttFilter implements ArrowheadMqttFilter {
 	public void doFilter(final String authKey, final MqttRequestModel request) {
 		logger.debug("InternalBlacklistMqttFilter is active");
 
-		final String origin = request.getBaseTopic() + " " + request.getOperation();
+		final String origin = request.getBaseTopic() + request.getOperation();
 		final String systemName = request.getRequester();
 
 		if (Utilities.isEmpty(systemName)) {

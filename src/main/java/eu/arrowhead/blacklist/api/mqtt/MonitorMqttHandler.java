@@ -39,7 +39,6 @@ public class MonitorMqttHandler extends MqttTopicHandler {
 		logger.debug("MonitorMqttHandler.handle started");
 		Assert.isTrue(request.getBaseTopic().equals(baseTopic()), "MQTT topic-handler mismatch");
 
-		final MqttStatus responseStatus = MqttStatus.OK;
 		Object responsePayload = null;
 
 		switch (request.getOperation()) {
@@ -51,7 +50,7 @@ public class MonitorMqttHandler extends MqttTopicHandler {
 			throw new InvalidParameterException("Unknown operation: " + request.getOperation());
 		}
 
-		successResponse(request, responseStatus, responsePayload);
+		successResponse(request, MqttStatus.OK, responsePayload);
 	}
 
 	//=================================================================================================
