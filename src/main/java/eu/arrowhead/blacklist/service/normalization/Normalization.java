@@ -57,7 +57,7 @@ public class Normalization {
 						? null
 						: dto.systemNames().stream().map(n -> systemNameNormalizer.normalize(n)).collect(Collectors.toList()),
 				// mode
-				Mode.valueOf(dto.mode().trim().toUpperCase()),
+				Utilities.isEmpty(dto.mode()) ? null : Mode.valueOf(dto.mode().trim().toUpperCase()),
 				// issuers
 				Utilities.isEmpty(dto.issuers())
 						? null
