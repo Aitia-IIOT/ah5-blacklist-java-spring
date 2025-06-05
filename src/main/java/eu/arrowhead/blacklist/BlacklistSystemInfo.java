@@ -16,7 +16,6 @@ import eu.arrowhead.common.model.InterfaceModel;
 import eu.arrowhead.common.model.ServiceModel;
 import eu.arrowhead.common.model.SystemModel;
 import eu.arrowhead.common.mqtt.model.MqttInterfaceModel;
-import jakarta.annotation.PostConstruct;
 
 @Component(Constants.BEAN_NAME_SYSTEM_INFO)
 public class BlacklistSystemInfo extends SystemInfo {
@@ -35,7 +34,7 @@ public class BlacklistSystemInfo extends SystemInfo {
 	//-------------------------------------------------------------------------------------------------
 	@Override
 	public String getSystemName() {
-		return BlacklistConstants.SYSTEM_NAME;
+		return Constants.SYS_NAME_BLACKLIST;
 	}
 
 	//-------------------------------------------------------------------------------------------------
@@ -72,15 +71,29 @@ public class BlacklistSystemInfo extends SystemInfo {
 
 	//-------------------------------------------------------------------------------------------------
 	@Override
-	@PostConstruct
 	protected void customInit() {
 		httpTemplateName = getSslProperties().isSslEnabled() ? Constants.GENERIC_HTTPS_INTERFACE_TEMPLATE_NAME : Constants.GENERIC_HTTP_INTERFACE_TEMPLATE_NAME;
 		mqttTemplateName = getSslProperties().isSslEnabled() ? Constants.GENERIC_MQTTS_INTERFACE_TEMPLATE_NAME : Constants.GENERIC_MQTT_INTERFACE_TEMPLATE_NAME;
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	private ServiceModel getDiscoveryServiceModel() {
+	protected PublicConfigurationKeysAndDefaults getPublicConfigurationKeysAndDefaults() {
+		return new PublicConfigurationKeysAndDefaults(
+				Set.of(Constants.SERVER_ADDRESS,
+						Constants.SERVER_PORT,
+						Constants.MQTT_API_ENABLED,
+						Constants.DOMAIN_NAME,
+						Constants.AUTHENTICATION_POLICY,
+						Constants.ENABLE_MANAGEMENT_FILTER,
+						Constants.MANAGEMENT_POLICY,
+						Constants.MAX_PAGE_SIZE,
+						Constants.NORMALIZATION_MODE,
+						BlacklistConstants.WHITELIST),
+				BlacklistDefaults.class);
+	}
 
+	//-------------------------------------------------------------------------------------------------
+	private ServiceModel getDiscoveryServiceModel() {
 		final List<InterfaceModel> discoveryInterfaces = new ArrayList<>();
 
 		final HttpOperationModel httpCheckOp = new HttpOperationModel.Builder()
@@ -149,7 +162,7 @@ public class BlacklistSystemInfo extends SystemInfo {
 		if (isMqttApiEnabled()) {
 			final MqttInterfaceModel mqttManagementIntf = new MqttInterfaceModel.Builder(mqttTemplateName, getMqttBrokerAddress(), getMqttBrokerPort())
 					.baseTopic(BlacklistConstants.MQTT_API_MANAGEMENT_BASE_TOPIC)
-					.operations(Set.of(Constants.SERVICE_OP_BLACKLIST_CREATE, Constants.SERVICE_OP_BLACKLIST_QUERY,  Constants.SERVICE_OP_BLACKLIST_REMOVE))
+					.operations(Set.of(Constants.SERVICE_OP_BLACKLIST_CREATE, Constants.SERVICE_OP_BLACKLIST_QUERY, Constants.SERVICE_OP_BLACKLIST_REMOVE))
 					.build();
 
 			managementInterfaces.add(mqttManagementIntf);
@@ -158,14 +171,12 @@ public class BlacklistSystemInfo extends SystemInfo {
 		return new ServiceModel.Builder()
 				.serviceDefinition(Constants.SERVICE_DEF_BLACKLIST_MANAGEMENT)
 				.version(BlacklistConstants.VERSION_MANAGEMENT)
-				.metadata(Constants.METADATA_KEY_UNRESTRICTED_DISCOVERY, false)
 				.serviceInterfaces(managementInterfaces)
 				.build();
 	}
 
 	//-------------------------------------------------------------------------------------------------
 	private ServiceModel getGeneralManagementServiceModel() {
-
 		final List<InterfaceModel> generalManagementInterfaces = new ArrayList<>();
 
 		final HttpOperationModel httpLogOp = new HttpOperationModel.Builder()
@@ -197,7 +208,6 @@ public class BlacklistSystemInfo extends SystemInfo {
 		return new ServiceModel.Builder()
 				.serviceDefinition(Constants.SERVICE_DEF_GENERAL_MANAGEMENT)
 				.version(BlacklistConstants.VERSION_GENERAL_MANAGEMENT)
-				.metadata(Constants.METADATA_KEY_UNRESTRICTED_DISCOVERY, false)
 				.serviceInterfaces(generalManagementInterfaces)
 				.build();
 	}
@@ -230,24 +240,7 @@ public class BlacklistSystemInfo extends SystemInfo {
 		return new ServiceModel.Builder()
 				.serviceDefinition(Constants.SERVICE_DEF_MONITOR)
 				.version(BlacklistConstants.VERSION_MONITOR)
-				.metadata(Constants.METADATA_KEY_UNRESTRICTED_DISCOVERY, false)
 				.serviceInterfaces(monitorInterfaces)
 				.build();
-	}
-
-	protected PublicConfigurationKeysAndDefaults getPublicConfigurationKeysAndDefaults() {
-		return new PublicConfigurationKeysAndDefaults(
-				Set.of(Constants.SERVER_ADDRESS,
-						Constants.SERVER_PORT,
-						Constants.MQTT_API_ENABLED,
-						Constants.SERVICEREGISTRY_ADDRESS,
-						Constants.SERVICEREGISTRY_PORT,
-						Constants.DOMAIN_NAME,
-						Constants.ENABLE_MANAGEMENT_FILTER,
-						Constants.MANAGEMENT_POLICY,
-						Constants.AUTHENTICATION_POLICY,
-						Constants.MAX_PAGE_SIZE,
-						BlacklistConstants.WHITELIST),
-				BlacklistDefaults.class);
 	}
 }

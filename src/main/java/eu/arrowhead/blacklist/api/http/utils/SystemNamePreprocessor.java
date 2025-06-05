@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class SystemNamePreprocessor {
+
 	//=================================================================================================
 	// members
 
@@ -17,12 +18,11 @@ public class SystemNamePreprocessor {
 
 	//=================================================================================================
 	// methods
+
 	//-------------------------------------------------------------------------------------------------
 	public String process(final HttpServletRequest request, final String origin) throws InvalidParameterException {
 		logger.debug("SystemName process started");
 
-		final String name = HttpUtilities.acquireName(request, origin);
-
-		return name;
+		return HttpUtilities.acquireName(request, origin);
 	}
 }

@@ -38,7 +38,7 @@ public class MonitorMqttHandler extends MqttTopicHandler {
 	public void handle(final MqttRequestModel request) throws ArrowheadException {
 		logger.debug("MonitorMqttHandler.handle started");
 		Assert.isTrue(request.getBaseTopic().equals(baseTopic()), "MQTT topic-handler mismatch");
-		
+
 		Object responsePayload = null;
 
 		switch (request.getOperation()) {

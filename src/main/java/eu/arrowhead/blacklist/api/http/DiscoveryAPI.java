@@ -87,5 +87,4 @@ public class DiscoveryAPI {
 
 		return discoveryService.lookup(identifiedName, origin);
 	}
-
 }

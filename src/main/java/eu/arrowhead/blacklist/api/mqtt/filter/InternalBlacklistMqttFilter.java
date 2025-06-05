@@ -9,6 +9,8 @@ import eu.arrowhead.blacklist.BlacklistConstants;
 import eu.arrowhead.blacklist.service.DiscoveryService;
 import eu.arrowhead.blacklist.service.normalization.Normalization;
 import eu.arrowhead.common.Constants;
+import eu.arrowhead.common.Utilities;
+import eu.arrowhead.common.exception.AuthException;
 import eu.arrowhead.common.exception.ForbiddenException;
 import eu.arrowhead.common.mqtt.filter.ArrowheadMqttFilter;
 import eu.arrowhead.common.mqtt.model.MqttRequestModel;
@@ -40,15 +42,20 @@ public class InternalBlacklistMqttFilter implements ArrowheadMqttFilter {
 	@Override
 	public void doFilter(final String authKey, final MqttRequestModel request) {
 		logger.debug("InternalBlacklistMqttFilter is active");
-		final String origin = request.getBaseTopic() + request.getOperation();
 
+		final String origin = request.getBaseTopic() + request.getOperation();
 		final String systemName = request.getRequester();
+
+		if (Utilities.isEmpty(systemName)) {
+			// no system name in request
+			throw new AuthException("Unknown requester system", origin);
+		}
 
 		if (!request.isSysOp()
 				&& !isSelfCheck(request)
 				&& !isLookup(request)
 				&& discoveryService.check(systemName, origin)) {
-				throw new ForbiddenException(systemName + " system is blacklisted!");
+			throw new ForbiddenException(systemName + " system is blacklisted");
 		}
 	}
 
@@ -57,14 +64,12 @@ public class InternalBlacklistMqttFilter implements ArrowheadMqttFilter {
 
 	//-------------------------------------------------------------------------------------------------
 	private boolean isLookup(final MqttRequestModel request) {
-
 		return request.getBaseTopic().equals(BlacklistConstants.MQTT_API_DISCOVERY_BASE_TOPIC)
 				&& request.getOperation().equals(Constants.SERVICE_OP_LOOKUP);
 	}
 
 	//-------------------------------------------------------------------------------------------------
 	private boolean isSelfCheck(final MqttRequestModel request) {
-
 		return request.getBaseTopic().equals(BlacklistConstants.MQTT_API_DISCOVERY_BASE_TOPIC)
 				&& request.getOperation().equals(Constants.SERVICE_OP_CHECK)
 				&& normalizer.normalizeSystemName(request.getPayload().toString()).equals(normalizer.normalizeSystemName(request.getRequester()));

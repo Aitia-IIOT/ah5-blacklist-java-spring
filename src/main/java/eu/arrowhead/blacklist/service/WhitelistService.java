@@ -1,5 +1,6 @@
 package eu.arrowhead.blacklist.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 import eu.arrowhead.blacklist.BlacklistConstants;
 import eu.arrowhead.blacklist.jpa.service.EntryDbService;
 import eu.arrowhead.blacklist.service.normalization.Normalization;
+import eu.arrowhead.common.Constants;
+import eu.arrowhead.common.Utilities;
 import eu.arrowhead.common.exception.InvalidParameterException;
 import jakarta.annotation.PostConstruct;
 
@@ -24,7 +27,7 @@ public class WhitelistService {
 	@Value(BlacklistConstants.$WHITELIST_WD)
 	private List<String> whitelist;
 
-	private List<String> normalizedWhitelist;
+	private List<String> normalizedWhitelist = new ArrayList<>();
 
 	@Autowired
 	private EntryDbService dbService;
@@ -42,7 +45,10 @@ public class WhitelistService {
 	public void checkWhitelist(final List<String> names, final String origin) {
 		logger.debug("checkWhitelist started");
 
-		final List<String> namesOnWhitelist = names.stream().filter(n -> normalizedWhitelist.contains(n)).collect(Collectors.toList());
+		final List<String> namesOnWhitelist = names
+				.stream()
+				.filter(n -> normalizedWhitelist.contains(n))
+				.collect(Collectors.toList());
 
 		if (!namesOnWhitelist.isEmpty()) {
 			throw new InvalidParameterException("The following system names cannot be added, because they are on the whitelist: " + String.join(", ", namesOnWhitelist), origin);
@@ -50,11 +56,11 @@ public class WhitelistService {
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	// Inactivates entries in the database, that refer to whitelisted systems
+	// Inactivates entries in the database that refer to whitelisted systems
 	public void cleanDatabase() {
 		logger.debug("cleanDatabase started");
 
-		dbService.inactivateNameList(normalizedWhitelist, BlacklistConstants.SYSTEM_NAME);
+		dbService.inactivateNameList(normalizedWhitelist, Constants.SYS_NAME_BLACKLIST);
 	}
 
 	//=================================================================================================
@@ -63,6 +69,8 @@ public class WhitelistService {
 	//-------------------------------------------------------------------------------------------------
 	@PostConstruct
 	private void init() {
-		normalizedWhitelist = normalizer.normalizeSystemNames(whitelist);
+		if (!Utilities.isEmpty(whitelist)) {
+			normalizedWhitelist = normalizer.normalizeSystemNames(whitelist);
+		}
 	}
 }

@@ -67,6 +67,14 @@ public class Entry extends ArrowheadEntity {
 				+ revokedBy + ", reason = " + reason + "]";
 	}
 
+	//-------------------------------------------------------------------------------------------------
+	public void inactivate(final String revoker) {
+		Assert.notNull(revoker, "Revoker is null!");
+
+		this.revokedBy = revoker;
+		this.active = false;
+	}
+
 	//=================================================================================================
 	// boilerplate
 
@@ -74,6 +82,7 @@ public class Entry extends ArrowheadEntity {
 	public String getSystemName() {
 		return systemName;
 	}
+
 	//-------------------------------------------------------------------------------------------------
 	public void setSystemName(final String systemName) {
 		this.systemName = systemName;
@@ -128,13 +137,4 @@ public class Entry extends ArrowheadEntity {
 	public void setActive(final boolean active) {
 		this.active = active;
 	}
-
-	//-------------------------------------------------------------------------------------------------
-	public void inactivate(final String revoker) {
-		Assert.notNull(revoker, "Revoker is null!");
-
-		this.revokedBy = revoker;
-		this.active = false;
-	}
-
 }

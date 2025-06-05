@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class IsSysopPreprocessor {
+
 	//=================================================================================================
 	// members
 
@@ -17,9 +18,11 @@ public class IsSysopPreprocessor {
 
 	//=================================================================================================
 	// methods
+
 	//-------------------------------------------------------------------------------------------------
 	public boolean process(final HttpServletRequest request, final String origin) throws InvalidParameterException {
 		logger.debug("isSysop process started...");
+
 		return HttpUtilities.isSysop(request, origin);
 	}
 }

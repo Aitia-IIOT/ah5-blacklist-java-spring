@@ -18,20 +18,19 @@ import eu.arrowhead.common.jpa.RefreshableRepositoryImpl;
     ))
 @EntityScan(BlacklistConstants.DATABASE_ENTITY_PACKAGE)
 @EnableJpaRepositories(basePackages = BlacklistConstants.DATABASE_REPOSITORY_PACKAGE, repositoryBaseClass = RefreshableRepositoryImpl.class)
-public class BlacklistApplication {
+public class BlacklistMain {
 
 	//=================================================================================================
 	// methods
 
 	public static void main(final String[] args) {
-		SpringApplication.run(BlacklistApplication.class, args);
+		SpringApplication.run(BlacklistMain.class, args);
 	}
 
 	//=================================================================================================
 	// boilerplate
 
 	//-------------------------------------------------------------------------------------------------
-	protected BlacklistApplication() {
+	protected BlacklistMain() {
 	}
-
 }

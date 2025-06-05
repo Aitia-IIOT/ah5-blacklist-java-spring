@@ -11,7 +11,7 @@ import org.springframework.util.Assert;
 
 import eu.arrowhead.blacklist.service.dto.NormalizedBlacklistQueryRequestDTO;
 import eu.arrowhead.common.Utilities;
-import eu.arrowhead.common.service.validation.name.NameNormalizer;
+import eu.arrowhead.common.service.validation.name.SystemNameNormalizer;
 import eu.arrowhead.dto.BlacklistCreateListRequestDTO;
 import eu.arrowhead.dto.BlacklistCreateRequestDTO;
 import eu.arrowhead.dto.BlacklistQueryRequestDTO;
@@ -25,7 +25,7 @@ public class Normalization {
 	private final Logger logger = LogManager.getLogger(this.getClass());
 
 	@Autowired
-	private NameNormalizer nameNormalizer;
+	private SystemNameNormalizer systemNameNormalizer;
 
 	//=================================================================================================
 	// methods
@@ -35,7 +35,10 @@ public class Normalization {
 		logger.debug("normalizeBlacklistCreateListRequestDTO started...");
 		Assert.notNull(dto, "BlacklistCreateListRequestDTO is null");
 
-		return new BlacklistCreateListRequestDTO(dto.entities().stream().map(e -> normalizeBlacklistCreateRequestDTO(e)).collect(Collectors.toList()));
+		return new BlacklistCreateListRequestDTO(dto.entities()
+				.stream()
+				.map(e -> normalizeBlacklistCreateRequestDTO(e))
+				.collect(Collectors.toList()));
 	}
 
 	//-------------------------------------------------------------------------------------------------
@@ -50,32 +53,40 @@ public class Normalization {
 				// pagination
 				dto.pagination(), // no need to normalize, because it will happen in the getPageRequest method
 				// system names
-				Utilities.isEmpty(dto.systemNames()) ? null
-					: dto.systemNames().stream().map(n -> nameNormalizer.normalize(n)).collect(Collectors.toList()),
+				Utilities.isEmpty(dto.systemNames())
+						? null
+						: dto.systemNames().stream().map(n -> systemNameNormalizer.normalize(n)).collect(Collectors.toList()),
 				// mode
-				Mode.valueOf(dto.mode().toUpperCase()),
+				Utilities.isEmpty(dto.mode()) ? null : Mode.valueOf(dto.mode().trim().toUpperCase()),
 				// issuers
-				Utilities.isEmpty(dto.issuers()) ? null
-						: dto.issuers().stream().map(n -> nameNormalizer.normalize(n)).collect(Collectors.toList()),
+				Utilities.isEmpty(dto.issuers())
+						? null
+						: dto.issuers().stream().map(n -> systemNameNormalizer.normalize(n)).collect(Collectors.toList()),
 				// revokers
-				Utilities.isEmpty(dto.revokers()) ? null
-						: dto.revokers().stream().map(n -> nameNormalizer.normalize(n)).collect(Collectors.toList()),
+				Utilities.isEmpty(dto.revokers())
+						? null
+						: dto.revokers().stream().map(n -> systemNameNormalizer.normalize(n)).collect(Collectors.toList()),
 				// reason
 				dto.reason(),
-				// alives at
+				// alivesAt
 				Utilities.isEmpty(dto.alivesAt()) ? "" : dto.alivesAt().trim());
 	}
 
 	//-------------------------------------------------------------------------------------------------
 	public List<String> normalizeSystemNames(final List<String> names) {
 		logger.debug("normalizeSystemNames started...");
-		return names.stream().map(n -> nameNormalizer.normalize(n)).collect(Collectors.toList());
+
+		return names
+				.stream()
+				.map(n -> systemNameNormalizer.normalize(n))
+				.collect(Collectors.toList());
 	}
 
 	//-------------------------------------------------------------------------------------------------
 	public String normalizeSystemName(final String name) {
 		logger.debug("normalizeSystemName started...");
-		return nameNormalizer.normalize(name);
+
+		return systemNameNormalizer.normalize(name);
 	}
 
 	//=================================================================================================
@@ -88,10 +99,10 @@ public class Normalization {
 
 		return new BlacklistCreateRequestDTO(
 				// system name
-				nameNormalizer.normalize(candidate.systemName()),
+				systemNameNormalizer.normalize(candidate.systemName()),
 				// expires at
 				Utilities.isEmpty(candidate.expiresAt()) ? "" : candidate.expiresAt().trim(),
 				// reason
-				candidate.reason());
+				candidate.reason().trim());
 	}
 }

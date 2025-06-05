@@ -81,5 +81,4 @@ public class DiscoveryMqttHandler extends MqttTopicHandler {
 
 		return discoveryService.lookup(identifiedRequester, baseTopic() + Constants.SERVICE_OP_LOOKUP);
 	}
-
 }

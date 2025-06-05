@@ -1,4 +1,5 @@
 package eu.arrowhead.blacklist.jpa.service;
+
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,8 +53,14 @@ public class EntryDbService {
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	public Page<Entry> getPageByFilters(final PageRequest pagination, final List<String> systemNames, final Mode mode,
-			final List<String> issuers, final List<String> revokers, final String reason, final ZonedDateTime alivesAt) {
+	public Page<Entry> getPageByFilters(
+			final PageRequest pagination,
+			final List<String> systemNames,
+			final Mode mode,
+			final List<String> issuers,
+			final List<String> revokers,
+			final String reason,
+			final ZonedDateTime alivesAt) {
 		logger.debug("getByFilters started...");
 		Assert.notNull(pagination, "page is null");
 
@@ -79,25 +86,31 @@ public class EntryDbService {
 						if (mode != null && !modeMatch(mode, entry.getActive())) {
 							continue;
 						}
+
 						if (!Utilities.isEmpty(issuers) && !issuers.contains(entry.getCreatedBy())) {
 							continue;
 						}
+
 						if (!Utilities.isEmpty(revokers) && (entry.getRevokedBy() == null || !revokers.contains(entry.getRevokedBy()))) {
 							continue;
 						}
+
 						// reason match is case insensitive
 						if (!Utilities.isEmpty(reason) && !entry.getReason().toLowerCase().contains(reason.toLowerCase())) {
 							continue;
 						}
+
 						if (alivesAt != null && (!entry.getActive() || (entry.getExpiresAt() != null && alivesAt.isAfter(entry.getExpiresAt())))) {
 							continue;
 						}
 
 						matchingIDs.add(entry.getId());
 					}
+
 					entries = entryRepo.findAllByIdIn(matchingIDs, pagination);
 				}
 			}
+
 			return entries;
 		} catch (final Exception ex) {
 			logger.error(ex.getMessage());
@@ -109,12 +122,15 @@ public class EntryDbService {
 	//-------------------------------------------------------------------------------------------------
 	@Transactional(rollbackFor = ArrowheadException.class)
 	public void inactivateNameList(final List<String> names, final String revokerName) {
-		logger.debug("unsetActiveByNameList started...");
+		logger.debug("inactivateNameList started...");
 		Assert.isTrue(!Utilities.isEmpty(names), "System name list is missing or empty");
 
 		try {
 			synchronized (LOCK) {
-				final List<Entry> toInactivate = entryRepo.findAllBySystemNameIn(names).stream().filter(Entry::getActive).collect(Collectors.toList());
+				final List<Entry> toInactivate = entryRepo.findAllBySystemNameIn(names)
+						.stream()
+						.filter(Entry::getActive)
+						.collect(Collectors.toList());
 				for (final Entry entry : toInactivate) {
 					entry.inactivate(revokerName);
 				}
@@ -135,7 +151,6 @@ public class EntryDbService {
 
 		try {
 			synchronized (LOCK) {
-
 				// finding the matching system name
 				final List<Entry> entries = entryRepo.findAllBySystemNameAndActive(systemName, true);
 				for (final Entry entry : entries) {
@@ -143,6 +158,7 @@ public class EntryDbService {
 						return true;
 					}
 				}
+
 				return false;
 			}
 		} catch (final Exception ex) {
@@ -154,20 +170,23 @@ public class EntryDbService {
 
 	//-------------------------------------------------------------------------------------------------
 	public List<Entry> getActiveEntriesForName(final String systemName) {
-		logger.debug("getActiveEntriesForName, name: {}", systemName);
+		logger.debug("getActiveEntriesForName started, name: {}", systemName);
 		Assert.isTrue(!Utilities.isEmpty(systemName), "System name is missing or empty");
 
 		try {
 			synchronized (LOCK) {
-				final List<Entry> entries = entryRepo.findAllBySystemName(systemName);
-				return entries.stream().filter(e -> !isExpired(e)).toList();
+				final List<Entry> entries = entryRepo.findAllBySystemNameAndActive(systemName, true);
+
+				return entries
+						.stream()
+						.filter(e -> !isExpired(e))
+						.toList();
 			}
 		} catch (final Exception ex) {
 			logger.error(ex.getMessage());
 			logger.debug(ex);
 			throw new InternalServerError("Database operation error");
 		}
-
 	}
 
 	//=================================================================================================
@@ -185,8 +204,7 @@ public class EntryDbService {
 						// created by
 						requesterName,
 						// reason
-						c.reason()
-						))
+						c.reason()))
 				.collect(Collectors.toList());
 	}
 
@@ -194,19 +212,18 @@ public class EntryDbService {
 	// Returns true, if the record activity state matches the filtering mode
 	private boolean modeMatch(final Mode mode, final boolean active) {
 		switch (mode) {
-			case Mode.ACTIVES:
-				return active;
-			case Mode.INACTIVES:
-				return !active;
-			default:
-				return true;
+		case Mode.ACTIVES:
+			return active;
+		case Mode.INACTIVES:
+			return !active;
+		default:
+			return true;
 		}
 	}
 
 	//-------------------------------------------------------------------------------------------------
 	// Returns true, if the expiration date is not null and it is in the past
 	private boolean isExpired(final Entry entry) {
-		return entry.getExpiresAt() != null && entry.getExpiresAt().isBefore(ZonedDateTime.now());
+		return entry.getExpiresAt() != null && entry.getExpiresAt().isBefore(Utilities.utcNow());
 	}
-
 }
