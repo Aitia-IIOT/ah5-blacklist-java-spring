@@ -62,7 +62,8 @@ public class DiscoveryAPI {
 	public boolean check(@PathVariable(required = true) final String systemName) {
 		logger.debug("Check started for {}", systemName);
 
-		final String origin = HttpMethod.GET.name() + " " + BlacklistConstants.HTTP_API_BASE_PATH + BlacklistConstants.HTTP_API_OP_CHECK_PATH;
+		final String origin = HttpMethod.GET.name() + " " + BlacklistConstants.HTTP_API_BASE_PATH
+				+ BlacklistConstants.HTTP_API_OP_CHECK_PATH.replace(BlacklistConstants.HTTP_API_PARAM_NAME, systemName);
 
 		return discoveryService.check(systemName, origin);
 	}

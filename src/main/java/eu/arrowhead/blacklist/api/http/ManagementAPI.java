@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -120,13 +121,13 @@ public class ManagementAPI {
 			@ApiResponse(responseCode = Constants.HTTP_STATUS_INTERNAL_SERVER_ERROR, description = Constants.SWAGGER_HTTP_500_MESSAGE, content = {
 					@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ErrorMessageDTO.class)) })
 	})
-	@DeleteMapping(path = BlacklistConstants.HTTP_API_OP_REMOVE_PATH)
-	public void remove(final HttpServletRequest httpServletRequest, @PathVariable final List<String> systemNameList) {
+	@DeleteMapping(path = BlacklistConstants.HTTP_API_OP_REMOVE)
+	public void remove(final HttpServletRequest httpServletRequest, final @RequestParam List<String> names) {
 		logger.debug("remove started");
 
-		final String origin = HttpMethod.DELETE.name() + " " + BlacklistConstants.HTTP_API_MANAGEMENT_PATH + BlacklistConstants.HTTP_API_OP_REMOVE_PATH;
+		final String origin = HttpMethod.DELETE.name() + " " + BlacklistConstants.HTTP_API_MANAGEMENT_PATH + BlacklistConstants.HTTP_API_OP_REMOVE;
 		final boolean isSysop = isSysopPreprocessor.process(httpServletRequest, origin);
 		final String revokerName = systemNamepreprocessor.process(httpServletRequest, origin);
-		managementService.remove(systemNameList, isSysop, revokerName, origin);
+		managementService.remove(names, isSysop, revokerName, origin);
 	}
 }
