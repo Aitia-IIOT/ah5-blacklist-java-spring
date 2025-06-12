@@ -38,7 +38,7 @@ public final class BlacklistConstants {
 	// MQTT API topics
 
 	public static final String MQTT_API_BASE_TOPIC = "arrowhead/blacklist";
-	public static final String MQTT_API_DISCOVERY_BASE_TOPIC = MQTT_API_BASE_TOPIC + "/discovery/";
+	public static final String MQTT_API_DISCOVERY_BASE_TOPIC = MQTT_API_BASE_TOPIC + "/";
 	public static final String MQTT_API_MANAGEMENT_BASE_TOPIC = MQTT_API_BASE_TOPIC + "/management/";
 	public static final String MQTT_API_GENERAL_MANAGEMENT_BASE_TOPIC = MQTT_API_BASE_TOPIC + "/general/management/";
 	public static final String MQTT_API_MONITOR_BASE_TOPIC = MQTT_API_BASE_TOPIC + "/monitor/";
