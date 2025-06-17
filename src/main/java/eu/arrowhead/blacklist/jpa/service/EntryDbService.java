@@ -100,7 +100,7 @@ public class EntryDbService {
 							continue;
 						}
 
-						if (alivesAt != null && (!entry.getActive() || (entry.getExpiresAt() != null && alivesAt.isAfter(entry.getExpiresAt())))) {
+						if (alivesAt != null && (!entry.getActive() || (entry.getExpiresAt() != null && alivesAt.isBefore(entry.getExpiresAt())))) {
 							continue;
 						}
 
