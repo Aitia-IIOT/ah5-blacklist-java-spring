@@ -30,8 +30,6 @@ public final class BlacklistConstants {
 	public static final String HTTP_API_OP_QUERY = "/query";
 	public static final String HTTP_API_OP_CREATE = "/create";
 	public static final String HTTP_API_OP_REMOVE = "/remove";
-	public static final String HTTP_API_PARAM_NAME_LIST = "{systemNameList}";
-	public static final String HTTP_API_OP_REMOVE_PATH = HTTP_API_OP_REMOVE + "/" + HTTP_API_PARAM_NAME_LIST;
 	public static final String HTTP_API_GENERAL_MANAGEMENT_PATH = HTTP_API_BASE_PATH + "/general/mgmt";
 	public static final String HTTP_API_OP_ECHO = "/echo";
 
