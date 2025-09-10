@@ -8,8 +8,10 @@ root-folder
 
 # BUILD IMAGES
 
-1) Update the version numbers in the system Dockerfile and entrypoint.sh.
+1) Run the system build command from the _root-folder_. Make sure you use the proper version number for build arg and also for the tag!
 
-2) Run the system build command from the _root-folder_: `docker build -f ./ah5-blacklist-java-spring/docker/Dockerfile-Blacklist -t arrowhead-blacklist:5.0.0 .`
+`docker build -f ./ah5-blacklist-java-spring/docker/Dockerfile-Blacklist -t arrowhead-blacklist:5.0.0 --build-arg AH_VERSION=5.0.0 .`
 
-3) Run the database build command from the _root-folder_: `docker build -f ./ah5-blacklist-java-spring/docker/Dockerfile-Blacklist-DB -t arrowhead-blacklist-db:5.0.0 .`
+2) Run the database build command from the _root-folder_. Make sure you use the proper version number for the tag.
+
+`docker build -f ./ah5-blacklist-java-spring/docker/Dockerfile-Blacklist-DB -t arrowhead-blacklist-db:5.0.0 .`
