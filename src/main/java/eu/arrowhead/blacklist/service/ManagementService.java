@@ -71,6 +71,7 @@ public class ManagementService {
 	//-------------------------------------------------------------------------------------------------
 	public BlacklistEntryListResponseDTO query(final BlacklistQueryRequestDTO dto, final String origin) {
 		logger.debug("ManagementService query started...");
+		Assert.isTrue(!Utilities.isEmpty(origin), "origin is empty");
 
 		final NormalizedBlacklistQueryRequestDTO normalized = validator.validateAndNormalizeBlacklistQueryRequestDTO(dto, origin);
 		final PageRequest pageRequest = pageService.getPageRequest(normalized.pagination(), Direction.DESC, Entry.SORTABLE_FIELDS_BY, Entry.DEFAULT_SORT_FIELD, origin);
@@ -94,6 +95,7 @@ public class ManagementService {
 	//-------------------------------------------------------------------------------------------------
 	public BlacklistEntryListResponseDTO create(final BlacklistCreateListRequestDTO dto, final String requesterName, final String origin) {
 		logger.debug("ManagementService create started...");
+		Assert.isTrue(!Utilities.isEmpty(origin), "origin is empty");
 
 		final BlacklistCreateListRequestDTO normalizedDto = validator.validateAndNormalizeBlacklistCreateListRequestDTO(dto, origin);
 		final String normalizedRequesterName = validator.validateAndNormalizeSystemName(requesterName, origin);
@@ -111,6 +113,7 @@ public class ManagementService {
 	//-------------------------------------------------------------------------------------------------
 	public void remove(final List<String> systemNameList, final boolean isSysop, final String revokerName, final String origin) {
 		logger.debug("ManagementService remove started...");
+		Assert.isTrue(!Utilities.isEmpty(origin), "origin is empty");
 
 		final List<String> normalizedList = validator.validateAndNormalizeSystemNameList(systemNameList, origin);
 		final String normalizedRevokerName = validator.validateAndNormalizeSystemName(revokerName, origin);
