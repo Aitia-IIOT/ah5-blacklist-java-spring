@@ -58,6 +58,7 @@ public class EntryDbService {
 	@Transactional(rollbackFor = ArrowheadException.class)
 	public List<Entry> createBulk(final List<BlacklistCreateRequestDTO> candidates, final String requesterName) {
 		logger.debug("createBulk started...");
+		Assert.notNull(candidates, "candidates list is null");
 
 		try {
 			return entryRepo.saveAllAndFlush(createEntriesFromDTOs(candidates, requesterName));
