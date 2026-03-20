@@ -141,6 +141,7 @@ public class EntryDbService {
 	public void inactivateNameList(final List<String> names, final String revokerName) {
 		logger.debug("inactivateNameList started...");
 		Assert.isTrue(!Utilities.isEmpty(names), "System name list is missing or empty");
+		Assert.isTrue(!Utilities.isEmpty(revokerName), "Revoker name is missing or empty");
 
 		try {
 			synchronized (LOCK) {

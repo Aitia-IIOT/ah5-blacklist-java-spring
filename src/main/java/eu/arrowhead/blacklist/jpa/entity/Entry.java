@@ -85,7 +85,7 @@ public class Entry extends ArrowheadEntity {
 
 	//-------------------------------------------------------------------------------------------------
 	public void inactivate(final String revoker) {
-		Assert.notNull(revoker, "Revoker is null!");
+		Assert.notNull(revoker, "Revoker is null");
 
 		this.revokedBy = revoker;
 		this.active = false;
