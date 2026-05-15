@@ -22,11 +22,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import eu.arrowhead.blacklist.jpa.entity.Entry;
 import eu.arrowhead.blacklist.jpa.service.EntryDbService;
 import eu.arrowhead.blacklist.service.dto.DTOConverter;
 import eu.arrowhead.blacklist.service.validation.Validation;
+import eu.arrowhead.common.Utilities;
 import eu.arrowhead.common.exception.InternalServerError;
 import eu.arrowhead.dto.BlacklistEntryListResponseDTO;
 
@@ -53,6 +55,7 @@ public class DiscoveryService {
 	//-------------------------------------------------------------------------------------------------
 	public boolean check(final String systemName, final String origin) {
 		logger.debug("check started...");
+		Assert.isTrue(!Utilities.isEmpty(origin), "origin is empty");
 
 		final String normalizedName = validator.validateAndNormalizeSystemName(systemName, origin);
 
@@ -66,6 +69,7 @@ public class DiscoveryService {
 	//-------------------------------------------------------------------------------------------------
 	public BlacklistEntryListResponseDTO lookup(final String requester, final String origin) {
 		logger.debug("lookup started...");
+		Assert.isTrue(!Utilities.isEmpty(origin), "origin is empty");
 
 		final String normalizedName = validator.validateAndNormalizeSystemName(requester, origin);
 

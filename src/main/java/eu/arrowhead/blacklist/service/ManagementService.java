@@ -71,6 +71,7 @@ public class ManagementService {
 	//-------------------------------------------------------------------------------------------------
 	public BlacklistEntryListResponseDTO query(final BlacklistQueryRequestDTO dto, final String origin) {
 		logger.debug("ManagementService query started...");
+		Assert.isTrue(!Utilities.isEmpty(origin), "origin is empty");
 
 		final NormalizedBlacklistQueryRequestDTO normalized = validator.validateAndNormalizeBlacklistQueryRequestDTO(dto, origin);
 		final PageRequest pageRequest = pageService.getPageRequest(normalized.pagination(), Direction.DESC, Entry.SORTABLE_FIELDS_BY, Entry.DEFAULT_SORT_FIELD, origin);
@@ -94,6 +95,7 @@ public class ManagementService {
 	//-------------------------------------------------------------------------------------------------
 	public BlacklistEntryListResponseDTO create(final BlacklistCreateListRequestDTO dto, final String requesterName, final String origin) {
 		logger.debug("ManagementService create started...");
+		Assert.isTrue(!Utilities.isEmpty(origin), "origin is empty");
 
 		final BlacklistCreateListRequestDTO normalizedDto = validator.validateAndNormalizeBlacklistCreateListRequestDTO(dto, origin);
 		final String normalizedRequesterName = validator.validateAndNormalizeSystemName(requesterName, origin);
@@ -111,6 +113,7 @@ public class ManagementService {
 	//-------------------------------------------------------------------------------------------------
 	public void remove(final List<String> systemNameList, final boolean isSysop, final String revokerName, final String origin) {
 		logger.debug("ManagementService remove started...");
+		Assert.isTrue(!Utilities.isEmpty(origin), "origin is empty");
 
 		final List<String> normalizedList = validator.validateAndNormalizeSystemNameList(systemNameList, origin);
 		final String normalizedRevokerName = validator.validateAndNormalizeSystemName(revokerName, origin);
@@ -130,8 +133,7 @@ public class ManagementService {
 
 	//-------------------------------------------------------------------------------------------------
 	private void checkSelfBlacklisting(final List<BlacklistCreateRequestDTO> candidates, final String requesterName, final String origin) {
-		Assert.notNull(candidates, "Candidates is null");
-		Assert.isTrue(!Utilities.containsNull(candidates), "Candidate list contains null element");
+		logger.debug("checkSelfBlacklisting started...");
 
 		for (final BlacklistCreateRequestDTO candidate : candidates) {
 			if (candidate.systemName().equals(requesterName)) {
@@ -142,6 +144,7 @@ public class ManagementService {
 
 	//-------------------------------------------------------------------------------------------------
 	private void checkSysopRemoval(final List<String> names, final boolean isSysop, final String requesterName, final String origin) {
+		logger.debug("checkSysopRemoval started...");
 		Assert.notNull(names, "System name list is null");
 
 		if (names.contains(requesterName) && !isSysop) {
