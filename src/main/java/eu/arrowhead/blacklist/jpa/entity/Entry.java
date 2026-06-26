@@ -78,14 +78,13 @@ public class Entry extends ArrowheadEntity {
 	//-------------------------------------------------------------------------------------------------
 	@Override
 	public String toString() {
-		return "Entry [id = " + id + ", systemName = " + systemName + ", expiresAt = " + expiresAt + ", "
-				+ "active = " + active + ", createdBy = " + createdBy + ", revokedBy = "
-				+ revokedBy + ", reason = " + reason + "]";
+		return "Entry [id=" + id + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", systemName=" + systemName + ", expiresAt=" + expiresAt + ", active=" + active
+				+ ", createdBy=" + createdBy + ", revokedBy=" + revokedBy + ", reason=" + reason + "]";
 	}
 
 	//-------------------------------------------------------------------------------------------------
 	public void inactivate(final String revoker) {
-		Assert.notNull(revoker, "Revoker is null!");
+		Assert.notNull(revoker, "Revoker is null");
 
 		this.revokedBy = revoker;
 		this.active = false;

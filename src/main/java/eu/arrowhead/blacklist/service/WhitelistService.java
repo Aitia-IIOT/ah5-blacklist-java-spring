@@ -25,6 +25,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import eu.arrowhead.blacklist.BlacklistConstants;
 import eu.arrowhead.blacklist.jpa.service.EntryDbService;
@@ -60,8 +61,14 @@ public class WhitelistService {
 	// Throws exception, if the provided system name list contains element(s) that are on the whitelist
 	public void checkWhitelist(final List<String> names, final String origin) {
 		logger.debug("checkWhitelist started");
+		Assert.isTrue(!Utilities.isEmpty(origin), "origin is empty");
 
-		final List<String> namesOnWhitelist = names
+		if (Utilities.isEmpty(names)) {
+			return;
+		}
+
+		final List<String> normalizedNames = normalizer.normalizeSystemNames(names);
+		final List<String> namesOnWhitelist = normalizedNames
 				.stream()
 				.filter(n -> normalizedWhitelist.contains(n))
 				.collect(Collectors.toList());
@@ -76,7 +83,9 @@ public class WhitelistService {
 	public void cleanDatabase() {
 		logger.debug("cleanDatabase started");
 
-		dbService.inactivateNameList(normalizedWhitelist, Constants.SYS_NAME_BLACKLIST);
+		if (!Utilities.isEmpty(normalizedWhitelist)) {
+			dbService.inactivateNameList(normalizedWhitelist, Constants.SYS_NAME_BLACKLIST);
+		}
 	}
 
 	//=================================================================================================
