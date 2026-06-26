@@ -27,6 +27,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import eu.arrowhead.blacklist.BlacklistConstants;
 import eu.arrowhead.blacklist.jpa.entity.Entry;
@@ -71,6 +72,7 @@ public class Validation {
 	//-------------------------------------------------------------------------------------------------
 	public BlacklistCreateListRequestDTO validateAndNormalizeBlacklistCreateListRequestDTO(final BlacklistCreateListRequestDTO dto, final String origin) {
 		logger.debug("validateAndNormalizeBlacklistCreateListRequestDTO started...");
+		Assert.isTrue(!Utilities.isEmpty(origin), "origin is empty");
 
 		validateBlacklistCreateListRequestDTO(dto, origin);
 		final BlacklistCreateListRequestDTO normalized = normalizer.normalizeBlacklistCreateListRequestDTO(dto);
@@ -87,6 +89,7 @@ public class Validation {
 	//-------------------------------------------------------------------------------------------------
 	public NormalizedBlacklistQueryRequestDTO validateAndNormalizeBlacklistQueryRequestDTO(final BlacklistQueryRequestDTO dto, final String origin) {
 		logger.debug("validateAndNormalizeBlacklistQueryRequestDTO started...");
+		Assert.isTrue(!Utilities.isEmpty(origin), "origin is empty");
 
 		validateBlacklistQueryRequestDTO(dto, origin);
 		final NormalizedBlacklistQueryRequestDTO normalized = normalizer.normalizeBlacklistQueryRequestDTO(dto);
@@ -113,6 +116,7 @@ public class Validation {
 	//-------------------------------------------------------------------------------------------------
 	public List<String> validateAndNormalizeSystemNameList(final List<String> names, final String origin) {
 		logger.debug("validateAndNormalizeSystemNameList started...");
+		Assert.isTrue(!Utilities.isEmpty(origin), "origin is empty");
 
 		validateSystemNameList(names, origin);
 		final List<String> normalizedNames = normalizer.normalizeSystemNames(names);
@@ -129,6 +133,7 @@ public class Validation {
 	//-------------------------------------------------------------------------------------------------
 	public String validateAndNormalizeSystemName(final String name, final String origin) {
 		logger.debug("validateAndNormalizeSystemName");
+		Assert.isTrue(!Utilities.isEmpty(origin), "origin is empty");
 
 		final String normalizedName = normalizer.normalizeSystemName(name);
 

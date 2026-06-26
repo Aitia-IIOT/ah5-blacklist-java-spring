@@ -59,7 +59,8 @@ public class InternalBlacklistFilter extends ArrowheadFilter {
 	@Override
 	protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response, final FilterChain chain) throws IOException, ServletException {
 		log.debug("InternalBlacklistFilter is active");
-		final String origin = request.getMethod() + " " + request.getRequestURL().substring(request.getRequestURL().indexOf(BlacklistConstants.HTTP_API_BASE_PATH));
+		final int index = request.getRequestURL().indexOf(BlacklistConstants.HTTP_API_BASE_PATH);
+		final String origin = request.getMethod() + " " + (index > 0 ? request.getRequestURL().substring(index) : request.getRequestURL());
 
 		try {
 			final String systemName = HttpUtilities.acquireName(request, origin);
@@ -68,7 +69,7 @@ public class InternalBlacklistFilter extends ArrowheadFilter {
 					&& !isSelfCheck(request, systemName)
 					&& !isLookup(request)
 					&& discoveryService.check(systemName, origin)) {
-				throw new ForbiddenException(systemName + " system is blacklisted");
+				throw new ForbiddenException(systemName + " system is blacklisted", origin);
 			}
 		} catch (final InvalidParameterException ex) {
 			// no system name in attributes
@@ -90,7 +91,7 @@ public class InternalBlacklistFilter extends ArrowheadFilter {
 
 	//-------------------------------------------------------------------------------------------------
 	private boolean isSelfCheck(final HttpServletRequest request, final String systemName) {
-		final String requestTarget = Utilities.stripEndSlash(request.getRequestURL().toString());
+		final String requestTarget = Utilities.stripEndSlash(request.getRequestURI().toString());
 		if (!requestTarget.contains(SLASH)) {
 			return false;
 		}

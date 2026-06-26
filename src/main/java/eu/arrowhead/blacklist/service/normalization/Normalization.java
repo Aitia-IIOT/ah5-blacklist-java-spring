@@ -50,6 +50,7 @@ public class Normalization {
 	public BlacklistCreateListRequestDTO normalizeBlacklistCreateListRequestDTO(final BlacklistCreateListRequestDTO dto) {
 		logger.debug("normalizeBlacklistCreateListRequestDTO started...");
 		Assert.notNull(dto, "BlacklistCreateListRequestDTO is null");
+		Assert.notNull(dto.entities(), "Entities list is null");
 
 		return new BlacklistCreateListRequestDTO(dto.entities()
 				.stream()
@@ -83,7 +84,9 @@ public class Normalization {
 						? null
 						: dto.revokers().stream().map(n -> systemNameNormalizer.normalize(n)).collect(Collectors.toList()),
 				// reason
-				dto.reason(),
+				Utilities.isEmpty(dto.reason())
+						? null
+						: dto.reason().trim(),
 				// alivesAt
 				Utilities.isEmpty(dto.alivesAt()) ? "" : dto.alivesAt().trim());
 	}
@@ -91,6 +94,7 @@ public class Normalization {
 	//-------------------------------------------------------------------------------------------------
 	public List<String> normalizeSystemNames(final List<String> names) {
 		logger.debug("normalizeSystemNames started...");
+		Assert.notNull(names, "names list is null");
 
 		return names
 				.stream()

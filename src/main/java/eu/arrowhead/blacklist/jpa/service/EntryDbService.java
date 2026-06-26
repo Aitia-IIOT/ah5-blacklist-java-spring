@@ -58,6 +58,7 @@ public class EntryDbService {
 	@Transactional(rollbackFor = ArrowheadException.class)
 	public List<Entry> createBulk(final List<BlacklistCreateRequestDTO> candidates, final String requesterName) {
 		logger.debug("createBulk started...");
+		Assert.notNull(candidates, "candidates list is null");
 
 		try {
 			return entryRepo.saveAllAndFlush(createEntriesFromDTOs(candidates, requesterName));
@@ -140,6 +141,7 @@ public class EntryDbService {
 	public void inactivateNameList(final List<String> names, final String revokerName) {
 		logger.debug("inactivateNameList started...");
 		Assert.isTrue(!Utilities.isEmpty(names), "System name list is missing or empty");
+		Assert.isTrue(!Utilities.isEmpty(revokerName), "Revoker name is missing or empty");
 
 		try {
 			synchronized (LOCK) {
