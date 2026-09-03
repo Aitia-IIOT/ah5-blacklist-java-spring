@@ -32,6 +32,7 @@ import eu.arrowhead.common.exception.ForbiddenException;
 import eu.arrowhead.common.exception.InvalidParameterException;
 import eu.arrowhead.common.http.HttpUtilities;
 import eu.arrowhead.common.http.filter.ArrowheadFilter;
+import eu.arrowhead.common.security.SecurityUtilities;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -81,7 +82,7 @@ public class InternalBlacklistFilter extends ArrowheadFilter {
 
 	//-------------------------------------------------------------------------------------------------
 	private boolean isLookup(final HttpServletRequest request) {
-		final String requestTarget = Utilities.stripEndSlash(request.getRequestURL().toString());
+		final String requestTarget = Utilities.stripEndSlash(SecurityUtilities.getDecodedUri(request.getRequestURL().toString()));
 		if (requestTarget.endsWith(BlacklistConstants.HTTP_API_BASE_PATH + BlacklistConstants.HTTP_API_OP_LOOKUP)) {
 			return true;
 		}
@@ -91,7 +92,7 @@ public class InternalBlacklistFilter extends ArrowheadFilter {
 
 	//-------------------------------------------------------------------------------------------------
 	private boolean isSelfCheck(final HttpServletRequest request, final String systemName) {
-		final String requestTarget = Utilities.stripEndSlash(request.getRequestURI().toString());
+		final String requestTarget = Utilities.stripEndSlash(SecurityUtilities.getDecodedUri(request.getRequestURI().toString()));
 		if (!requestTarget.contains(SLASH)) {
 			return false;
 		}
